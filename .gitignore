@@ -1,0 +1,9 @@
+# you should add ignore items here
+
+# filters for samples
+Samples\GoogleMaps\JS-GoogleMaps\.idea
+
+# filters for 'TravelBro' project
+*.suo
+TravelBro\Travel.Web\bin
+TravelBro\Travel.Web\obj
