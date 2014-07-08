@@ -1,9 +1,16 @@
 # you should add ignore items here
 
-# filters for samples
-Samples/GoogleMaps/JS-GoogleMaps/.idea
+# Visual Studio files
+*.suo
+
+# NuGet packages
+**\packages
+
+# filters for Samples
+Samples\GoogleMaps\JS-GoogleMaps\.idea
+Samples\EF\ASP NET Web API with EF\ProductStore\bin
+Samples\EF\ASP NET Web API with EF\ProductStore\obj
 
 # filters for 'TravelBro' project
-*.suo
-TravelBro/Travel.Web/bin
-TravelBro/Travel.Web/obj
+TravelBro\Travel.Web\bin
+TravelBro\Travel.Web\obj
