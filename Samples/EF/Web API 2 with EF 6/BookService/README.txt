@@ -17,3 +17,15 @@
 	
  Design:
 	- single-page application (SPA) design
+
+
+
+
+
+											T O   D O
+
+
+MS site End working on:
+________________________________________________________
+http://www.asp.net/web-api/overview/creating-web-apis/using-web-api-with-entity-framework/part-2
+acking, and persisting data to the database. It inherits from DbConte

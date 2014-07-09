@@ -4,6 +4,9 @@
 *.suo
 *.user
 
+# MS SQL Server files
+*.ldf
+
 # NuGet packages
 **/packages
 
