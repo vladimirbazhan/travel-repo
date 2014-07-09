@@ -2,6 +2,7 @@
 
 # Visual Studio files
 *.suo
+*.user
 
 # NuGet packages
 **\packages
@@ -10,6 +11,10 @@
 Samples\GoogleMaps\JS-GoogleMaps\.idea
 Samples\EF\ASP NET Web API with EF\ProductStore\bin
 Samples\EF\ASP NET Web API with EF\ProductStore\obj
+Samples\EF\Web API 2 with EF 6\BookService\bin
+Samples\EF\Web API 2 with EF 6\BookService\obj
+Samples\EF\Web API 2 with EF 6\BookService.Tests\bin
+Samples\EF\Web API 2 with EF 6\BookService.Tests\obj
 
 # filters for 'TravelBro' project
 TravelBro\Travel.Web\bin
