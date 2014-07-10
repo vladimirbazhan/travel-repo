@@ -11,61 +11,61 @@ namespace BookService.Controllers
 {
     /// <summary>
     /// Defines a Web API controller.
-    /// The controller implements the REST API that clients use to perform CRUD operations on the list of Authors.
+    /// The controller implements the REST API that clients use to perform CRUD operations on the list of Books.
     /// </summary>
-    public class AuthorsController : ApiController
+    public class BooksController : ApiController
     {
         private BookServiceContext db = new BookServiceContext();
 
-        // GET: api/Authors
+        // GET: api/Books
         /// <summary>
-        /// Get all authors.
+        /// Get all books.
         /// </summary>
         /// <returns></returns>
-        public IQueryable<Author> GetAuthors()
+        public IQueryable<Book> GetBooks()
         {
-            return db.Authors;
+            return db.Books;
         }
 
-        // GET: api/Authors/5
+        // GET: api/Books/5
         /// <summary>
-        /// Get an author by ID.
+        /// Get a book by ID.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [ResponseType(typeof(Author))]
-        public async Task<IHttpActionResult> GetAuthorAsync(int id)
+        [ResponseType(typeof(Book))]
+        public async Task<IHttpActionResult> GetBookAsync(int id)
         {
-            Author author = await db.Authors.FindAsync(id);
-            if (author == null)
+            Book book = await db.Books.FindAsync(id);
+            if (book == null)
             {
                 return NotFound();
             }
 
-            return Ok(author);
+            return Ok(book);
         }
 
-        // PUT: api/Authors/5
+        // PUT: api/Books/5
         /// <summary>
-        /// Update an existing author.
+        /// Update an existing book.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="author"></param>
+        /// <param name="book"></param>
         /// <returns></returns>
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutAuthorAsync(int id, Author author)
+        public async Task<IHttpActionResult> PutBookAsync(int id, Book book)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != author.Id)
+            if (id != book.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(author).State = EntityState.Modified;
+            db.Entry(book).State = EntityState.Modified;
 
             try
             {
@@ -73,7 +73,7 @@ namespace BookService.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AuthorExists(id))
+                if (!BookExists(id))
                 {
                     return NotFound();
                 }
@@ -86,45 +86,45 @@ namespace BookService.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Authors
+        // POST: api/Books
         /// <summary>
-        /// Create a new author.
+        /// Create a new book.
         /// </summary>
-        /// <param name="author"></param>
+        /// <param name="book"></param>
         /// <returns></returns>
-        [ResponseType(typeof(Author))]
-        public async Task<IHttpActionResult> PostAuthorAsync(Author author)
+        [ResponseType(typeof(Book))]
+        public async Task<IHttpActionResult> PostBookAsync(Book book)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Authors.Add(author);
+            db.Books.Add(book);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = author.Id }, author);
+            return CreatedAtRoute("DefaultApi", new { id = book.Id }, book);
         }
 
-        // DELETE: api/Authors/5
+        // DELETE: api/Books/5
         /// <summary>
-        /// Delete an author.
+        /// Delete a book.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [ResponseType(typeof(Author))]
-        public async Task<IHttpActionResult> DeleteAuthorAsync(int id)
+        [ResponseType(typeof(Book))]
+        public async Task<IHttpActionResult> DeleteBookAsync(int id)
         {
-            Author author = await db.Authors.FindAsync(id);
-            if (author == null)
+            Book book = await db.Books.FindAsync(id);
+            if (book == null)
             {
                 return NotFound();
             }
 
-            db.Authors.Remove(author);
+            db.Books.Remove(book);
             await db.SaveChangesAsync();
 
-            return Ok(author);
+            return Ok(book);
         }
 
         protected override void Dispose(bool disposing)
@@ -136,9 +136,9 @@ namespace BookService.Controllers
             base.Dispose(disposing);
         }
 
-        private bool AuthorExists(int id)
+        private bool BookExists(int id)
         {
-            return db.Authors.Count(e => e.Id == id) > 0;
+            return db.Books.Count(e => e.Id == id) > 0;
         }
     }
 }

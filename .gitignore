@@ -6,6 +6,7 @@
 
 # MS SQL Server files
 *.ldf
+*.mdf
 
 # NuGet packages
 **/packages

@@ -11,14 +11,14 @@ namespace BookService.Models
         // 
         // If you want Entity Framework to drop and regenerate your database
         // automatically whenever you change your model schema, please use data migrations.
-        // For more information refer to the documentation:
-        // http://msdn.microsoft.com/en-us/data/jj591621.aspx
+        // For more information refer to the documentation: http://msdn.microsoft.com/en-us/data/jj591621.aspx
     
         public BookServiceContext() : base("name=BookServiceContext")
         {
         }
 
-        public System.Data.Entity.DbSet<BookService.Models.Author> Authors { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Book> Books { get; set; }
     
     }
 }
