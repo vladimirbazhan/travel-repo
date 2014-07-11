@@ -21,7 +21,10 @@ namespace BookService.Models
         /// Foreign Key
         /// </summary>
         public int AuthorId { get; set; }
-        // Navigation property
+        
+        /// <summary>
+        /// Navigation property
+        /// </summary>
         public Author Author { get; set; }
     }
 }

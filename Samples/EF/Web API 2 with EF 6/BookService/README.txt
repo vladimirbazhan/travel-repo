@@ -21,11 +21,13 @@
 
 
 
-
 											T O   D O
-
 
 MS site End working on:
 ________________________________________________________
-http://www.asp.net/web-api/overview/creating-web-apis/using-web-api-with-entity-framework/part-2
-acking, and persisting data to the database. It inherits from DbConte
+http://www.asp.net/web-api/overview/creating-web-apis/using-web-api-with-entity-framework/part-5
+Right now, our web API exposes the database entities to the client. The client receives data tha
+
+
+1) Read about EF Migration.
+2)

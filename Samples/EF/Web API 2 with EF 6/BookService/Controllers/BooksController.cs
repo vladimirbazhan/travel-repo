@@ -15,7 +15,7 @@ namespace BookService.Controllers
     /// </summary>
     public class BooksController : ApiController
     {
-        private BookServiceContext db = new BookServiceContext();
+        private BookServiceContext dbContext = new BookServiceContext();
 
         // GET: api/Books
         /// <summary>
@@ -24,7 +24,8 @@ namespace BookService.Controllers
         /// <returns></returns>
         public IQueryable<Book> GetBooks()
         {
-            return db.Books;
+            // Eager Loading of related data
+            return dbContext.Books.Include(b => b.Author);
         }
 
         // GET: api/Books/5
@@ -36,7 +37,7 @@ namespace BookService.Controllers
         [ResponseType(typeof(Book))]
         public async Task<IHttpActionResult> GetBookAsync(int id)
         {
-            Book book = await db.Books.FindAsync(id);
+            Book book = await dbContext.Books.FindAsync(id);
             if (book == null)
             {
                 return NotFound();
@@ -65,11 +66,11 @@ namespace BookService.Controllers
                 return BadRequest();
             }
 
-            db.Entry(book).State = EntityState.Modified;
+            dbContext.Entry(book).State = EntityState.Modified;
 
             try
             {
-                await db.SaveChangesAsync();
+                await dbContext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -100,8 +101,8 @@ namespace BookService.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Books.Add(book);
-            await db.SaveChangesAsync();
+            dbContext.Books.Add(book);
+            await dbContext.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = book.Id }, book);
         }
@@ -115,14 +116,14 @@ namespace BookService.Controllers
         [ResponseType(typeof(Book))]
         public async Task<IHttpActionResult> DeleteBookAsync(int id)
         {
-            Book book = await db.Books.FindAsync(id);
+            Book book = await dbContext.Books.FindAsync(id);
             if (book == null)
             {
                 return NotFound();
             }
 
-            db.Books.Remove(book);
-            await db.SaveChangesAsync();
+            dbContext.Books.Remove(book);
+            await dbContext.SaveChangesAsync();
 
             return Ok(book);
         }
@@ -131,14 +132,14 @@ namespace BookService.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                dbContext.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool BookExists(int id)
         {
-            return db.Books.Count(e => e.Id == id) > 0;
+            return dbContext.Books.Count(e => e.Id == id) > 0;
         }
     }
 }
