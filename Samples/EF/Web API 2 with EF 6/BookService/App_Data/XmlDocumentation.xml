@@ -600,6 +600,21 @@
             Foreign Key
             </summary>
         </member>
+        <member name="P:BookService.Models.Book.Author">
+            <summary>
+            Navigation property
+            </summary>
+        </member>
+        <member name="T:BookService.Models.BookDetailDTO">
+            <summary>
+            Detail Data Transfer Object for class Book
+            </summary>
+        </member>
+        <member name="T:BookService.Models.BookDTO">
+            <summary>
+            Data Transfer Object for class Book
+            </summary>
+        </member>
         <member name="T:BookService.Models.BookServiceContext">
             <summary>
             Manages entity objects during run time, which includes populating objects with data from a database, change tracking, and persisting data to the database.
