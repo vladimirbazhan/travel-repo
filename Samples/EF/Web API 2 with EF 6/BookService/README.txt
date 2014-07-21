@@ -14,20 +14,38 @@
 	Entity Framework 6
 	.NET 4.5
 	Knockout.js 3.1
+	Bootstrap styling (http://getbootstrap.com/)
 	
  Design:
 	- single-page application (SPA) design
 
+Using:
+	Web API - http://localhost:62407/api/Books  etc.
 
+
+
+											B U G S
+
+1) Clean build from Git --> DB does not dreate
+2) 
 
 
 											T O   D O
 
 MS site End working on:
 ________________________________________________________
-http://www.asp.net/web-api/overview/creating-web-apis/using-web-api-with-entity-framework/part-5
-Right now, our web API exposes the database entities to the client. The client receives data tha
+http://www.asp.net/web-api/overview/creating-web-apis/using-web-api-with-entity-framework/part-7
+beginning..
 
 
 1) Read about EF Migration.
-2)
+2) 
+
+
+											H O W    T O
+
+1) How to change default Web API string to   e.g. /api/version2/AuthorLalala ??
+	- see API mapping in Global.asax or WebApiConfig.cs (like  routeTemplate: "api/{controller}/{id}")
+	- use [Route] and [RoutePrefix] attribute for class or methods
+	- http://www.asp.net/web-api/overview/web-api-routing-and-actions/attribute-routing-in-web-api-2
+2) 

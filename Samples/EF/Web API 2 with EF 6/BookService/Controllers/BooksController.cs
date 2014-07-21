@@ -10,9 +10,10 @@ using BookService.Models;
 namespace BookService.Controllers
 {
     /// <summary>
-    /// Defines a Web API controller.
+    /// Defines a Web API controller (here we DO NOT use default attribute routing for Web API-Uri !).
     /// The controller implements the REST API that clients use to perform CRUD operations on the list of Books.
     /// </summary>
+    [RoutePrefix("api/ver2/BooksNew")] // the attribute changes default Attribute Routing
     public class BooksController : ApiController
     {
         private BookServiceContext dbContext = new BookServiceContext();
@@ -22,6 +23,7 @@ namespace BookService.Controllers
         /// Get all books.
         /// </summary>
         /// <returns></returns>
+        [Route("")] // Full Web API string for the method will be  [RoutePrefix] + [Route]
         public IQueryable<BookDTO> GetBooks()
         {
             // Eager Loading of related data
@@ -42,6 +44,7 @@ namespace BookService.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [ResponseType(typeof(BookDetailDTO))]
+        [Route("{id:int}")] // Full Web API string for the method will be  [RoutePrefix] + [Route]
         public async Task<IHttpActionResult> GetBookAsync(int id)
         {
             var book = await dbContext.Books.Include(b => b.Author).Select(b => new BookDetailDTO()
@@ -68,6 +71,7 @@ namespace BookService.Controllers
         /// <param name="book"></param>
         /// <returns></returns>
         [ResponseType(typeof(void))]
+        [Route("{id:int}")] // Full Web API string for the method will be  [RoutePrefix] + [Route]
         public async Task<IHttpActionResult> PutBookAsync(int id, Book book)
         {
             if (!ModelState.IsValid)
@@ -108,6 +112,7 @@ namespace BookService.Controllers
         /// <param name="book"></param>
         /// <returns></returns>
         [ResponseType(typeof(Book))]
+        [Route("")] // Full Web API string for the method will be  [RoutePrefix] + [Route]
         public async Task<IHttpActionResult> PostBookAsync(Book book)
         {
             if (!ModelState.IsValid)
@@ -135,6 +140,7 @@ namespace BookService.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [ResponseType(typeof(Book))]
+        [Route("{id:int}")] // Full Web API string for the method will be  [RoutePrefix] + [Route]
         public async Task<IHttpActionResult> DeleteBookAsync(int id)
         {
             Book book = await dbContext.Books.FindAsync(id);

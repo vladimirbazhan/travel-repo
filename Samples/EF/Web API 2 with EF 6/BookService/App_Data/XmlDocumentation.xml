@@ -524,7 +524,7 @@
         </member>
         <member name="T:BookService.Controllers.BooksController">
             <summary>
-            Defines a Web API controller.
+            Defines a Web API controller (here we DO NOT use default attribute routing for Web API-Uri !).
             The controller implements the REST API that clients use to perform CRUD operations on the list of Books.
             </summary>
         </member>
