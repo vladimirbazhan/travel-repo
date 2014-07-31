@@ -48,6 +48,7 @@ namespace WebApplication1.Models
             curr.Description = item.Description;
             curr.DateFrom = item.DateFrom;
             curr.DateTo = item.DateTo;
+            curr.IsPrivate = item.IsPrivate;
 
             return true;
         }

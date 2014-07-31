@@ -41,6 +41,11 @@
             var id = $('#tripId').val();
             $.getJSON(uri + '/' + id)
                 .done(function (data) {
+                    a = JSON.parse(data);
+                    if( Object.prototype.toString.call( a ) === '[object Array]' ) {
+                        alert( 'Array!' );
+                    }
+                    alert(a.length);
                     $('#product').text(formatItem(data));
                 })
                 .fail(function (jqXHR, textStatus, err) {
