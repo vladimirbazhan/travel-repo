@@ -184,6 +184,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201407311021141_InitialCreate.cs" />
+    <Compile Include="Migrations\201407311021141_InitialCreate.Designer.cs">
+      <DependentUpon>201407311021141_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201407311404551_Mig1.cs" />
+    <Compile Include="Migrations\201407311404551_Mig1.Designer.cs">
+      <DependentUpon>201407311404551_Mig1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels\ApplicationUser.cs" />
     <Compile Include="Models\IdentityModels\AccountBindingModels.cs" />
     <Compile Include="Models\IdentityModels\AccountViewModels.cs" />
@@ -519,6 +528,14 @@
     <Content Include="Scripts\app\bower_components\jquery\test\data\text.php" />
     <Content Include="Scripts\app\bower_components\jquery\test\data\with_fries_over_jsonp.php" />
     <Content Include="Scripts\app\bower_components\jquery\test\xhtml.php" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201407311021141_InitialCreate.resx">
+      <DependentUpon>201407311021141_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201407311404551_Mig1.resx">
+      <DependentUpon>201407311404551_Mig1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
