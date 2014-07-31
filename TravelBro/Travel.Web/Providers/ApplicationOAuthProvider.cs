@@ -10,6 +10,7 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using WebApplication1.Models;
+using WebApplication1.Models.IdentityModels;
 
 namespace WebApplication1.Providers
 {
