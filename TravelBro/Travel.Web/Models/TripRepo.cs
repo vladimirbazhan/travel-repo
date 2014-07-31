@@ -3,45 +3,45 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WebApplication1.Models.EntityModels;
+using WebApplication1.Models.IdentityModels;
 
 namespace WebApplication1.Models
 {
     public class TripRepo : ITripRepo
     {
-        private List<Trip> _trips = new List<Trip>() 
+        public TripRepo()
         {
-            new Trip() { Id = 1, Name = "Poland", Description = "My first visit to Poland" },
-            new Trip() { Id = 2, Name = "Germany", Description = "My memories about Berlin" },
-            new Trip() { Id = 3, Name = "Turkish", Description = "Why do I love Istanbul" }
-        };
+            _context = ApplicationDbContext.GetInstance();
+        }
 
-        private int _nextId = 4;
+        private ApplicationDbContext _context;
 
         public IEnumerable<Trip> GetAll()
         {
-            return _trips;
+            return _context.Trips.ToList();
         }
 
         public Trip Get(int id)
         {
-            return _trips.FirstOrDefault(x => x.Id == id);
+            return _context.Trips.FirstOrDefault(t => t.Id == id);
         }
 
         public Trip Add(Trip item)
         {
-            item.Id = _nextId++;
-            _trips.Add(item);
+            _context.Trips.Add(item);
             return item;
         }
 
         public void Remove(int id)
         {
-            _trips.RemoveAll(x => x.Id == id);
+            var trip = _context.Trips.FirstOrDefault(t => t.Id == id);
+            if (trip != null)
+                _context.Trips.Remove(trip);
         }
 
         public bool Update(Trip item)
         {
-            Trip curr = _trips.FirstOrDefault(x => x.Id == item.Id);
+            Trip curr = _context.Trips.FirstOrDefault(x => x.Id == item.Id);
             if (curr == null)
                 return false;
 
