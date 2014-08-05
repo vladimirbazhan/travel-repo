@@ -8,6 +8,7 @@ travelbroControllers.controller('TripListCtrl', ['$scope', '$location', '$route'
   function ($scope, $location, $route, $window, Trips, Auth) {
       $scope.trips = Trips.trips.query();
       $scope.tripsOrder = 'Name';
+      $scope.tripFilter = '';
       $scope.signedIn = Auth.token.isSet();
       $scope.userName = Auth.userName;
 
