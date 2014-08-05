@@ -27,9 +27,15 @@
         <input type="text" class="form-control col-lg-8" ng-model="tripFilter" placeholder="Search">
       </form>
         <ul class="nav navbar-nav navbar-right">
-            <li ng-show="{{signedIn}}"><a>Welcome, {{userName}}!</a></li>
+            <li ng-show="{{signedIn}}" class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">{{userName}}<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="">Profile</a></li>
+                    <li><a href="">Settings</a></li>
+                    <li><a href="" ng-click="logOut();">Sign Out</a></li>
+                </ul>
+            </li>
             <li ng-show="{{!signedIn}}"><a href="#/sign-in">Sign in</a></li>
-            <li ng-show="{{signedIn}}"><a href="" ng-click="logOut();">Log Out</a></li>
         </ul>
     </div>
   </div>

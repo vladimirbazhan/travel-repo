@@ -73,13 +73,13 @@ travelbroServices.factory('Auth', ['$http', '$window', function ($http, $window)
             $window.localStorage.removeItem('tokenData');
             token.set(null);
         },
-        userName: function () {
+        getUserName: function () {
             var tokenData = $window.localStorage.getItem('tokenData');
             var isTokenDataValid = tokenData && tokenData.length && tokenData !== 'null';
             if (isTokenDataValid) {
                 return JSON.parse(tokenData).userName;
             }
-        }()
+        }
     };
     return authService;
 }]);

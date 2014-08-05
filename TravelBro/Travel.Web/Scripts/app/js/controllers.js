@@ -10,7 +10,7 @@ travelbroControllers.controller('TripListCtrl', ['$scope', '$location', '$route'
       $scope.tripsOrder = 'Name';
       $scope.tripFilter = '';
       $scope.signedIn = Auth.token.isSet();
-      $scope.userName = Auth.userName;
+      $scope.userName = Auth.getUserName();
 
       $scope.create = function() {
           $location.path('/trips/new');
@@ -26,11 +26,11 @@ travelbroControllers.controller('TripListCtrl', ['$scope', '$location', '$route'
       };
   }]);
 
-travelbroControllers.controller('TripEditCtrl', ['$scope', '$routeParams', '$location', 'Trips',
-  function ($scope, $routeParams, $location, Trips) {
+travelbroControllers.controller('TripEditCtrl', ['$scope', '$routeParams', '$location', 'Trips', 'Auth',
+  function ($scope, $routeParams, $location, Trips, Auth) {
 
       $scope.editMode = $routeParams.tripId == 'new' ? false : true;
-
+      $scope.signedIn = Auth.token.isSet();
       $scope.legend = $scope.editMode ? "Edit trip" : "Create trip";
 
       if ($scope.editMode) {

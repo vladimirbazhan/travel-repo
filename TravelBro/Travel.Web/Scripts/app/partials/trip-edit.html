@@ -1,6 +1,6 @@
 <form class="form-horizontal" >
   <fieldset>
-    <legend>{{legend}}<button class="btn btn-link" ng-show="{{editMode}}" ng-click="delete();">delete</button></legend>    
+    <legend>{{legend}}<button class="btn btn-link" ng-show="{{editMode && signedIn}}" ng-click="delete();">delete</button></legend>    
     <div class="form-group">
       <label for="inputName" class="col-lg-2 control-label">Trip name</label>
       <div class="col-lg-10">
