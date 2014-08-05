@@ -29,6 +29,7 @@ namespace WebApplication1.Models
         public Trip Add(Trip item)
         {
             _context.Trips.Add(item);
+            _context.SaveChanges();
             return item;
         }
 
@@ -36,7 +37,11 @@ namespace WebApplication1.Models
         {
             var trip = _context.Trips.FirstOrDefault(t => t.Id == id);
             if (trip != null)
+            {
                 _context.Trips.Remove(trip);
+                _context.SaveChanges();
+            }
+                
         }
 
         public bool Update(Trip item)
@@ -50,6 +55,8 @@ namespace WebApplication1.Models
             curr.DateFrom = item.DateFrom;
             curr.DateTo = item.DateTo;
             curr.IsPrivate = item.IsPrivate;
+
+            _context.SaveChanges();
 
             return true;
         }

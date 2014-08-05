@@ -178,12 +178,14 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TripController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\EntityModels\TripDTO.cs" />
     <Compile Include="Models\IdentityModels\ApplicationUser.cs" />
     <Compile Include="Models\IdentityModels\AccountBindingModels.cs" />
     <Compile Include="Models\IdentityModels\AccountViewModels.cs" />
@@ -379,6 +381,8 @@
     <Content Include="Scripts\app\js\directives.js" />
     <Content Include="Scripts\app\js\filters.js" />
     <Content Include="Scripts\app\js\services.js" />
+    <Content Include="Scripts\app\partials\sign-in.html" />
+    <Content Include="Scripts\app\partials\sign-up.html" />
     <Content Include="Scripts\app\partials\trip-edit.html" />
     <Content Include="Scripts\app\partials\trip-list.html" />
     <Content Include="Web.config">
