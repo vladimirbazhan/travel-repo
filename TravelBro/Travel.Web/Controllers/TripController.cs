@@ -46,8 +46,6 @@ namespace WebApplication1.Controllers
             var usr = ApplicationDbContext.GetInstance().Users.FirstOrDefault(x => x.Id == id);
 
             item.Author = usr;
-            item.DateFrom = DateTime.Now;
-            item.DateTo = DateTime.Now;
             Trip res = _repo.Add(item);
             var response = Request.CreateResponse<TripDTO>(HttpStatusCode.Created, new TripDTO(res));
 
