@@ -32,6 +32,13 @@ travelbroControllers.controller('TripEditCtrl', ['$scope', '$routeParams', '$loc
       $scope.editMode = $routeParams.tripId == 'new' ? false : true;
       $scope.signedIn = Auth.token.isSet();
       $scope.legend = $scope.editMode ? "Edit trip" : "Create trip";
+      $scope.dateOptions = {
+          showOn: "button",
+          changeYear: true,
+          autoSize: true
+      };
+      $scope.dateFrom = new Date();
+      $scope.dateTo = new Date();
 
       if ($scope.editMode) {
           $scope.trip = Trips.trips.get({ tripId: $routeParams.tripId }, function (trip) {
