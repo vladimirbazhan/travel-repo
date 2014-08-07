@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 
 namespace WebApplication1.Models.EntityModels
 {
@@ -16,5 +17,6 @@ namespace WebApplication1.Models.EntityModels
         public virtual Place StartPlace { get; set; }
 
         public virtual Place FinishPlace { get; set; }
+        public virtual Collection<Comment> Comments { get; private set; }
     }
 }

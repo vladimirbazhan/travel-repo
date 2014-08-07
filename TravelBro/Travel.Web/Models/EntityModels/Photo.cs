@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using WebApplication1.Models.IdentityModels;
 
 namespace WebApplication1.Models.EntityModels
@@ -13,5 +14,6 @@ namespace WebApplication1.Models.EntityModels
         public virtual ApplicationUser Author { get; set; }
 
         public virtual Visit Visit { get; set; }
+        public virtual Collection<Comment> Comments { get; private set; }
     }
 }

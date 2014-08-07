@@ -185,6 +185,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201408071314229_Comments-Update.cs" />
+    <Compile Include="Migrations\201408071314229_Comments-Update.Designer.cs">
+      <DependentUpon>201408071314229_Comments-Update.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\EntityModels\TripDTO.cs" />
     <Compile Include="Migrations\201407311021141_InitialCreate.cs" />
     <Compile Include="Migrations\201407311021141_InitialCreate.Designer.cs">
@@ -539,6 +543,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201407311404551_Mig1.resx">
       <DependentUpon>201407311404551_Mig1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201408071314229_Comments-Update.resx">
+      <DependentUpon>201408071314229_Comments-Update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
