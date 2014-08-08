@@ -7,6 +7,17 @@
         <input type="text" class="form-control" id="inputName" value="{{trip.Name}}" ng-model="trip.Name">
       </div>
     </div>
+      <div class="form-group">
+          <label class="col-lg-2"></label>
+          <div class="col-lg-5">
+              <label>Trip start: </label><br/>
+              <input ui-date="dateOptions" ui-date-format="DD, d MM, yy" ng-model="trip.DateFrom">
+          </div>
+          <div class="col-lg-5">
+              <label>Trip finish: </label><br />
+              <input ui-date="dateOptions" ui-date-format="DD, d MM, yy" ng-model="trip.DateTo">
+          </div>
+      </div>
     <div class="form-group">
       <label for="textDescription" class="col-lg-2 control-label">Description</label>
       <div class="col-lg-10">

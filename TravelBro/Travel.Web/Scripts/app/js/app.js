@@ -6,7 +6,8 @@ var travelbroApp = angular.module('travelbroApp', [
   'ngRoute',
   'travelbroControllers',
   'travelbroFilters',
-  'travelbroServices'
+  'travelbroServices',
+  'ui.date'
 ]);
 
 travelbroApp.config(['$routeProvider',
