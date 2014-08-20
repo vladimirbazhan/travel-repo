@@ -12,6 +12,8 @@
     "angular-route": "~1.2.x",
     "angular-resource": "~1.2.x",
     "angular-animate": "~1.2.x",
-    "angular-ui-date": "latest"
+    "angular-ui-date": "latest",
+    "requirejs": "latest",
+    "requirejs-domready": "latest"
   }
 }
