@@ -49,8 +49,11 @@ define(['./module'], function (controllers) {
           });
         };
 
-        $scope.addTripItem = function () {
-            alert('Not implemented');
+        $scope.addVisit = function () {
+            console.log('addVisit Not implemented');
+        }
+        $scope.addRoute = function () {
+            console.log('addRoute Not implemented');
         }
     }]);
 });

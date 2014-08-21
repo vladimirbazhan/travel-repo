@@ -1,5 +1,6 @@
 define([
     './visit',
     './route',
-    './tripItems'
+    './tripItems',
+    './addTripItem'
 ], function () {});

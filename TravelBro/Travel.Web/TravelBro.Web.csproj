@@ -248,6 +248,7 @@
     <Content Include="Scripts\app\controllers\TripEditCtrl.js" />
     <Content Include="Scripts\app\controllers\TripListCtrl.js" />
     <Content Include="Scripts\app\css\app.css" />
+    <Content Include="Scripts\app\directives\addTripItem.js" />
     <Content Include="Scripts\app\directives\index.js" />
     <Content Include="Scripts\app\directives\module.js" />
     <Content Include="Scripts\app\directives\route.js" />

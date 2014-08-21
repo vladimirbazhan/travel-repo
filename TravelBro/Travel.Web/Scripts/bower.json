@@ -13,6 +13,7 @@
     "angular-resource": "~1.2.x",
     "angular-animate": "~1.2.x",
     "angular-ui-date": "latest",
+    "angular-bootstrap": "latest",
     "requirejs": "latest",
     "requirejs-domready": "latest"
   }

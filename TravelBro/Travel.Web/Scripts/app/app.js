@@ -11,6 +11,7 @@ define([
     'jquery-ui',
     'jquery.ui.datepicker',
     'angular-ui-date',
+    'angular-bootstrap',
     'controllers/index',
     'services/index',
     'directives/index'
@@ -23,7 +24,8 @@ define([
         'app.directives',
         'ngRoute',
         'ngResource',
-        'ui.date'
+        'ui.date',
+        'ui.bootstrap'
     ]);
     
     app.run(['$location', '$window', 'Auth', function ($location, $window, Auth) {

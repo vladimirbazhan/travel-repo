@@ -11,7 +11,8 @@ require.config({
         'jquery': 'bower_components/jquery/jquery',
         'jquery-ui': 'bower_components/jquery-ui/ui/jquery-ui',
         'jquery.ui.datepicker': 'bower_components/jquery-ui/ui/jquery.ui.datepicker',
-        'angular-ui-date': 'bower_components/angular-ui-date/src/date'
+        'angular-ui-date': 'bower_components/angular-ui-date/src/date',
+        'angular-bootstrap': 'bower_components/angular-bootstrap/ui-bootstrap-tpls'
     },
 
     // angular does not support AMD out of the box, put it in a shim
@@ -30,6 +31,9 @@ require.config({
         },
         'angular-ui-date': {
             deps: ['angular', 'jquery.ui.datepicker']
+        },
+        'angular-bootstrap': {
+            deps: ['angular']
         },
         'bootstrap': {
             deps: ['jquery']
