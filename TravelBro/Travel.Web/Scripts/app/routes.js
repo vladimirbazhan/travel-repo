@@ -23,6 +23,10 @@ define(['app'], function (app) {
                 templateUrl: '/Scripts/app/partials/trip-edit.html',
                 controller: 'TripEditCtrl'
             }).
+            when('/places', {
+                templateUrl: '/Scripts/app/partials/place-list.html',
+                controller: 'PlaceListCtrl'
+            }).
             otherwise({
                 redirectTo: '/trips'
             });

@@ -8,5 +8,6 @@ define([
     './TripListCtrl',
     './TripEditCtrl',
     './SignInCtrl',
-    './SignUpCtrl'
+    './SignUpCtrl',
+    './PlaceListCtrl'
 ], function () {});

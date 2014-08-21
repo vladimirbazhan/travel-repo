@@ -234,12 +234,19 @@
     <Content Include="Scripts\app\boot.js" />
     <Content Include="Scripts\app\controllers\index.js" />
     <Content Include="Scripts\app\controllers\module.js" />
+    <Content Include="Scripts\app\controllers\PlaceListCtrl.js" />
     <Content Include="Scripts\app\controllers\SignInCtrl.js" />
     <Content Include="Scripts\app\controllers\SignUpCtrl.js" />
     <Content Include="Scripts\app\controllers\TripEditCtrl.js" />
     <Content Include="Scripts\app\controllers\TripListCtrl.js" />
     <Content Include="Scripts\app\css\app.css" />
+    <Content Include="Scripts\app\directives\index.js" />
+    <Content Include="Scripts\app\directives\module.js" />
+    <Content Include="Scripts\app\directives\route.js" />
+    <Content Include="Scripts\app\directives\tripItems.js" />
+    <Content Include="Scripts\app\directives\visit.js" />
     <Content Include="Scripts\app\main.js" />
+    <Content Include="Scripts\app\partials\place-list.html" />
     <Content Include="Scripts\app\partials\sign-in.html" />
     <Content Include="Scripts\app\partials\sign-up.html" />
     <Content Include="Scripts\app\partials\trip-edit.html" />
@@ -248,6 +255,7 @@
     <Content Include="Scripts\app\services\Auth.js" />
     <Content Include="Scripts\app\services\index.js" />
     <Content Include="Scripts\app\services\module.js" />
+    <Content Include="Scripts\app\services\Places.js" />
     <Content Include="Scripts\app\services\Trips.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
