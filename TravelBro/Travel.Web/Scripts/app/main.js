@@ -18,7 +18,8 @@ require.config({
     // angular does not support AMD out of the box, put it in a shim
     shim: {
         'angular': {
-            exports: 'angular'
+            exports: 'angular',
+            deps: ['jquery']
         },
         'angular-route': {
             deps: ['angular']
