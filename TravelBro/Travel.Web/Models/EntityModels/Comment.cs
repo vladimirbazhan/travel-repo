@@ -12,6 +12,6 @@ namespace WebApplication1.Models.EntityModels
 
         public virtual ApplicationUser Author { get; set; }
 
-        public virtual Visit Visit { get; set; }
+        public virtual Comment ReplyTo { get; set; }
     }
 }

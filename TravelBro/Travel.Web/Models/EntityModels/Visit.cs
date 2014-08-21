@@ -11,6 +11,7 @@ namespace WebApplication1.Models.EntityModels
         public double Cost { get; set; }
         public DateTime Start { get; set; }
         public DateTime Finish { get; set; }
+        public int ActivityOrder { get; set; }
 
         public virtual Place Place { get; set; }
 

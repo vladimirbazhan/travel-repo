@@ -18,5 +18,6 @@ namespace WebApplication1.Models.EntityModels
             get { return new Collection<Route>(From.Concat(To).ToList()); }
         }
         public virtual Collection<Visit> Visits { get; private set; }
+        public virtual Collection<Comment> Comments { get; private set; }
     }
 }
