@@ -16,6 +16,13 @@ define(['./module'], function (controllers) {
         if ($scope.editMode) {
           $scope.trip = Trips.trips.get({ tripId: $routeParams.tripId }, function (trip) {
               // trip fetched
+              // TODO: fetch real items instead of fake ones
+              var items = [];
+              items.push({ type: "visit" });
+              items.push({ type: "route" });
+              items.push({ type: "visit" });
+              items.push({ type: "route" });
+              $scope.tripItems = items;
           }, function(err) {
               alert(JSON.stringify(err));
           });
@@ -41,5 +48,9 @@ define(['./module'], function (controllers) {
               $location.path('/trips');
           });
         };
+
+        $scope.addTripItem = function () {
+            alert('Not implemented');
+        }
     }]);
 });

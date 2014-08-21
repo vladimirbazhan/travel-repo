@@ -12,13 +12,15 @@ define([
     'jquery.ui.datepicker',
     'angular-ui-date',
     'controllers/index',
-    'services/index'
+    'services/index',
+    'directives/index'
 ], function (ng) {
     'use strict';
     
     var app = ng.module('app', [
         'app.controllers', 
-        'app.services', 
+        'app.services',
+        'app.directives',
         'ngRoute',
         'ngResource',
         'ui.date'
