@@ -32,32 +32,53 @@ namespace WebApplication1.Models.IdentityModels
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Trip>()
                 .HasRequired(t => t.Author)
                 .WithMany(a => a.Trips)
                 .Map(m => m.MapKey("AuthorId"))
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Trip>()
+                .HasMany(t => t.Comments)
+                .WithMany()
+                .Map(m =>
+                {
+                    m.ToTable("TripsToComments");
+                    m.MapLeftKey("TripId");
+                    m.MapRightKey("CommentId");
+                });
+
             #region Visit
+
             modelBuilder.Entity<Visit>()
                 .HasRequired(v => v.Trip)
                 .WithMany(t => t.Visits)
-                .Map(m => m.MapKey("TripId"))
-                .WillCascadeOnDelete(false);
+                .Map(m => m.MapKey("TripId"));
 
             modelBuilder.Entity<Visit>()
                 .HasRequired(v => v.Place)
                 .WithMany(p => p.Visits)
                 .Map(m => m.MapKey("PlaceId"))
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Visit>()
+                .HasMany(t => t.Comments)
+                .WithMany()
+                .Map(m =>
+                {
+                    m.ToTable("VisitsToComments");
+                    m.MapLeftKey("VisitId");
+                    m.MapRightKey("CommentId");
+                });
             #endregion
 
             #region Route
+
             modelBuilder.Entity<Route>()
                 .HasRequired(v => v.Trip)
                 .WithMany(t => t.Routes)
-                .Map(m => m.MapKey("TripId"))
-                .WillCascadeOnDelete(false);
+                .Map(m => m.MapKey("TripId"));
 
             modelBuilder.Entity<Route>()
                 .HasRequired(v => v.StartPlace)
@@ -70,26 +91,51 @@ namespace WebApplication1.Models.IdentityModels
                 .WithMany(p => p.To)
                 .Map(m => m.MapKey("FinishPlaceId"))
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Route>()
+                .HasMany(t => t.Comments)
+                .WithMany()
+                .Map(m =>
+                {
+                    m.ToTable("RoutesToComments");
+                    m.MapLeftKey("RouteId");
+                    m.MapRightKey("CommentId");
+                });
             #endregion
 
             #region Comments & Photos
             modelBuilder.Entity<Comment>()
                     .HasRequired(c => c.Author)
                     .WithMany(a => a.Comments)
-                    .Map(m => m.MapKey("AuthorId"));
+                    .Map(m => m.MapKey("AuthorId"))
+                    .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<Comment>()
-                .HasRequired(c => c.Visit)
-                .WithMany(v => v.Comments)
-                .Map(m => m.MapKey("VisitId"));
+                .HasOptional(c => c.ReplyTo)
+                .WithOptionalDependent()
+                .Map(m => m.MapKey("ReplyToCommentId"))
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Photo>()
                 .HasRequired(p => p.Author)
                 .WithMany(a => a.Photos)
-                .Map(m => m.MapKey("AuthorId"));
+                .Map(m => m.MapKey("AuthorId"))
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<Photo>()
                 .HasRequired(photo => photo.Visit)
                 .WithMany(v => v.Photos)
-                .Map(m => m.MapKey("VisitId")); 
+                .Map(m => m.MapKey("VisitId"));
+
+            modelBuilder.Entity<Photo>()
+                .HasMany(t => t.Comments)
+                .WithMany()
+                .Map(m =>
+                {
+                    m.ToTable("PhotosToComments");
+                    m.MapLeftKey("PhotoId");
+                    m.MapRightKey("CommentId");
+                });
             #endregion
 
         }

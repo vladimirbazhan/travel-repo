@@ -1,17 +1,7 @@
-'use strict';
+define(['app'], function (app) {
+    'use strict';
 
-/* App Module */
-
-var travelbroApp = angular.module('travelbroApp', [
-  'ngRoute',
-  'travelbroControllers',
-  'travelbroFilters',
-  'travelbroServices',
-  'ui.date'
-]);
-
-travelbroApp.config(['$routeProvider',
-    function ($routeProvider) {
+    return app.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
             when('/sign-in', {
                 templateUrl: '/Scripts/app/partials/sign-in.html',
@@ -33,16 +23,12 @@ travelbroApp.config(['$routeProvider',
                 templateUrl: '/Scripts/app/partials/trip-edit.html',
                 controller: 'TripEditCtrl'
             }).
+            when('/places', {
+                templateUrl: '/Scripts/app/partials/place-list.html',
+                controller: 'PlaceListCtrl'
+            }).
             otherwise({
                 redirectTo: '/trips'
             });
     }]);
-
-
-travelbroApp.run(['$location', '$window', 'Auth', function ($location, $window, Auth) {
-    var tokenData = $window.localStorage.getItem('tokenData');
-    var isTokenDataValid = tokenData && tokenData.length && tokenData !== 'null';
-    if (isTokenDataValid) {
-        Auth.token.set(tokenData);
-    }
-}]);
+});
