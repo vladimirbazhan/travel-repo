@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using WebApplication1.Migrations;
 using WebApplication1.Models.EntityModels;
 
 namespace WebApplication1.Models.IdentityModels
@@ -12,13 +13,16 @@ namespace WebApplication1.Models.IdentityModels
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
-
+            
         }
 
         private static ApplicationDbContext _instance;
 
         public static ApplicationDbContext GetInstance()
         {
+            if (_instance == null)
+                Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
+
             return _instance ?? (_instance = new ApplicationDbContext());
         }
 
