@@ -1,8 +1,19 @@
 <div class="list-group">
     <a ng-repeat="place in places" href="" class="list-group-item">
-        <bold><h4 class="list-group-item-heading">{{place.Name}}</h4></bold>
-        <p class="list-group-item-text">Latitude: {{place.Lat}}</p>
-        <p class="list-group-item-text">Longitude: {{place.Long}}</p>
+        <table>
+            <tbody>
+                <tr>
+                    <td width="40" rowspan="3"><img width="32" height="32" src="Content/Maps-Pin-Place-icon.png" /></td>
+                    <td><bold><h4>{{place.Name}}</h4></bold></td>
+                </tr>
+                <tr>
+                    <td><p class="list-group-item-text">Latitude: {{place.Lat}}</p></td>
+                </tr>
+                <tr>
+                    <td><p class="list-group-item-text">Longitude: {{place.Long}}</p></td>
+                </tr>
+            </tbody>
+        </table> 
     </a>
 </div>
 <div class="text-right">

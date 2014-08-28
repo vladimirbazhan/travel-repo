@@ -13,46 +13,43 @@ using WebApplication1.Models.IdentityModels;
 
 namespace WebApplication1.Controllers
 {
-    public class PlacesController : ApiController
+    public class VisitsController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET api/Place
-        public IEnumerable<PlaceDTO> GetPlaces()
+        // GET api/Visits
+        public IQueryable<Visit> GetVisits()
         {
-            var places = db.Places.ToList();
-            var placesDTO = from place in places
-                           select new PlaceDTO(place);
-            return placesDTO;
+            return db.Visits;
         }
 
-        // GET api/Place/5
-        [ResponseType(typeof(Place))]
-        public IHttpActionResult GetPlace(int id)
+        // GET api/Visits/5
+        [ResponseType(typeof(Visit))]
+        public IHttpActionResult GetVisit(int id)
         {
-            Place place = db.Places.Find(id);
-            if (place == null)
+            Visit visit = db.Visits.Find(id);
+            if (visit == null)
             {
                 return NotFound();
             }
 
-            return Ok(place);
+            return Ok(visit);
         }
 
-        // PUT api/Place/5
-        public IHttpActionResult PutPlace(int id, Place place)
+        // PUT api/Visits/5
+        public IHttpActionResult PutVisit(int id, Visit visit)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != place.Id)
+            if (id != visit.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(place).State = EntityState.Modified;
+            db.Entry(visit).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +57,7 @@ namespace WebApplication1.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PlaceExists(id))
+                if (!VisitExists(id))
                 {
                     return NotFound();
                 }
@@ -73,35 +70,35 @@ namespace WebApplication1.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST api/Place
-        [ResponseType(typeof(Place))]
-        public IHttpActionResult PostPlace(Place place)
+        // POST api/Visits
+        [ResponseType(typeof(Visit))]
+        public IHttpActionResult PostVisit(Visit visit)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Places.Add(place);
+            db.Visits.Add(visit);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = place.Id }, place);
+            return CreatedAtRoute("DefaultApi", new { id = visit.Id }, visit);
         }
 
-        // DELETE api/Place/5
-        [ResponseType(typeof(Place))]
-        public IHttpActionResult DeletePlace(int id)
+        // DELETE api/Visits/5
+        [ResponseType(typeof(Visit))]
+        public IHttpActionResult DeleteVisit(int id)
         {
-            Place place = db.Places.Find(id);
-            if (place == null)
+            Visit visit = db.Visits.Find(id);
+            if (visit == null)
             {
                 return NotFound();
             }
 
-            db.Places.Remove(place);
+            db.Visits.Remove(visit);
             db.SaveChanges();
 
-            return Ok(place);
+            return Ok(visit);
         }
 
         protected override void Dispose(bool disposing)
@@ -113,9 +110,9 @@ namespace WebApplication1.Controllers
             base.Dispose(disposing);
         }
 
-        private bool PlaceExists(int id)
+        private bool VisitExists(int id)
         {
-            return db.Places.Count(e => e.Id == id) > 0;
+            return db.Visits.Count(e => e.Id == id) > 0;
         }
     }
 }

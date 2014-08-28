@@ -1,7 +1,7 @@
 define(['./module'], function (controllers) {
     'use strict';
     
-    controllers.controller('TripEditCtrl', ['$scope', '$routeParams', '$location', 'Trips', 'Auth', function ($scope, $routeParams, $location, Trips, Auth) {
+    controllers.controller('TripEditCtrl', ['$scope', '$routeParams', '$location', 'Backend', 'Auth', function ($scope, $routeParams, $location, Backend, Auth) {
         $scope.editMode = $routeParams.tripId == 'new' ? false : true;
         $scope.signedIn = Auth.token.isSet();
         $scope.legend = $scope.editMode ? "Edit trip" : "Create trip";
@@ -14,15 +14,20 @@ define(['./module'], function (controllers) {
         $scope.dateTo = new Date();
 
         if ($scope.editMode) {
-          $scope.trip = Trips.trips.get({ tripId: $routeParams.tripId }, function (trip) {
-              // trip fetched
-              // TODO: fetch real items instead of fake ones
-              var items = [];
-              items.push({ type: "visit" });
-              items.push({ type: "route" });
-              items.push({ type: "visit" });
-              items.push({ type: "route" });
-              $scope.tripItems = items;
+            $scope.trip = Backend.trips.get({ tripId: $routeParams.tripId }, function (trip) {
+                // trip fetched
+                var items = [];
+                if (trip.Visits) {
+                    trip.Visits.forEach(function (curr) {
+                        items.push({ type: "visit", data: curr });
+                    });
+                }
+                if (trip.Routes) {
+                    trip.Routes.forEach(function (curr) {
+                        items.push({ type: "route", data: curr });
+                    });
+                }
+                $scope.tripItems = items;
           }, function(err) {
               alert(JSON.stringify(err));
           });
@@ -32,25 +37,25 @@ define(['./module'], function (controllers) {
 
         $scope.save = function () {
           if ($scope.editMode) {
-              Trips.trips.update({ tripId: $scope.trip.Id }, $scope.trip, function () {
+              Backend.trips.update({ tripId: $scope.trip.Id }, $scope.trip, function () {
                   alert($scope.editMode ? "Changes saved" : "Trip created");
               });
           } else {
-              Trips.trips.save($scope.trip, function() {
+              Backend.trips.save($scope.trip, function () {
                   alert("Trip created");
                   $location.path('/trips');
               });
           }
         };
         $scope.delete = function() {
-          Trips.trips.delete({ tripId: $scope.trip.Id }, function() {
+            Backend.trips.delete({ tripId: $scope.trip.Id }, function () {
               alert("Trip deleted");
               $location.path('/trips');
           });
         };
 
         $scope.addVisit = function () {
-            console.log('addVisit Not implemented');
+            $location.path($location.url() + '/visit-new');
         }
         $scope.addRoute = function () {
             console.log('addRoute Not implemented');

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApplication1.Models.EntityModels
 {
@@ -13,8 +14,13 @@ namespace WebApplication1.Models.EntityModels
         public DateTime Finish { get; set; }
         public int ActivityOrder { get; set; }
 
+        // TODO: revise FK members
+        public int PlaceId { get; set; }
+        [ForeignKey("PlaceId")]
         public virtual Place Place { get; set; }
 
+        public int TripId { get; set; }
+        [ForeignKey("TripId")]
         public virtual Trip Trip { get; set; }
 
         public virtual Collection<Comment> Comments { get; private set; }

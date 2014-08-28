@@ -15,6 +15,10 @@ namespace WebApplication1.Models.EntityModels
             DateFrom = trip.DateFrom;
             DateTo = trip.DateTo;
             IsPrivate = trip.IsPrivate;
+            if (trip.Visits != null)
+            {
+                Visits = from visit in trip.Visits select new VisitDTO(visit);
+            }
         }
         public int Id { get; set; }
         public string Name { get; set; }
@@ -22,5 +26,6 @@ namespace WebApplication1.Models.EntityModels
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
         public bool IsPrivate { get; set; }
+        public IEnumerable<VisitDTO> Visits;
     }
 }

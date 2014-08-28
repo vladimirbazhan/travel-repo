@@ -11,7 +11,9 @@
                         for (var i = 0; i < newVal.length; i++) {
                             switch (newVal[i].type) {
                                 case "visit":
-                                    element.append('<visit></visit>');
+                                    var visitElem = $('<visit></visit>');
+                                    visitElem.data('visit', newVal[i]);
+                                    element.append(visitElem);
                                     break;
                                 case "route":
                                     element.append('<route></route>');

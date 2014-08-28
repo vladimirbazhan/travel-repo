@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using WebApplication1.Models.EntityModels;
@@ -23,7 +24,7 @@ namespace WebApplication1.Models
 
         public Trip Get(int id)
         {
-            return _context.Trips.FirstOrDefault(t => t.Id == id);
+            return _context.Trips.Where(x => x.Id == id).Include(t => t.Visits).Include(x => x.Routes).FirstOrDefault();
         }
 
         public Trip Add(Trip item)

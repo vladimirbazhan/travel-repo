@@ -9,5 +9,6 @@ define([
     './TripEditCtrl',
     './SignInCtrl',
     './SignUpCtrl',
-    './PlaceListCtrl'
+    './PlaceListCtrl',
+    './VisitEditCtrl'
 ], function () {});

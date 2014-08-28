@@ -14,8 +14,9 @@ namespace WebApplication1.Models.EntityModels
 
         public virtual Collection<Route> From { get; set; }
         public virtual Collection<Route> To { get; set; }
-        public Collection<Route> Routes {
-            get { return new Collection<Route>(From.Concat(To).ToList()); }
+        
+        public Collection<Route> Routes { 
+            get { return new Collection<Route>(); }
         }
         public virtual Collection<Visit> Visits { get; private set; }
         public virtual Collection<Comment> Comments { get; private set; }
