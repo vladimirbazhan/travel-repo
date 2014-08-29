@@ -37,6 +37,10 @@ namespace WebApplication1.Models.IdentityModels
         {
             base.OnModelCreating(modelBuilder);
 
+
+            modelBuilder.Entity<Place>()
+                .Ignore(p => p.Routes);
+
             modelBuilder.Entity<Trip>()
                 .HasRequired(t => t.Author)
                 .WithMany(a => a.Trips)

@@ -193,6 +193,10 @@
     <Compile Include="Migrations\201408201249341_Activity_Order_Added.Designer.cs">
       <DependentUpon>201408201249341_Activity_Order_Added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201408291051461_Drop_Place_Id_FK_in_Routes.cs" />
+    <Compile Include="Migrations\201408291051461_Drop_Place_Id_FK_in_Routes.Designer.cs">
+      <DependentUpon>201408291051461_Drop_Place_Id_FK_in_Routes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\EntityModels\PlaceDTO.cs" />
     <Compile Include="Models\EntityModels\TripDTO.cs" />
     <Compile Include="Migrations\201407311021141_InitialCreate.cs" />
@@ -312,6 +316,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201408201249341_Activity_Order_Added.resx">
       <DependentUpon>201408201249341_Activity_Order_Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201408291051461_Drop_Place_Id_FK_in_Routes.resx">
+      <DependentUpon>201408291051461_Drop_Place_Id_FK_in_Routes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
