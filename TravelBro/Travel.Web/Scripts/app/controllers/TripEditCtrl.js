@@ -10,8 +10,6 @@ define(['./module'], function (controllers) {
           changeYear: true,
           autoSize: true
         };
-        $scope.dateFrom = new Date();
-        $scope.dateTo = new Date();
 
         if ($scope.editMode) {
             $scope.trip = Backend.trips.get({ tripId: $routeParams.tripId }, function (trip) {
@@ -32,7 +30,11 @@ define(['./module'], function (controllers) {
               alert(JSON.stringify(err));
           });
         } else {
-          $scope.trip = { IsPrivate: false };
+          $scope.trip = {
+              IsPrivate: false,
+              DateFrom: new Date(),
+              DateTo: new Date()
+          };
         }
 
         $scope.save = function () {
