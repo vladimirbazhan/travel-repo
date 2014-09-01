@@ -7,7 +7,6 @@ define(['./module'], function (controllers) {
 
         $scope.register = function () {
           Auth.signUp($scope.mail, $scope.password, $scope.confirmPassword, function() {
-                alert(234);
               Auth.signIn($scope.mail, $scope.password, function () {
                   $location.path('/trips');
               }, function (res) {

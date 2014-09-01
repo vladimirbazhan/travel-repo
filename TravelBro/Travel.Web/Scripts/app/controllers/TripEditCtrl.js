@@ -58,7 +58,7 @@ define(['./module'], function (controllers) {
             $location.path($location.url() + '/visit-new');
         }
         $scope.addRoute = function () {
-            console.log('addRoute Not implemented');
+            $location.path($location.url() + '/route-new');
         }
     }]);
 });

@@ -51,6 +51,10 @@
             visits: $resource('/api/visits', {},
             {
                 'save': { url: '/api/visits', method: 'POST' }
+            }),
+            routes: $resource('/api/routes', {},
+            {
+                'save': { url: '/api/routes', method: 'POST' }
             })
         };
 

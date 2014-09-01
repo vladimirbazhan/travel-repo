@@ -19,10 +19,6 @@ namespace WebApplication1.Models.EntityModels
             {
                 Visits = from visit in trip.Visits select new VisitDTO(visit);
             }
-            if (trip.Routes != null)
-            {
-                Routes = from route in trip.Routes select new RouteDTO(route);
-            }
         }
         public int Id { get; set; }
         public string Name { get; set; }
@@ -31,6 +27,5 @@ namespace WebApplication1.Models.EntityModels
         public DateTime DateTo { get; set; }
         public bool IsPrivate { get; set; }
         public IEnumerable<VisitDTO> Visits;
-        public IEnumerable<RouteDTO> Routes;
     }
 }

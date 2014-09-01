@@ -16,7 +16,9 @@
                                     element.append(visitElem);
                                     break;
                                 case "route":
-                                    element.append('<route></route>');
+                                    var routeElem = $('<route></route>');
+                                    routeElem.data('route', newVal[i]);
+                                    element.append(routeElem);
                                     break;
                             }
                             element.append(aBtn);

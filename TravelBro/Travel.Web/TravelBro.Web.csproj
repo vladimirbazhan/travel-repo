@@ -179,6 +179,7 @@
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlacesController.cs" />
+    <Compile Include="Controllers\RoutesController.cs" />
     <Compile Include="Controllers\TripController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\VisitsController.cs" />
@@ -197,7 +198,12 @@
     <Compile Include="Migrations\201408291051461_Drop_Place_Id_FK_in_Routes.Designer.cs">
       <DependentUpon>201408291051461_Drop_Place_Id_FK_in_Routes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201409010918530_mig2.cs" />
+    <Compile Include="Migrations\201409010918530_mig2.Designer.cs">
+      <DependentUpon>201409010918530_mig2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\EntityModels\PlaceDTO.cs" />
+    <Compile Include="Models\EntityModels\RouteDTO.cs" />
     <Compile Include="Models\EntityModels\TripDTO.cs" />
     <Compile Include="Migrations\201407311021141_InitialCreate.cs" />
     <Compile Include="Migrations\201407311021141_InitialCreate.Designer.cs">
@@ -230,6 +236,7 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Maps-Pin-Place-icon.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -250,6 +257,7 @@
     <Content Include="Scripts\app\controllers\index.js" />
     <Content Include="Scripts\app\controllers\module.js" />
     <Content Include="Scripts\app\controllers\PlaceListCtrl.js" />
+    <Content Include="Scripts\app\controllers\RouteEditCtrl.js" />
     <Content Include="Scripts\app\controllers\SignInCtrl.js" />
     <Content Include="Scripts\app\controllers\SignUpCtrl.js" />
     <Content Include="Scripts\app\controllers\TripEditCtrl.js" />
@@ -264,6 +272,7 @@
     <Content Include="Scripts\app\directives\visit.js" />
     <Content Include="Scripts\app\main.js" />
     <Content Include="Scripts\app\partials\place-list.html" />
+    <Content Include="Scripts\app\partials\route-edit.html" />
     <Content Include="Scripts\app\partials\sign-in.html" />
     <Content Include="Scripts\app\partials\sign-up.html" />
     <Content Include="Scripts\app\partials\trip-edit.html" />
@@ -319,6 +328,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201408291051461_Drop_Place_Id_FK_in_Routes.resx">
       <DependentUpon>201408291051461_Drop_Place_Id_FK_in_Routes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409010918530_mig2.resx">
+      <DependentUpon>201409010918530_mig2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

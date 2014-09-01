@@ -31,6 +31,10 @@ define(['app'], function (app) {
                 templateUrl: '/Scripts/app/partials/visit-edit.html',
                 controller: 'VisitEditCtrl'
             }).
+            when('/trips/:tripId/route-new', {
+                templateUrl: '/Scripts/app/partials/route-edit.html',
+                controller: 'RouteEditCtrl'
+            }).
             otherwise({
                 redirectTo: '/trips'
             });
