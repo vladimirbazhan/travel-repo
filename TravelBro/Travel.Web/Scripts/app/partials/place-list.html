@@ -1,5 +1,6 @@
+<header/>
 <div class="list-group">
-    <a ng-repeat="place in places" href="" class="list-group-item">
+    <a ng-repeat="place in places | filter : headerFilter " href="" class="list-group-item">
         <table>
             <tbody>
                 <tr>
@@ -13,9 +14,6 @@
                     <td><p class="list-group-item-text">Longitude: {{place.Long}}</p></td>
                 </tr>
             </tbody>
-        </table> 
+        </table>
     </a>
-</div>
-<div class="text-right">
-    <button class="btn btn-default" onclick="history.go(-1);">Back</button>
 </div>
