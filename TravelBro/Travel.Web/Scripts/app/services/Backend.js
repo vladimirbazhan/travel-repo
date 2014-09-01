@@ -1,5 +1,39 @@
 ﻿define(['./module'], function (services) {
     'use strict';
+
+    var resourceWrapper = function (resource, action, handlerSuccess, handlerError) {
+        // copy original action
+        resource['_' + action] = resource[action];
+        // create new action wrapping the original and handling result
+        resource[action] = function (data, success, error) {
+            return resource['_' + action](data, function (obj) {
+                if (handlerSuccess) {
+                    handlerSuccess(obj);
+                }
+                if (success) {
+                    success(obj);
+                }
+            }, function (err) {
+                if (handlerError) {
+                    handlerError(err);
+                }
+                if (error) {
+                    error(err);
+                }
+            });
+        };
+    };
+
+    var wrapActions = function (resource, actions, handlers) {
+        // copy original resource
+        var wrappedResource = resource;
+        for (var i = 0; i < actions.length; i++) {
+            resourceWrapper(wrappedResource, actions[i], handlers[i]);
+        };
+        // return modified copy of resource
+        return wrappedResource;
+    };
+
     services.factory('Backend', ['$resource', 'Auth', function ($resource, Auth) {
         var authHeaders = {
             transformRequest: function (data, headersGetter) {
@@ -57,6 +91,30 @@
                 'save': { url: '/api/routes', method: 'POST' }
             })
         };
+
+        var successHandlers = {
+            trips: {
+                get: function (trip) {
+                    trip.Id = parseInt(trip.Id);
+
+                    var items = [];
+
+                    trip.Visits = trip.Visits || [];
+                    trip.Visits.forEach(function (curr) {
+                        items.push({ type: "visit", data: curr });
+                    });
+
+                    trip.Routes = trip.Routes || [];
+                    trip.Routes.forEach(function (curr) {
+                        items.push({ type: "route", data: curr });
+                    });
+
+                    trip.tripItems = items;
+                }
+            }
+        }
+        
+        service.trips = wrapActions(service.trips, ['get'], [successHandlers.trips.get]);
 
         return service;
     }]);

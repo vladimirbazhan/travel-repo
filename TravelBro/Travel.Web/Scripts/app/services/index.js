@@ -7,5 +7,6 @@
  **/
 define([
     './Backend',
-    './Auth'
+    './Auth',
+    './Entity'
 ], function () {});

@@ -4,7 +4,7 @@
         return {
             restrict: 'E',
             link: function (scope, element, attrs) {
-                scope.$watch('tripItems', function(newVal, oldVal) {
+                scope.$watch('trip.tripItems', function (newVal, oldVal) {
                     if (newVal) {
                         var aBtn = '<add-trip-item/>';
                         element.append(aBtn);

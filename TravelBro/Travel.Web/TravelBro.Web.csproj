@@ -284,10 +284,9 @@
     <Content Include="Scripts\app\routes.js" />
     <Content Include="Scripts\app\services\Auth.js" />
     <Content Include="Scripts\app\services\Backend.js" />
+    <Content Include="Scripts\app\services\Entity.js" />
     <Content Include="Scripts\app\services\index.js" />
     <Content Include="Scripts\app\services\module.js" />
-    <Content Include="Scripts\app\services\Places.js" />
-    <Content Include="Scripts\app\services\Trips.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

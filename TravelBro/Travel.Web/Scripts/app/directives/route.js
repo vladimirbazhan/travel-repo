@@ -6,7 +6,6 @@
             template: '<div></div>',
             link: function (scope, element, attrs) {
                 var route = element.data('route').data;
-                debugger;
                 var templ =
                     '<a class="list-group-item">' +
                         '<bold><h4 class="list-group-item-heading">Start place: ' + route.StartPlace.Name + '</h4></bold>' +

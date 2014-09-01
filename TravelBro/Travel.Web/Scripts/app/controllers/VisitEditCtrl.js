@@ -1,7 +1,7 @@
 ﻿define(['./module'], function (controllers) {
     'use strict';
 
-    controllers.controller('VisitEditCtrl', ['$scope', '$routeParams', '$location', 'Auth', 'Backend', function ($scope, $routeParams, $location, Auth, Backend) {
+    controllers.controller('VisitEditCtrl', ['$scope', '$routeParams', '$location', 'Auth', 'Backend', 'Entity', function ($scope, $routeParams, $location, Auth, Backend, Entity) {
         $scope.editMode = false;
         $scope.signedIn = Auth.token.isSet();
         $scope.legend = $scope.editMode ? "Edit visit" : "Create visit";
@@ -17,25 +17,15 @@
         if ($scope.editMode) {
             $scope.visit = {};
         } else {
-            $scope.visit = {
-                Start: new Date(),
-                Finish: new Date(),
-                ActivityOrder: 0,
-                Cost: 0
-            };
+            $scope.visit = Entity.visit.Default;
         }
-        $scope.visit.TripId = parseInt($routeParams.tripId);
 
-        $scope.save = function() {
+        $scope.save = function () {
+            $scope.visit.TripId = $scope.trip.Id;
             $scope.visit.Cost = parseFloat($scope.visit.Cost) || 0;
-            $scope.visit.PlaceId = parseInt($scope.visit.PlaceId);
             Backend.visits.save($scope.visit, function () {
-                $scope.trip.Visits = $scope.trip.Visits || [];
-                $scope.trip.Visits.push($scope.visit.Id);
-                Backend.trips.update({ tripId: $scope.trip.Id }, $scope.trip, function () {
-                    alert("Changes saved");
-                    $location.path('/trips/' + $routeParams.tripId);
-                });
+                alert("Changes saved");
+                $location.path('/trips/' + $routeParams.tripId);
             });
         };
     }]);

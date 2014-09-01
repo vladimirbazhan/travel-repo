@@ -1,7 +1,7 @@
 define(['./module'], function (controllers) {
     'use strict';
     
-    controllers.controller('TripEditCtrl', ['$scope', '$routeParams', '$location', 'Backend', 'Auth', function ($scope, $routeParams, $location, Backend, Auth) {
+    controllers.controller('TripEditCtrl', ['$scope', '$routeParams', '$location', 'Backend', 'Auth', 'Entity', function ($scope, $routeParams, $location, Backend, Auth, Entity) {
         $scope.editMode = $routeParams.tripId == 'new' ? false : true;
         $scope.signedIn = Auth.token.isSet();
         $scope.legend = $scope.editMode ? "Edit trip" : "Create trip";
@@ -12,29 +12,11 @@ define(['./module'], function (controllers) {
         };
 
         if ($scope.editMode) {
-            $scope.trip = Backend.trips.get({ tripId: $routeParams.tripId }, function (trip) {
-                // trip fetched
-                var items = [];
-                if (trip.Visits) {
-                    trip.Visits.forEach(function (curr) {
-                        items.push({ type: "visit", data: curr });
-                    });
-                }
-                if (trip.Routes) {
-                    trip.Routes.forEach(function (curr) {
-                        items.push({ type: "route", data: curr });
-                    });
-                }
-                $scope.tripItems = items;
-          }, function(err) {
+            $scope.trip = Backend.trips.get({ tripId: $routeParams.tripId }, null, function(err) {
               alert(JSON.stringify(err));
           });
         } else {
-          $scope.trip = {
-              IsPrivate: false,
-              DateFrom: new Date(),
-              DateTo: new Date()
-          };
+          $scope.trip = Entity.trip.Default;
         }
 
         $scope.save = function () {
