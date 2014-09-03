@@ -17,7 +17,7 @@
         if ($scope.editMode) {
             $scope.route = {};
         } else {
-            $scope.route = Entity.route.Default;
+            $scope.route = Entity.route.Default();
         }
 
         $scope.save = function () {

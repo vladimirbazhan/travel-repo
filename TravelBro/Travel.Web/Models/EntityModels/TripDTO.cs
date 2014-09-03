@@ -23,7 +23,12 @@ namespace WebApplication1.Models.EntityModels
             {
                 Routes = from route in trip.Routes select new RouteDTO(route);
             }
+            if (trip.Comments != null)
+            {
+                Comments = from comment in trip.Comments select new CommentDTO(comment);
+            }
         }
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -32,5 +37,6 @@ namespace WebApplication1.Models.EntityModels
         public bool IsPrivate { get; set; }
         public IEnumerable<VisitDTO> Visits;
         public IEnumerable<RouteDTO> Routes;
+        public IEnumerable<CommentDTO> Comments;
     }
 }

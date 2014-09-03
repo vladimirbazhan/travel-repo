@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -60,6 +61,19 @@ namespace WebApplication1.Models
             _context.SaveChanges();
 
             return true;
+        }
+
+        public Comment AddComment(int tripId, Comment comment)
+        {
+            Trip curr = _context.Trips.FirstOrDefault(x => x.Id == tripId);
+            if (curr.Comments == null)
+            {
+                curr.Comments = new Collection<Comment>();
+            }
+            curr.Comments.Add(comment);
+            _context.SaveChanges();
+
+            return comment;
         }
     }
 }

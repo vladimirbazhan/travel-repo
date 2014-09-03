@@ -17,7 +17,7 @@
         if ($scope.editMode) {
             $scope.visit = {};
         } else {
-            $scope.visit = Entity.visit.Default;
+            $scope.visit = Entity.visit.Default();
         }
 
         $scope.save = function () {

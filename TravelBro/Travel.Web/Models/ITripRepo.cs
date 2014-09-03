@@ -14,5 +14,6 @@ namespace WebApplication1.Models
         Trip Add(Trip item);
         void Remove(int id);
         bool Update(Trip item);
+        Comment AddComment(int tripId ,Comment comment);
     }
 }

@@ -76,7 +76,8 @@
                 'save': angular.extend({ url: '/api/trips', method: 'POST' }, authHeaders),
                 'delete': angular.extend({ url: '/api/trips/:tripId', method: 'DELETE' }, authHeaders),
                 'get': angular.extend({ url: '/api/trips/:tripId', method: 'GET' }, authHeaders, dateTransform),
-                'update': angular.extend({ url: '/api/trips/:tripId', method: 'PUT' }, authHeaders)
+                'update': angular.extend({ url: '/api/trips/:tripId', method: 'PUT' }, authHeaders),
+                'saveComment': angular.extend({ url: '/api/trips/:tripId/comments', method: 'POST' }, authHeaders)
             }),
             places: $resource("/api/places", {},
             {
@@ -92,29 +93,37 @@
             })
         };
 
+        var handleTrip = function(trip) {
+            trip.Id = parseInt(trip.Id);
+            trip.Comments = trip.Comments || [];
+
+            var items = [];
+
+            trip.Visits = trip.Visits || [];
+            trip.Visits.forEach(function(curr) {
+                items.push({ type: "visit", data: curr });
+            });
+
+            trip.Routes = trip.Routes || [];
+            trip.Routes.forEach(function(curr) {
+                items.push({ type: "route", data: curr });
+            });
+
+            trip.tripItems = items;
+        };
+
         var successHandlers = {
             trips: {
-                get: function (trip) {
-                    trip.Id = parseInt(trip.Id);
-
-                    var items = [];
-
-                    trip.Visits = trip.Visits || [];
-                    trip.Visits.forEach(function (curr) {
-                        items.push({ type: "visit", data: curr });
-                    });
-
-                    trip.Routes = trip.Routes || [];
-                    trip.Routes.forEach(function (curr) {
-                        items.push({ type: "route", data: curr });
-                    });
-
-                    trip.tripItems = items;
-                }
+                query: function (trips) {
+                    trips.forEach(handleTrip);
+                },
+                get: handleTrip
             }
         }
         
-        service.trips = wrapActions(service.trips, ['get'], [successHandlers.trips.get]);
+        service.trips = wrapActions(service.trips,
+            ['query', 'get'],
+            [successHandlers.trips.query, successHandlers.trips.get]);
 
         return service;
     }]);

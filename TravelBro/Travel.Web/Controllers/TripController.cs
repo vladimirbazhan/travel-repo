@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -58,6 +59,7 @@ namespace WebApplication1.Controllers
         public void PutTrip(int id, Trip item)
         {
             item.Id = id;
+
             if (!_repo.Update(item))
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -73,6 +75,44 @@ namespace WebApplication1.Controllers
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
             _repo.Remove(id);
+        }
+
+        [Route("api/trips/{tripId}/comments/{id}", Name = "GetTripCommentById")]
+        [HttpGet]
+        public CommentDTO GetComment(int tripId, int id)
+        {
+            Trip trip = _repo.Get(tripId);
+            if (trip == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+            Comment comment = trip.Comments.Where(x => x.Id == id).FirstOrDefault();
+            if (comment != null)
+            {
+                return new CommentDTO(comment);
+            }
+            else
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+        }
+        
+        [Route("api/trips/{tripId}/comments")]
+        [HttpPost]
+        public HttpResponseMessage PostComment(int tripId, Comment comment)
+        {
+            comment.Published = DateTime.Now;
+
+            string usrId = User.Identity.GetUserId();
+            var usr = ApplicationDbContext.GetInstance().Users.FirstOrDefault(x => x.Id == usrId);
+            comment.Author = usr;
+
+            Comment res = _repo.AddComment(tripId, comment);
+            var response = Request.CreateResponse<CommentDTO>(HttpStatusCode.Created, new CommentDTO(res));
+
+            string uri = Url.Link("GetTripCommentById", new { tripId = tripId, id = res.Id });
+            response.Headers.Location = new Uri(uri);
+            return response;
         }
     }
 }

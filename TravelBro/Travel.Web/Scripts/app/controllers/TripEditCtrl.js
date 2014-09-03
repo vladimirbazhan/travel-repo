@@ -16,13 +16,13 @@ define(['./module'], function (controllers) {
               alert(JSON.stringify(err));
           });
         } else {
-          $scope.trip = Entity.trip.Default;
+          $scope.trip = Entity.trip.Default();
         }
 
         $scope.save = function () {
           if ($scope.editMode) {
               Backend.trips.update({ tripId: $scope.trip.Id }, $scope.trip, function () {
-                  alert($scope.editMode ? "Changes saved" : "Trip created");
+                  alert("Changes saved");
               });
           } else {
               Backend.trips.save($scope.trip, function () {

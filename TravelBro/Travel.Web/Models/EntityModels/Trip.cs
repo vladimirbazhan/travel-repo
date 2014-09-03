@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using WebApplication1.Models.IdentityModels;
 
 namespace WebApplication1.Models.EntityModels
@@ -17,6 +18,6 @@ namespace WebApplication1.Models.EntityModels
 
         public virtual Collection<Route> Routes { get; private set; }
         public virtual Collection<Visit> Visits { get; private set; }
-        public virtual Collection<Comment> Comments { get; private set; }
+        public virtual Collection<Comment> Comments { get; set; }
     }
 }
