@@ -9,6 +9,7 @@ namespace WebApplication1.Models.EntityModels
 
         public DateTime Published { get; set; }
         public string Text { get; set; }
+        public string AuthorName { get; set; }
 
         public virtual ApplicationUser Author { get; set; }
 

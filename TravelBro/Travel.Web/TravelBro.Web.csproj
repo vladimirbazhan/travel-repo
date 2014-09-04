@@ -202,6 +202,10 @@
     <Compile Include="Migrations\201409010918530_mig2.Designer.cs">
       <DependentUpon>201409010918530_mig2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201409041236326_Comments.cs" />
+    <Compile Include="Migrations\201409041236326_Comments.Designer.cs">
+      <DependentUpon>201409041236326_Comments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\EntityModels\CommentDTO.cs" />
     <Compile Include="Models\EntityModels\PlaceDTO.cs" />
     <Compile Include="Models\EntityModels\RouteDTO.cs" />
@@ -221,6 +225,7 @@
     <Compile Include="Models\IdentityModels\AccountViewModels.cs" />
     <Compile Include="Models\EntityModels\Comment.cs" />
     <Compile Include="Models\IdentityModels\ApplicationDbContext.cs" />
+    <Compile Include="Models\IdentityModels\ApplicationUserDTO.cs" />
     <Compile Include="Models\ITripRepo.cs" />
     <Compile Include="Models\EntityModels\Photo.cs" />
     <Compile Include="Models\EntityModels\Place.cs" />
@@ -334,6 +339,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201409010918530_mig2.resx">
       <DependentUpon>201409010918530_mig2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409041236326_Comments.resx">
+      <DependentUpon>201409041236326_Comments.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

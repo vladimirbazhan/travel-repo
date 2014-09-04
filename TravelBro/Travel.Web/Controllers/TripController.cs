@@ -105,7 +105,11 @@ namespace WebApplication1.Controllers
 
             string usrId = User.Identity.GetUserId();
             var usr = ApplicationDbContext.GetInstance().Users.FirstOrDefault(x => x.Id == usrId);
-            comment.Author = usr;
+            if (usr != null)
+            {
+                comment.Author = usr;
+                comment.AuthorName = usr.UserName;
+            }
 
             Comment res = _repo.AddComment(tripId, comment);
             var response = Request.CreateResponse<CommentDTO>(HttpStatusCode.Created, new CommentDTO(res));

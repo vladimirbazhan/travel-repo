@@ -7,7 +7,10 @@
         <p class="list-group-item-text">{{trip.Description}}</p>
         <a class="btn-link" ng-class="{ dropup: !isCollapsed }" style=" color:grey;" ng-click="isCollapsed = !isCollapsed"><h6>Comments ({{trip.Comments.length}})<span class="caret"></span></h6></a>
         <div collapse="isCollapsed">
-            <div ng-repeat="comment in trip.Comments" class="well well-sm" style="margin-left: 0px;">{{comment.Text}}</div>
+            <div ng-repeat="comment in trip.Comments" class="well well-sm" style="margin-left: 0px;">
+                <p>{{comment.Text}}</p>
+                <p style="text-align: right;"><i>({{comment.AuthorName}})</i></p>
+            </div>
             <textarea class="form-control" ng-model="trip.commentText"></textarea>
             <div class="text-right" style="margin-top: 10px;">
                 <button class="btn btn-default" ng-click="sendComment(trip)">Send</button>

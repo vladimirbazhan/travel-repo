@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Web;
+using WebApplication1.Models.IdentityModels;
 
 namespace WebApplication1.Models.EntityModels
 {
@@ -9,17 +11,22 @@ namespace WebApplication1.Models.EntityModels
     {
         public CommentDTO(Comment c)
         {
-            Id = c.Id;
-            Published = c.Published;
-            Text = c.Text;
-            AuthorId = c.Author.Id;
-            ReplyToId = c.ReplyTo == null ? 0 : c.ReplyTo.Id;
+            Id         = c.Id;
+            Published  = c.Published;
+            Text       = c.Text;
+            AuthorId   = c.Author.Id;
+            Author     = new ApplicationUserDTO(c.Author);
+            AuthorName = c.Author.UserName;
+            ReplyToId  = c.ReplyTo == null ? 0 : c.ReplyTo.Id;
         }
 
-        public int Id { get; set; }
-        public DateTime Published { get; set; }
+        public int    Id { get; set; }
         public string Text { get; set; }
         public string AuthorId { get; set; }
-        public int ReplyToId { get; set; }
+        public int    ReplyToId { get; set; }
+        public string AuthorName { get; set; }
+
+        public DateTime           Published { get; set; }
+        public ApplicationUserDTO Author { get; set; }
     }
 }
