@@ -5,8 +5,9 @@
         $scope.editMode = false;
         $scope.signedIn = Auth.token.isSet();
         $scope.legend = $scope.editMode ? "Edit visit" : "Create visit";
-        $scope.places = Backend.places.query();
         $scope.trip = Backend.trips.get({ tripId: $routeParams.tripId });
+
+        $scope.place = {};
 
         $scope.dateOptions = {
             showOn: "button",

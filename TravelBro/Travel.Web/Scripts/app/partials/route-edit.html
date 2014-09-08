@@ -5,17 +5,17 @@
         <div class="form-group">
             <label for="select" class="col-lg-2 control-label">Start Place</label>
             <div class="col-lg-10">
-                <select class="form-control" id="select" ng-model="route.StartPlaceId">
-                    <option ng-repeat="place in places" value="{{place.Id}}">{{place.Name}}</option>
-                </select>
+                <input type="text" place-autocomplete class="form-control" placeholder="Enter a start place"
+                       details="startPlace.details" options="startPlace.options" place-object="startPlace.placeObject"
+                       place-id="route.StartGPlaceId" />
             </div>
         </div>
         <div class="form-group">
             <label for="select" class="col-lg-2 control-label">Finish Place</label>
             <div class="col-lg-10">
-                <select class="form-control" id="select" ng-model="route.FinishPlaceId">
-                    <option ng-repeat="place in places" value="{{place.Id}}">{{place.Name}}</option>
-                </select>
+                <input type="text" place-autocomplete class="form-control" placeholder="Enter a finish place"
+                       details="finishPlace.details" options="finishPlace.options" place-object="finishPlace.placeObject"
+                       place-id="route.FinishGPlaceId" />
             </div>
         </div>
         <div class="form-group">

@@ -12,6 +12,7 @@
         this.Finish = new Date();
         this.ActivityOrder = 0;
         this.Cost = 0;
+        this.GPlaceId = '';
     }
 
     function route() {

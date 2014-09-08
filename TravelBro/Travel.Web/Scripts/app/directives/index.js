@@ -3,5 +3,6 @@ define([
     './visit',
     './route',
     './tripItems',
-    './addTripItem'
+    './addTripItem',
+    './placeAutocomplete'
 ], function () {});

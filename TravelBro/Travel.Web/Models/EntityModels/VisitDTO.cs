@@ -15,8 +15,7 @@ namespace WebApplication1.Models.EntityModels
             Start = v.Start;
             Finish = v.Finish;
             ActivityOrder = v.ActivityOrder;
-            PlaceId = v.PlaceId;
-            Place = new PlaceDTO(v.Place);
+            GPlaceId = v.GPlaceId;
             TripId = v.TripId;
         }
 
@@ -28,8 +27,7 @@ namespace WebApplication1.Models.EntityModels
         public DateTime Finish { get; set; }
         public int ActivityOrder { get; set; }
 
-        public int PlaceId { get; set; }
-        public PlaceDTO Place { get; set; }
+        public string GPlaceId { get; set; }
         public int TripId { get; set; }
     }
 }

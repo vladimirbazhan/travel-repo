@@ -79,10 +79,6 @@
                 'update': angular.extend({ url: '/api/trips/:tripId', method: 'PUT' }, authHeaders),
                 'saveComment': angular.extend({ url: '/api/trips/:tripId/comments', method: 'POST' }, authHeaders)
             }),
-            places: $resource("/api/places", {},
-            {
-                'query': { url: '/api/places', method: 'GET', isArray: true }
-            }),
             visits: $resource('/api/visits', {},
             {
                 'save': { url: '/api/visits', method: 'POST' }

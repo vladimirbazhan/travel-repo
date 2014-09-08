@@ -5,6 +5,8 @@ using System.Web;
 
 namespace WebApplication1.Models.EntityModels
 {
+    // TODO: remove
+    /*
     public class PlaceDTO
     {
         public PlaceDTO(Place place)
@@ -22,5 +24,5 @@ namespace WebApplication1.Models.EntityModels
 
         public string Name { get; set; }
     }
-
+    */
 }
