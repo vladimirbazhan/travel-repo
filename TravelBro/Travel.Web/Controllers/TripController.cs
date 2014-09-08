@@ -108,7 +108,6 @@ namespace WebApplication1.Controllers
             if (usr != null)
             {
                 comment.Author = usr;
-                comment.AuthorName = usr.UserName;
             }
 
             Comment res = _repo.AddComment(tripId, comment);

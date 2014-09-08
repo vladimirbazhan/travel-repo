@@ -16,7 +16,6 @@ namespace WebApplication1.Models.EntityModels
             Text       = c.Text;
             AuthorId   = c.Author.Id;
             Author     = new ApplicationUserDTO(c.Author);
-            AuthorName = c.Author.UserName;
             ReplyToId  = c.ReplyTo == null ? 0 : c.ReplyTo.Id;
         }
 
@@ -24,7 +23,6 @@ namespace WebApplication1.Models.EntityModels
         public string Text { get; set; }
         public string AuthorId { get; set; }
         public int    ReplyToId { get; set; }
-        public string AuthorName { get; set; }
 
         public DateTime           Published { get; set; }
         public ApplicationUserDTO Author { get; set; }

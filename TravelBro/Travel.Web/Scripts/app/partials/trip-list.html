@@ -9,7 +9,7 @@
         <div collapse="isCollapsed">
             <div ng-repeat="comment in trip.Comments" class="well well-sm" style="margin-left: 0px;">
                 <p>{{comment.Text}}</p>
-                <p style="text-align: right;"><i>({{comment.AuthorName}})</i></p>
+                <p style="text-align: right;"><i>({{comment.Author.Email}})</i></p>
             </div>
             <textarea class="form-control" ng-model="trip.commentText"></textarea>
             <div class="text-right" style="margin-top: 10px;">
