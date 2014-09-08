@@ -17,8 +17,8 @@ define(['./module'], function (controllers) {
             var comment = Entity.comment.Default();
             comment.Text = trip.commentText;
 
-            Backend.trips.saveComment({ tripId: trip.Id }, comment, function () {
-                trip.Comments.push(comment);
+            Backend.trips.saveComment({ tripId: trip.Id }, comment, function (res) {
+                trip.Comments.push(res);
                 trip.commentText = "";
             });
         }
