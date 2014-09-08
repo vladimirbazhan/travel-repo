@@ -16,8 +16,8 @@ namespace WebApplication1.Models.EntityModels
             Cost = r.Cost;
             ActivityOrder = r.ActivityOrder;
             TripId = r.TripId;
-            StartPlace = new PlaceDTO(r.StartPlace);
-            FinishPlace = new PlaceDTO(r.FinishPlace);
+            StartGPlaceId = r.StartGPlaceId;
+            FinishGPlaceId = r.FinishGPlaceId;
         }
 
         public int Id { get; set; }
@@ -27,7 +27,7 @@ namespace WebApplication1.Models.EntityModels
         public double Cost { get; set; }
         public int ActivityOrder { get; set; }
         public int TripId { get; set; }
-        public PlaceDTO StartPlace { get; set; }
-        public PlaceDTO FinishPlace { get; set; }
+        public string StartGPlaceId { get; set; }
+        public string FinishGPlaceId { get; set; }
     }
 }

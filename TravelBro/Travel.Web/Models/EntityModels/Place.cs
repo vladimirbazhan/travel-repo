@@ -3,6 +3,8 @@ using System.Linq;
 
 namespace WebApplication1.Models.EntityModels
 {
+    // TODO: remove
+    /*
     public class Place
     {
         public int Id { get; set; }
@@ -20,5 +22,5 @@ namespace WebApplication1.Models.EntityModels
         }
         public virtual Collection<Visit> Visits { get; private set; }
         public virtual Collection<Comment> Comments { get; private set; }
-    }
+    }*/
 }

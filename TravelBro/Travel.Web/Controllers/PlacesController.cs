@@ -13,6 +13,8 @@ using WebApplication1.Models.IdentityModels;
 
 namespace WebApplication1.Controllers
 {
+    // TODO: remove
+    /*
     public class PlacesController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -40,7 +42,7 @@ namespace WebApplication1.Controllers
         }
 
         // PUT api/Place/5
-        public IHttpActionResult PutPlace(int id, Place place)
+        public IHttpActionResult PutPlace(string id, Place place)
         {
             if (!ModelState.IsValid)
             {
@@ -113,9 +115,10 @@ namespace WebApplication1.Controllers
             base.Dispose(disposing);
         }
 
-        private bool PlaceExists(int id)
+        private bool PlaceExists(string id)
         {
             return db.Places.Count(e => e.Id == id) > 0;
         }
     }
+     * */
 }

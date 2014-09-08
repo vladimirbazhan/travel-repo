@@ -29,7 +29,8 @@ namespace WebApplication1.Models.IdentityModels
         public DbSet<Trip> Trips { get; set; }
         public DbSet<Visit> Visits { get; set; }
         public DbSet<Route> Routes { get; set; }
-        public DbSet<Place> Places { get; set; }
+        // TODO: remove
+        //public DbSet<Place> Places { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Photo> Photos { get; set; }
 
@@ -37,15 +38,16 @@ namespace WebApplication1.Models.IdentityModels
         {
             base.OnModelCreating(modelBuilder);
 
-
-            modelBuilder.Entity<Place>()
-                .Ignore(p => p.Routes);
-
             modelBuilder.Entity<Trip>()
                 .HasRequired(t => t.Author)
                 .WithMany(a => a.Trips)
                 .Map(m => m.MapKey("AuthorId"))
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .Ignore(p => p.Trips)
+                .Ignore(p => p.Photos)
+                .Ignore(p => p.Comments);
 
             modelBuilder.Entity<Trip>()
                 .HasMany(t => t.Comments)
@@ -65,12 +67,6 @@ namespace WebApplication1.Models.IdentityModels
                 .Map(m => m.MapKey("TripId"));
 
             modelBuilder.Entity<Visit>()
-                .HasRequired(v => v.Place)
-                .WithMany(p => p.Visits)
-                .Map(m => m.MapKey("PlaceId"))
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Visit>()
                 .HasMany(t => t.Comments)
                 .WithMany()
                 .Map(m =>
@@ -87,18 +83,6 @@ namespace WebApplication1.Models.IdentityModels
                 .HasRequired(v => v.Trip)
                 .WithMany(t => t.Routes)
                 .Map(m => m.MapKey("TripId"));
-
-            modelBuilder.Entity<Route>()
-                .HasRequired(v => v.StartPlace)
-                .WithMany(p => p.From)
-                .Map(m => m.MapKey("StartPlaceId"))
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Route>()
-                .HasRequired(v => v.FinishPlace)
-                .WithMany(p => p.To)
-                .Map(m => m.MapKey("FinishPlaceId"))
-                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Route>()
                 .HasMany(t => t.Comments)

@@ -12,6 +12,7 @@
         this.Finish = new Date();
         this.ActivityOrder = 0;
         this.Cost = 0;
+        this.GPlaceId = '';
     }
 
     function route() {
@@ -28,22 +29,22 @@
         var service = {
             trip: {
                 Default: function () {
-                    return Object.create(trip.prototype);
+                    return new trip();
                 }
             },
             visit: {
                 Default: function () {
-                    return Object.create(visit.prototype);
+                    return new visit();
                 }
             },
             route: {
                 Default: function () {
-                    return Object.create(route.prototype);
+                    return new route();
                 }
             },
             comment: {
                 Default: function() {
-                    return Object.create(comment.prototype);
+                    return new comment();
                 }
             }
         };

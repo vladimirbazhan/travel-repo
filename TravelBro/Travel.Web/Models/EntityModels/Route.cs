@@ -18,13 +18,9 @@ namespace WebApplication1.Models.EntityModels
         [ForeignKey("TripId")]
         public virtual Trip Trip { get; set; }
 
-        public int StartPlaceId { get; set; }
-        [ForeignKey("StartPlaceId")]
-        public virtual Place StartPlace { get; set; }
+        public string StartGPlaceId { get; set; }
+        public string FinishGPlaceId { get; set; }
 
-        public int FinishPlaceId { get; set; }
-        [ForeignKey("FinishPlaceId")]
-        public virtual Place FinishPlace { get; set; }
         public virtual Collection<Comment> Comments { get; private set; }
     }
 }

@@ -14,10 +14,7 @@ namespace WebApplication1.Models.EntityModels
         public DateTime Finish { get; set; }
         public int ActivityOrder { get; set; }
 
-        // TODO: revise FK members
-        public int PlaceId { get; set; }
-        [ForeignKey("PlaceId")]
-        public virtual Place Place { get; set; }
+        public string GPlaceId { get; set; }
 
         public int TripId { get; set; }
         [ForeignKey("TripId")]

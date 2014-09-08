@@ -206,6 +206,10 @@
     <Compile Include="Migrations\201409041236326_Comments.Designer.cs">
       <DependentUpon>201409041236326_Comments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201409080917054_SwitchToGooglePlaceId.cs" />
+    <Compile Include="Migrations\201409080917054_SwitchToGooglePlaceId.Designer.cs">
+      <DependentUpon>201409080917054_SwitchToGooglePlaceId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\EntityModels\CommentDTO.cs" />
     <Compile Include="Models\EntityModels\PlaceDTO.cs" />
     <Compile Include="Models\EntityModels\RouteDTO.cs" />
@@ -272,6 +276,7 @@
     <Content Include="Scripts\app\controllers\VisitEditCtrl.js" />
     <Content Include="Scripts\app\css\app.css" />
     <Content Include="Scripts\app\directives\addTripItem.js" />
+    <Content Include="Scripts\app\directives\placeAutocomplete.js" />
     <Content Include="Scripts\app\directives\header.js" />
     <Content Include="Scripts\app\directives\index.js" />
     <Content Include="Scripts\app\directives\module.js" />
@@ -342,6 +347,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201409041236326_Comments.resx">
       <DependentUpon>201409041236326_Comments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409080917054_SwitchToGooglePlaceId.resx">
+      <DependentUpon>201409080917054_SwitchToGooglePlaceId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

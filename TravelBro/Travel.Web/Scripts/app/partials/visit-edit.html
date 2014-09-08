@@ -1,13 +1,13 @@
 <header/>
 <form class="form-horizontal" >
     <fieldset>
-        <legend>{{legend}}<!--<button class="btn btn-link" ng-show="{{editMode && signedIn}}" ng-click="delete();">delete</button>--></legend>    
+        <legend>{{legend}}</legend>
         <div class="form-group">
             <label for="select" class="col-lg-2 control-label">Place</label>
             <div class="col-lg-10">
-                <select class="form-control" id="select" ng-model="visit.PlaceId">
-                    <option ng-repeat="place in places" value="{{place.Id}}">{{place.Name}}</option>
-                </select>
+                <input type="text" place-autocomplete class="form-control" placeholder="Enter a place"
+                       details="place.details" options="place.options" place-object="place.placeObject"
+                       place-id="visit.GPlaceId" />
             </div>
         </div>
         <div class="form-group">
