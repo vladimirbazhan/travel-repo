@@ -1,35 +1,36 @@
 <header/>
-<form class="form-horizontal" >
-  <fieldset>
-    <legend>Sign Up</legend>    
-    <div class="form-group">
-      <label for="inputMail" class="col-lg-4 control-label">Email</label>      
-      <div class="col-lg-4">
-        <input type="text" class="form-control" id="inputEmail" placeholder="Email" value="{{mail}}" ng-model="mail">
-      </div>
-      <div class="col-lg-4"></div>
+<form class="form-horizontal" ng-submit="register()">
+    <fieldset>
+        <legend>Sign Up</legend>
+        <div class="form-group">
+            <label for="inputMail" class="col-lg-4 control-label">Email</label>
+            <div class="col-lg-4">
+                <input type="text" next-on-enter class="form-control" tabindex="1" id="inputEmail" placeholder="Email" value="{{mail}}" ng-model="mail">
+            </div>
+            <div class="col-lg-4"></div>
+        </div>
+        <div class="form-group">
+            <label for="textPassword" class="col-lg-4 control-label">Password</label>
+            <div class="col-lg-4">
+                <input type="password" next-on-enter class="form-control" tabindex="2" id="inputPassword" placeholder="Password" value="{{password}}" ng-model="password">
+            </div>
+            <div class="col-lg-4"></div>
+        </div>
+        <div class="form-group">
+            <label for="textConfirmPassword" class="col-lg-4 control-label">Confirm Password</label>
+            <div class="col-lg-4">
+                <input type="password" class="form-control" tabindex="3" id="inputConfirmPassword" placeholder="Confirm Password" value="{{confirmPassword}}" ng-model="confirmPassword">
+            </div>
+            <div class="col-lg-4"></div>
+        </div>
+        <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" />
+    </fieldset>
+    <div class="text-right">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+            <button class="btn btn-default" tabindex="5" onclick="history.go(-1);">Cancel</button>
+            <button class="btn btn-primary" tabindex="4" ng-click="register();">Register</button>
+        </div>
+        <div class="col-lg-4"></div>
     </div>
-    <div class="form-group">
-      <label for="textPassword" class="col-lg-4 control-label">Password</label>
-      <div class="col-lg-4">
-        <input type="password" class="form-control" id="inputPassword" placeholder="Password" value="{{password}}" ng-model="password">
-      </div>
-      <div class="col-lg-4"></div>
-    </div>
-    <div class="form-group">
-      <label for="textConfirmPassword" class="col-lg-4 control-label">Confirm Password</label>
-      <div class="col-lg-4">
-        <input type="password" class="form-control" id="inputConfirmPassword" placeholder="Confirm Password" value="{{confirmPassword}}" ng-model="confirmPassword">
-      </div>
-      <div class="col-lg-4"></div>
-    </div>
-  </fieldset>  
-  <div class="text-right">
-    <div class="col-lg-4"></div>
-    <div class="col-lg-4">
-        <button class="btn btn-default" onclick="history.go(-1);">Cancel</button>        
-        <button class="btn btn-primary" ng-click="register();">Register</button>
-    </div>
-    <div class="col-lg-4"></div>
-  </div>
 </form>
