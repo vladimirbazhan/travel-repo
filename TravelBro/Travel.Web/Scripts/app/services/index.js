@@ -8,5 +8,6 @@
 define([
     './Backend',
     './Auth',
-    './Entity'
+    './Entity',
+    './Alerts'
 ], function () {});

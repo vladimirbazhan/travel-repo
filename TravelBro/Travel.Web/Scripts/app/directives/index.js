@@ -4,5 +4,6 @@ define([
     './route',
     './tripItems',
     './addTripItem',
-    './placeAutocomplete'
+    './placeAutocomplete',
+    './notificationArea'
 ], function () {});

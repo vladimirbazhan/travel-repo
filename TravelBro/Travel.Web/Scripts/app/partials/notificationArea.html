@@ -1,0 +1,6 @@
+﻿<section class="notification-area" ng-controller="AlertsCtrl">
+    <div ng-repeat="alert in alerts" class="alert alert-{{alert.type}} alert-dismissable">
+        <button ng-show="{{alert.dismissable}}" type="button" class="close" ng-click="close(alert.id)" data-dismiss="alert">x</button>
+        {{alert.msg}}
+    </div>
+</section>

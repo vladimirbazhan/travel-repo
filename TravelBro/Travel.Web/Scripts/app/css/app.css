@@ -3,3 +3,11 @@
 body {
   padding-top: 70px;
 }
+
+.notification-area {
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
+  display: flex;
+  flex-direction: column-reverse;
+}

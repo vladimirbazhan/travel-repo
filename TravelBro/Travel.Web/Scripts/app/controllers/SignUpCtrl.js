@@ -1,6 +1,6 @@
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('SignUpCtrl', ['$scope', '$location', 'Auth', function ($scope, $location, Auth) {
+    controllers.controller('SignUpCtrl', ['$scope', '$location', 'Auth', 'Alerts', function ($scope, $location, Auth, Alerts) {
         $scope.mail = '';
         $scope.password = '';
         $scope.confirmPassword = '';
@@ -10,7 +10,7 @@ define(['./module'], function (controllers) {
               Auth.signIn($scope.mail, $scope.password, function () {
                   $location.path('/trips');
               }, function (res) {
-                  alert(res.error_description);
+                  Alerts.add('danger', res.error_description);
               });
           }, function (err) {
               var str = '';
@@ -50,7 +50,7 @@ define(['./module'], function (controllers) {
               } else {
                   str = err.Message;
               }
-              alert(str);
+              Alerts.add('danger', str);
           });
         };
     }]);

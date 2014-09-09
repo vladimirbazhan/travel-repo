@@ -264,6 +264,7 @@
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="Scripts\app\app.js" />
     <Content Include="Scripts\app\boot.js" />
+    <Content Include="Scripts\app\controllers\AlertsCtrl.js" />
     <Content Include="Scripts\app\controllers\HeaderCtrl.js" />
     <Content Include="Scripts\app\controllers\index.js" />
     <Content Include="Scripts\app\controllers\module.js" />
@@ -276,6 +277,7 @@
     <Content Include="Scripts\app\controllers\VisitEditCtrl.js" />
     <Content Include="Scripts\app\css\app.css" />
     <Content Include="Scripts\app\directives\addTripItem.js" />
+    <Content Include="Scripts\app\directives\notificationArea.js" />
     <Content Include="Scripts\app\directives\placeAutocomplete.js" />
     <Content Include="Scripts\app\directives\header.js" />
     <Content Include="Scripts\app\directives\index.js" />
@@ -285,6 +287,7 @@
     <Content Include="Scripts\app\directives\visit.js" />
     <Content Include="Scripts\app\main.js" />
     <Content Include="Scripts\app\partials\header.html" />
+    <Content Include="Scripts\app\partials\notificationArea.html" />
     <Content Include="Scripts\app\partials\place-list.html" />
     <Content Include="Scripts\app\partials\route-edit.html" />
     <Content Include="Scripts\app\partials\sign-in.html" />
@@ -293,6 +296,7 @@
     <Content Include="Scripts\app\partials\trip-list.html" />
     <Content Include="Scripts\app\partials\visit-edit.html" />
     <Content Include="Scripts\app\routes.js" />
+    <Content Include="Scripts\app\services\Alerts.js" />
     <Content Include="Scripts\app\services\Auth.js" />
     <Content Include="Scripts\app\services\Backend.js" />
     <Content Include="Scripts\app\services\Entity.js" />

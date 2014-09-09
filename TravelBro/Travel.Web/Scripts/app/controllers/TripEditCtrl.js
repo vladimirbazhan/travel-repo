@@ -1,7 +1,8 @@
 define(['./module'], function (controllers) {
     'use strict';
     
-    controllers.controller('TripEditCtrl', ['$scope', '$routeParams', '$location', 'Backend', 'Auth', 'Entity', function ($scope, $routeParams, $location, Backend, Auth, Entity) {
+    controllers.controller('TripEditCtrl', ['$scope', '$routeParams', '$location', 'Backend', 'Auth', 'Entity', 'Alerts',
+        function ($scope, $routeParams, $location, Backend, Auth, Entity, Alerts) {
         $scope.editMode = $routeParams.tripId == 'new' ? false : true;
         $scope.signedIn = Auth.token.isSet();
         $scope.legend = $scope.editMode ? "Edit trip" : "Create trip";
@@ -12,8 +13,8 @@ define(['./module'], function (controllers) {
         };
 
         if ($scope.editMode) {
-            $scope.trip = Backend.trips.get({ tripId: $routeParams.tripId }, null, function(err) {
-              alert(JSON.stringify(err));
+            $scope.trip = Backend.trips.get({ tripId: $routeParams.tripId }, null, function (err) {
+                Alerts.add('danger', JSON.stringify(err));
           });
         } else {
           $scope.trip = Entity.trip.Default();
@@ -22,19 +23,19 @@ define(['./module'], function (controllers) {
         $scope.save = function () {
           if ($scope.editMode) {
               Backend.trips.update({ tripId: $scope.trip.Id }, $scope.trip, function () {
-                  alert("Changes saved");
+                  Alerts.add('info', 'Changes saved');
               });
           } else {
               Backend.trips.save($scope.trip, function () {
-                  alert("Trip created");
+                  Alerts.add('info', 'Trip created');
                   $location.path('/trips');
               });
           }
         };
         $scope.delete = function() {
             Backend.trips.delete({ tripId: $scope.trip.Id }, function () {
-              alert("Trip deleted");
-              $location.path('/trips');
+                Alerts.add('info', 'Trip deleted');
+                $location.path('/trips');
           });
         };
 

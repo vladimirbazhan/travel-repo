@@ -1,7 +1,8 @@
 ﻿define(['./module'], function (controllers) {
     'use strict';
 
-    controllers.controller('VisitEditCtrl', ['$scope', '$routeParams', '$location', 'Auth', 'Backend', 'Entity', function ($scope, $routeParams, $location, Auth, Backend, Entity) {
+    controllers.controller('VisitEditCtrl', ['$scope', '$routeParams', '$location', 'Auth', 'Backend', 'Entity', 'Alerts',
+        function ($scope, $routeParams, $location, Auth, Backend, Entity, Alerts) {
         $scope.editMode = false;
         $scope.signedIn = Auth.token.isSet();
         $scope.legend = $scope.editMode ? "Edit visit" : "Create visit";
@@ -25,7 +26,7 @@
             $scope.visit.TripId = $scope.trip.Id;
             $scope.visit.Cost = parseFloat($scope.visit.Cost) || 0;
             Backend.visits.save($scope.visit, function () {
-                alert("Changes saved");
+                Alerts.add('info', 'Changes saved');
                 $location.path('/trips/' + $routeParams.tripId);
             });
         };
