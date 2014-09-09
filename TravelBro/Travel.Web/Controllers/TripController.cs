@@ -19,7 +19,7 @@ namespace WebApplication1.Controllers
 
         public IEnumerable<TripDTO> GetTrips()
         {
-            var trips = _repo.GetAll().ToList();
+            var trips = _repo.GetAll().Where(x => (!x.IsPrivate || x.Author.Id == User.Identity.GetUserId())).ToList();
             var tripsDTO = from trip in trips
                 select new TripDTO(trip);
             return tripsDTO;
@@ -58,6 +58,11 @@ namespace WebApplication1.Controllers
         [Authorize]
         public void PutTrip(int id, Trip item)
         {
+            if (_repo.Get(id).Author.Id != User.Identity.GetUserId())
+            {
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            }
+
             item.Id = id;
 
             if (!_repo.Update(item))
@@ -74,6 +79,11 @@ namespace WebApplication1.Controllers
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
+            if (item.Author.Id != User.Identity.GetUserId())
+            {
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            }
+
             _repo.Remove(id);
         }
 

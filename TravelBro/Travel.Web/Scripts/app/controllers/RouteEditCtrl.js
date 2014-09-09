@@ -28,6 +28,8 @@
             Backend.routes.save($scope.route, function () {
                 Alerts.add('info', 'Changes saved');
                 $location.path('/trips/' + $routeParams.tripId);
+            }, function (err) {
+                Alerts.add('danger', 'Error ' + err.status + ': ' + err.statusText);
             });
         };
     }]);

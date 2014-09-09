@@ -24,6 +24,8 @@ define(['./module'], function (controllers) {
           if ($scope.editMode) {
               Backend.trips.update({ tripId: $scope.trip.Id }, $scope.trip, function () {
                   Alerts.add('info', 'Changes saved');
+              }, function (err) {
+                  Alerts.add('danger', 'Error ' + err.status + ': ' + err.statusText);
               });
           } else {
               Backend.trips.save($scope.trip, function () {
@@ -36,7 +38,9 @@ define(['./module'], function (controllers) {
             Backend.trips.delete({ tripId: $scope.trip.Id }, function () {
                 Alerts.add('info', 'Trip deleted');
                 $location.path('/trips');
-          });
+            }, function (err) {
+                Alerts.add('danger', 'Error ' + err.status + ': ' + err.statusText);
+            });
         };
 
         $scope.addVisit = function () {

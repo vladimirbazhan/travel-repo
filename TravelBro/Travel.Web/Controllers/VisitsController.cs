@@ -8,6 +8,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Microsoft.AspNet.Identity;
+using WebApplication1.Models;
 using WebApplication1.Models.EntityModels;
 using WebApplication1.Models.IdentityModels;
 
@@ -16,6 +18,7 @@ namespace WebApplication1.Controllers
     public class VisitsController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        static private ITripRepo _tripRepo = new TripRepo();
 
         // GET api/Visits
         public IQueryable<Visit> GetVisits()
@@ -49,6 +52,11 @@ namespace WebApplication1.Controllers
                 return BadRequest();
             }
 
+            if (_tripRepo.Get(visit.TripId).Author.Id != User.Identity.GetUserId())
+            {
+                return StatusCode(HttpStatusCode.Unauthorized);
+            }
+
             db.Entry(visit).State = EntityState.Modified;
 
             try
@@ -79,6 +87,11 @@ namespace WebApplication1.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (_tripRepo.Get(visit.TripId).Author.Id != User.Identity.GetUserId())
+            {
+                return StatusCode(HttpStatusCode.Unauthorized);
+            }
+
             db.Visits.Add(visit);
             db.SaveChanges();
 
@@ -93,6 +106,11 @@ namespace WebApplication1.Controllers
             if (visit == null)
             {
                 return NotFound();
+            }
+
+            if (_tripRepo.Get(visit.TripId).Author.Id != User.Identity.GetUserId())
+            {
+                return StatusCode(HttpStatusCode.Unauthorized);
             }
 
             db.Visits.Remove(visit);

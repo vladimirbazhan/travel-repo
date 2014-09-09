@@ -8,6 +8,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Microsoft.AspNet.Identity;
+using WebApplication1.Models;
 using WebApplication1.Models.EntityModels;
 using WebApplication1.Models.IdentityModels;
 
@@ -15,6 +17,7 @@ namespace WebApplication1.Controllers
 {
     public class RoutesController : ApiController
     {
+        static private ITripRepo _tripRepo = new TripRepo();
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET api/Routes
@@ -42,6 +45,11 @@ namespace WebApplication1.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            if (_tripRepo.Get(route.TripId).Author.Id != User.Identity.GetUserId())
+            {
+                return StatusCode(HttpStatusCode.Unauthorized);
             }
 
             if (id != route.Id)
@@ -79,6 +87,11 @@ namespace WebApplication1.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (_tripRepo.Get(route.TripId).Author.Id != User.Identity.GetUserId())
+            {
+                return StatusCode(HttpStatusCode.Unauthorized);
+            }
+
             db.Routes.Add(route);
             db.SaveChanges();
 
@@ -93,6 +106,11 @@ namespace WebApplication1.Controllers
             if (route == null)
             {
                 return NotFound();
+            }
+
+            if (_tripRepo.Get(route.TripId).Author.Id != User.Identity.GetUserId())
+            {
+                return StatusCode(HttpStatusCode.Unauthorized);
             }
 
             db.Routes.Remove(route);
