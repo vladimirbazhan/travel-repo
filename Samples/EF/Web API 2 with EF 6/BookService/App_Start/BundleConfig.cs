@@ -31,7 +31,7 @@ namespace BookService
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862
-            // TODO: uncomment this
+            // TODO AG: uncomment this
             BundleTable.EnableOptimizations = true;
         }
     }
