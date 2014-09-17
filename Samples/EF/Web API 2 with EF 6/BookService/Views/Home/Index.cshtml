@@ -8,28 +8,33 @@
 </head>
 
 <div class="page-header">
-    <h1>BookService</h1>
+    <h2 class="text-danger">BookService</h2>
+</div>
+
+
+<div class="row">
+    <div class="alert alert-danger" data-bind="visible: error"><p data-bind="text: error"></p></div>
 </div>
 
 <div class="row">
-
-    <div class="col-md-5">
+    <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h2 class="panel-title">Books</h2>
             </div>
-            <div class="panel-body">
-                <ul class="list-unstyled" data-bind="foreach: books">
-                    <li>
-                        <strong><span data-bind="text: AuthorName"></span></strong>: <span data-bind="text: Title"></span>
+            <table class="table-striped">
+                <tbody data-bind="foreach: books">
+                    <tr>
+                        <td class="col-md-11">
+                            <small><strong><span data-bind="text: AuthorName"></span></strong></small><br><small>&nbsp;&nbsp;"<span data-bind="text: Title"></span>"</small>
+                        </td>
                         <!-- This binds the click handler for the <a> element to the getBookDetail function on the view model. -->
-                        <small><a href="#" data-bind="click: $parent.getBookDetail">Details</a></small>
-                        <small><a href="#" class="label-warning" data-bind="click: $parent.removeBook">Remove</a></small>
-                    </li>
-                </ul>
-            </div>
+                        <td><small><a href="#" data-bind="click: $parent.getBookDetail">Details</a></small></td>
+                        <td><small><a href="#" class="label-warning" data-bind="click: $parent.removeBook">Remove</a></small></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="alert alert-danger" data-bind="visible: error"><p data-bind="text: error"></p></div>
     </div>
     
     <!-- ko if:detail() -->
@@ -40,12 +45,12 @@
             <div class="panel-heading">
                 <h2 class="panel-title">Detail</h2>
             </div>
-            <table class="table">
-                <tr><td>Author</td><td data-bind="text: detail().AuthorName"></td></tr>
-                <tr><td>Title</td><td data-bind="text: detail().Title"></td></tr>
-                <tr><td>Year</td><td data-bind="text: detail().Year"></td></tr>
-                <tr><td>Genre</td><td data-bind="text: detail().Genre"></td></tr>
-                <tr><td>Price</td><td data-bind="text: detail().Price"></td></tr>
+            <table class="table table-bordered">
+                <tr><td>Author</td><td class="text-info" data-bind="text: detail().AuthorName"></td></tr>
+                <tr><td>Title</td><td class="text-info" data-bind="text: detail().Title"></td></tr>
+                <tr><td>Year</td><td class="text-info" data-bind="text: detail().Year"></td></tr>
+                <tr><td>Genre</td><td class="text-info" data-bind="text: detail().Genre"></td></tr>
+                <tr><td>Price</td><td class="text-info" data-bind="text: detail().Price"></td></tr>
             </table>
         </div>
     </div>
@@ -57,7 +62,6 @@
             <div class="panel-heading">
                 <h2 class="panel-title">Add Book</h2>
             </div>
-
             <div class="panel-body">
                 <form class="form-horizontal" data-bind="submit: addBook">
                     <div class="form-group">
@@ -88,8 +92,8 @@
                             <input type="number" step="any" class="form-control" id="inputPrice" data-bind="value:Price" />
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-warning text-right pull-right">Submit</button>
-                </form>
+                    <button type="submit" class="btn btn-danger text-right pull-right">Submit</button>
+                </form> 
             </div>
         </div>
     </div>
