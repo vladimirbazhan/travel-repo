@@ -1,6 +1,6 @@
 ﻿define(['./module'], function (services) {
     'use strict';
-    services.factory('Alerts', ['$rootScope', '$timeout', function ($rootScope, $timeout) {
+    services.factory('Alerts', ['$rootScope', '$interval', function ($rootScope, $interval) {
         $rootScope.alerts = [];
         var counter = 0;
 
@@ -24,9 +24,9 @@
                 alert.id = ++counter;
                 $rootScope.alerts.push(alert);
                 if (alert.timeout >= 0) {
-                    $timeout(function () {
+                    $interval(function () {
                         removeAlert(alert.id);
-                    }, alert.timeout);
+                    }, alert.timeout, 1);
                 }
             },
             remove: removeAlert
