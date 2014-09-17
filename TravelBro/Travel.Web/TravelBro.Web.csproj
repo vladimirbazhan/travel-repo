@@ -277,6 +277,7 @@
     <Content Include="Scripts\app\controllers\VisitEditCtrl.js" />
     <Content Include="Scripts\app\css\app.css" />
     <Content Include="Scripts\app\directives\addTripItem.js" />
+    <Content Include="Scripts\app\directives\nextOnEnter.js" />
     <Content Include="Scripts\app\directives\notificationArea.js" />
     <Content Include="Scripts\app\directives\placeAutocomplete.js" />
     <Content Include="Scripts\app\directives\header.js" />
@@ -302,6 +303,8 @@
     <Content Include="Scripts\app\services\Entity.js" />
     <Content Include="Scripts\app\services\index.js" />
     <Content Include="Scripts\app\services\module.js" />
+    <Content Include="Scripts\test\e2e\scenarios.js" />
+    <Content Include="Scripts\test\protractor-conf.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -329,6 +332,7 @@
     <Content Include="Scripts\bower.json" />
     <Content Include="Scripts\package.json" />
     <Content Include="Scripts\app\.bowerrc" />
+    <Content Include="Scripts\test\e2e\README.md" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201407311021141_InitialCreate.resx">
@@ -374,7 +378,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62428</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:62428/</IISUrl>
+          <IISUrl>http://localhost:8000/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
