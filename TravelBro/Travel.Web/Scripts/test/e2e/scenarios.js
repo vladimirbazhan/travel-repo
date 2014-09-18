@@ -4,21 +4,6 @@
 
 describe('TravelBro App', function() {
 
-    // custom locators
-
-    by.addLocator('buttonContainsText', function (buttonText, opt_parentElement) {
-        var elemContainsText = function (tag, text, parent) {
-            var using = parent || document,
-            elems = using.querySelectorAll(tag);
-
-            // Return an array of buttons with the text.
-            return Array.prototype.filter.call(elems, function (elem) {
-                return elem.textContent.indexOf(text) > -1;
-            });
-        }
-        return elemContainsText('button', buttonText, opt_parentElement);
-    });
-
     // utils
     function CheckUrl(expectedUrl) {
         browser.getLocationAbsUrl().then(function (url) {
@@ -60,7 +45,7 @@ describe('TravelBro App', function() {
                 alert('message is abc?');
             });
 
-            var regBtn = element(by.buttonContainsText('Register'));
+            var regBtn = element(by.partialButtonText('Register'));
             expect(regBtn.isPresent());
             regBtn.click();
             browser.waitForAngular();
@@ -81,7 +66,7 @@ describe('TravelBro App', function() {
             element(by.model('trip.DateFrom')).sendKeys(dateTo);
             element(by.model('trip.Description')).sendKeys(desc);
 
-            var saveBtn = element(by.buttonContainsText('Save'));
+            var saveBtn = element(by.partialButtonText('Save'));
             expect(saveBtn.isPresent());
             saveBtn.click();
             CloseAlert('info');
@@ -136,7 +121,7 @@ describe('TravelBro App', function() {
 
                 element(by.partialLinkText(name)).click();
 
-                var delBtn = element(by.buttonContainsText('delete'));
+                var delBtn = element(by.partialButtonText('delete'));
                 expect(delBtn.isPresent());
                 delBtn.click();
                 CloseAlert('info');
