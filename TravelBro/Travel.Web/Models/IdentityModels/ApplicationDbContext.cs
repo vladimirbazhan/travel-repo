@@ -54,7 +54,7 @@ namespace WebApplication1.Models.IdentityModels
                 .WithMany()
                 .Map(m =>
                 {
-                    m.ToTable("TripsToComments");
+                    m.ToTable("CommentsToTrips");
                     m.MapLeftKey("TripId");
                     m.MapRightKey("CommentId");
                 });
@@ -71,7 +71,7 @@ namespace WebApplication1.Models.IdentityModels
                 .WithMany()
                 .Map(m =>
                 {
-                    m.ToTable("VisitsToComments");
+                    m.ToTable("CommentsToVisits");
                     m.MapLeftKey("VisitId");
                     m.MapRightKey("CommentId");
                 });
@@ -89,7 +89,7 @@ namespace WebApplication1.Models.IdentityModels
                 .WithMany()
                 .Map(m =>
                 {
-                    m.ToTable("RoutesToComments");
+                    m.ToTable("CommentsToRoutes");
                     m.MapLeftKey("RouteId");
                     m.MapRightKey("CommentId");
                 });
@@ -124,7 +124,7 @@ namespace WebApplication1.Models.IdentityModels
                 .WithMany()
                 .Map(m =>
                 {
-                    m.ToTable("PhotosToComments");
+                    m.ToTable("CommentsToPhotos");
                     m.MapLeftKey("PhotoId");
                     m.MapRightKey("CommentId");
                 });

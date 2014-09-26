@@ -210,6 +210,10 @@
     <Compile Include="Migrations\201409080917054_SwitchToGooglePlaceId.Designer.cs">
       <DependentUpon>201409080917054_SwitchToGooglePlaceId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201409261330344_Rename_XToComments_To_CommentsToX.cs" />
+    <Compile Include="Migrations\201409261330344_Rename_XToComments_To_CommentsToX.Designer.cs">
+      <DependentUpon>201409261330344_Rename_XToComments_To_CommentsToX.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\EntityModels\CommentDTO.cs" />
     <Compile Include="Models\EntityModels\PlaceDTO.cs" />
     <Compile Include="Models\EntityModels\RouteDTO.cs" />
@@ -358,6 +362,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201409080917054_SwitchToGooglePlaceId.resx">
       <DependentUpon>201409080917054_SwitchToGooglePlaceId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409261330344_Rename_XToComments_To_CommentsToX.resx">
+      <DependentUpon>201409261330344_Rename_XToComments_To_CommentsToX.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
