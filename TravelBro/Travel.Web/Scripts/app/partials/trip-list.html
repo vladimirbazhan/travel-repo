@@ -1,5 +1,5 @@
 <header />
-<button type="button" class="btn btn-link" ng-click="create()">New trip</button>
+<button type="button" class="btn btn-link" ng-click="create()"><span class="glyphicon glyphicon-plus"></span>&nbsp;New trip</button>
 <br>
 <div class="list-group">
     <span ng-repeat="trip in trips | filter : headerFilter | orderBy : tripsOrder" class="list-group-item">
