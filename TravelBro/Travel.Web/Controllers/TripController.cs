@@ -2,9 +2,15 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using WebApplication1.Models;
@@ -15,7 +21,25 @@ namespace WebApplication1.Controllers
 {
     public class TripsController : ApiController
     {
+        public class CustomMultipartFormDataStreamProvider : MultipartFormDataStreamProvider
+        {
+            private int _counter = 0;
+            public CustomMultipartFormDataStreamProvider(string path) : base(path) { }
+
+            public override string GetLocalFileName(HttpContentHeaders headers)
+            {
+                string fileName = headers.ContentDisposition.FileName.Replace("\"", "");
+                return "_tmp_" + ++_counter + Path.GetExtension(fileName);
+            }
+        }
+
         static private ITripRepo _repo = new TripRepo();
+        private Dictionary<string, string> _extensions = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        {
+            {".jpg", "image/jpeg"},
+            {".png", "image/png"},
+            {".gif", "image/gif"}
+        };
 
         public IEnumerable<TripDTO> GetTrips()
         {
@@ -126,6 +150,102 @@ namespace WebApplication1.Controllers
             string uri = Url.Link("GetTripCommentById", new { tripId = tripId, id = res.Id });
             response.Headers.Location = new Uri(uri);
             return response;
+        }
+
+        [Route("api/trips/{tripId}/photos")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> PostPhoto(int tripId)
+        {
+            string usrId = User.Identity.GetUserId();
+            var usr = ApplicationDbContext.GetInstance().Users.FirstOrDefault(x => x.Id == usrId);
+            if (usr == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.Unauthorized);
+            }
+
+            // Check whether the POST operation is MultiPart? 
+            if (!Request.Content.IsMimeMultipartContent())
+            {
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            }
+            // Prepare CustomMultipartFormDataStreamProvider in which our multipart form 
+            // data will be loaded. 
+            string fileSaveLocation = HttpContext.Current.Server.MapPath("~/App_Data/Images");
+            CustomMultipartFormDataStreamProvider provider = new CustomMultipartFormDataStreamProvider(fileSaveLocation);
+            try
+            {
+                // Read all contents of multipart message into CustomMultipartFormDataStreamProvider. 
+                await Request.Content.ReadAsMultipartAsync(provider);
+                List<Photo> tripPhotos = new List<Photo>();
+                foreach (MultipartFileData file in provider.FileData)
+                {
+                    string hash = GetFileHash(file.LocalFileName);
+                    string newFileName = hash + Path.GetExtension(file.LocalFileName);
+                    string newFullFileName = fileSaveLocation + "\\" + newFileName;
+                    if (File.Exists(newFullFileName))
+                    {
+                        File.Delete(file.LocalFileName);
+                    }
+                    else
+                    {
+                        File.Move(file.LocalFileName, newFullFileName);
+                    }
+                    
+                    Photo photo = new Photo()
+                    {
+                        Author = usr,
+                        Published = DateTime.Now,
+                        ImagePath = newFileName
+                    };
+                    tripPhotos.Add(photo);
+                }
+
+                _repo.AddPhotos(tripId, tripPhotos);
+
+                // Send OK Response along with saved file names to the client. 
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (System.Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+            }
+        }
+
+        [Route("api/trips/photos/{photoId}")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> PhotosGet(string photoId)
+        {
+            string fileSaveLocation = HttpContext.Current.Server.MapPath("~/App_Data/Images");
+            string path = fileSaveLocation + "\\" + photoId;
+            var fileStream = File.OpenRead(path);
+            {
+                var resp = new HttpResponseMessage()
+                {
+                    Content = new StreamContent(fileStream)
+                };
+
+                // Find the MIME type
+                string ext = Path.GetExtension(path);
+                string mimeType = _extensions[ext];
+                resp.Content.Headers.ContentType = new MediaTypeHeaderValue(mimeType);
+                return resp;
+            }
+        }
+
+        private string GetFileHash(string fileName)
+        {
+            using (FileStream fStream = File.OpenRead(fileName))
+            using (MD5 md5 = MD5.Create())
+            {
+                byte[] data = md5.ComputeHash(fStream);
+
+                StringBuilder sBuilder = new StringBuilder();
+                for (int i = 0; i < data.Length; i++)
+                {
+                    sBuilder.Append(data[i].ToString("x2"));
+                }
+                return sBuilder.ToString();
+            }
         }
     }
 }

@@ -12,8 +12,6 @@ namespace WebApplication1.Models.EntityModels
         public string ImagePath { get; set; }
 
         public virtual ApplicationUser Author { get; set; }
-
-        public virtual Visit Visit { get; set; }
         public virtual Collection<Comment> Comments { get; private set; }
     }
 }

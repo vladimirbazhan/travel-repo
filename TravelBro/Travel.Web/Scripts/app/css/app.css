@@ -11,3 +11,23 @@ body {
   display: flex;
   flex-direction: column-reverse;
 }
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+
+div.photos div.col-md-3 {
+    padding: 5px;
+}
+
+.btn-file > input[type="file"] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  filter: alpha(opacity=0);
+  opacity: 0;
+}

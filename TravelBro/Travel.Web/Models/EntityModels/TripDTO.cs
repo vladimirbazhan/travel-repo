@@ -27,6 +27,10 @@ namespace WebApplication1.Models.EntityModels
             {
                 Comments = from comment in trip.Comments select new CommentDTO(comment);
             }
+            if (trip.Photos != null)
+            {
+                Photos = from photo in trip.Photos select photo.ImagePath;
+            }
         }
 
         public int Id { get; set; }
@@ -38,5 +42,6 @@ namespace WebApplication1.Models.EntityModels
         public IEnumerable<VisitDTO> Visits;
         public IEnumerable<RouteDTO> Routes;
         public IEnumerable<CommentDTO> Comments;
+        public IEnumerable<string> Photos;
     }
 }

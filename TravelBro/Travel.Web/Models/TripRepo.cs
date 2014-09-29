@@ -75,5 +75,20 @@ namespace WebApplication1.Models
 
             return comment;
         }
+
+        public void AddPhotos(int tripId, IEnumerable<Photo> photos)
+        {
+            Trip curr = _context.Trips.FirstOrDefault(x => x.Id == tripId);
+            if (curr.Photos == null)
+            {
+                curr.Photos = new Collection<Photo>();
+            }
+            foreach (var tripPhoto in photos)
+            {
+                curr.Photos.Add(tripPhoto);
+            }
+
+            _context.SaveChanges();
+        }
     }
 }

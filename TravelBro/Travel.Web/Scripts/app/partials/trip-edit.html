@@ -25,28 +25,47 @@
         <textarea class="form-control" rows="3" id="textDescription" ng-model="trip.Description">{{trip.Description}}</textarea>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-lg-2 control-label">Sharing</label>
-      <div class="col-lg-10">
-        <div class="radio">
-          <label>
-            <input type="radio" ng-model="trip.IsPrivate" name="optionsSharing" ng-value="false">
-            Share this trip
-          </label>
-        </div>
-        <div class="radio">
-          <label>
-            <input type="radio" ng-model="trip.IsPrivate" name="optionsSharing" ng-value="true" checked>
-            Make trip private
-          </label>
-        </div>
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Sharing</label>
+          <div class="col-lg-10">
+              <div class="radio">
+                  <label>
+                      <input type="radio" ng-model="trip.IsPrivate" name="optionsSharing" ng-value="false">
+                      Share this trip
+                  </label>
+              </div>
+              <div class="radio">
+                  <label>
+                      <input type="radio" ng-model="trip.IsPrivate" name="optionsSharing" ng-value="true" checked>
+                      Make trip private
+                  </label>
+              </div>
+          </div>
       </div>
-    </div>
-  </fieldset>
+      
+      <photos/>
+      
+      <ul class="list-group" ng-show="photos.length > 0">
+          <h4><b>Selected files: </b></h4>
+          <li ng-repeat="photo in photos" class="list-group-item">
+              <span class="glyphicon glyphicon-picture"></span>
+              &nbsp;{{photo.name}}
+              <a href="" ng-click="removeSelectedPhoto($index)"><span class="glyphicon glyphicon-remove"></span></a>
+          </li>
+      </ul>
+      
+      <div class="btn-file btn btn-xs btn-default">
+          <span>Select files</span>
+          <input type="file" multiple accept="image/*" onchange="angular.element(this).scope().onSelectedPhotosChanged(this.files)">
+      </div>
+      <br /><br />
+
+</fieldset>
   <trip-items ng-show="{{editMode && signedIn}}"></trip-items>
   <div class="text-right">
-    <button class="btn btn-default" onclick="history.go(-1);">Cancel</button>
-    <button class="btn btn-primary" ng-click="save();">Save</button>
+      <button class="btn btn-default" onclick="history.go(-1);">Cancel</button>
+      <button class="btn btn-primary" ng-click="save();"><span class="glyphicon glyphicon-ok"></span>&nbsp;Save</button>
+      <button class="btn btn-primary" ng-click="savePhotos();"><span class="glyphicon glyphicon-ok"></span>&nbsp;SavePhotos</button>
   </div>
 </form>
 <br />

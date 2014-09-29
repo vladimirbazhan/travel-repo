@@ -214,6 +214,10 @@
     <Compile Include="Migrations\201409261330344_Rename_XToComments_To_CommentsToX.Designer.cs">
       <DependentUpon>201409261330344_Rename_XToComments_To_CommentsToX.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201409261351109_PhotosToX_Relations_Created.cs" />
+    <Compile Include="Migrations\201409261351109_PhotosToX_Relations_Created.Designer.cs">
+      <DependentUpon>201409261351109_PhotosToX_Relations_Created.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\EntityModels\CommentDTO.cs" />
     <Compile Include="Models\EntityModels\PlaceDTO.cs" />
     <Compile Include="Models\EntityModels\RouteDTO.cs" />
@@ -283,6 +287,7 @@
     <Content Include="Scripts\app\directives\addTripItem.js" />
     <Content Include="Scripts\app\directives\nextOnEnter.js" />
     <Content Include="Scripts\app\directives\notificationArea.js" />
+    <Content Include="Scripts\app\directives\photos.js" />
     <Content Include="Scripts\app\directives\placeAutocomplete.js" />
     <Content Include="Scripts\app\directives\header.js" />
     <Content Include="Scripts\app\directives\index.js" />
@@ -365,6 +370,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201409261330344_Rename_XToComments_To_CommentsToX.resx">
       <DependentUpon>201409261330344_Rename_XToComments_To_CommentsToX.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409261351109_PhotosToX_Relations_Created.resx">
+      <DependentUpon>201409261351109_PhotosToX_Relations_Created.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

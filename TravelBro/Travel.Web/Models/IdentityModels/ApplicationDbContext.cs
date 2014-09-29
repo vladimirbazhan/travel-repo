@@ -115,11 +115,6 @@ namespace WebApplication1.Models.IdentityModels
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Photo>()
-                .HasRequired(photo => photo.Visit)
-                .WithMany(v => v.Photos)
-                .Map(m => m.MapKey("VisitId"));
-
-            modelBuilder.Entity<Photo>()
                 .HasMany(t => t.Comments)
                 .WithMany()
                 .Map(m =>
@@ -128,6 +123,40 @@ namespace WebApplication1.Models.IdentityModels
                     m.MapLeftKey("PhotoId");
                     m.MapRightKey("CommentId");
                 });
+            #endregion
+
+            #region PhotosToX
+
+            modelBuilder.Entity<Trip>()
+                .HasMany(t => t.Photos)
+                .WithMany()
+                .Map(m =>
+                {
+                    m.ToTable("PhotosToTrips");
+                    m.MapLeftKey("TripId");
+                    m.MapRightKey("PhotoId");
+                });
+
+            modelBuilder.Entity<Visit>()
+                .HasMany(t => t.Photos)
+                .WithMany()
+                .Map(m =>
+                {
+                    m.ToTable("PhotosToVisits");
+                    m.MapLeftKey("VisitId");
+                    m.MapRightKey("PhotoId");
+                });
+
+            modelBuilder.Entity<Route>()
+                .HasMany(t => t.Photos)
+                .WithMany()
+                .Map(m =>
+                {
+                    m.ToTable("PhotosToRoutes");
+                    m.MapLeftKey("RouteId");
+                    m.MapRightKey("PhotoId");
+                });
+
             #endregion
 
         }

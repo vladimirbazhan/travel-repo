@@ -106,6 +106,7 @@
             });
 
             trip.tripItems = items;
+            trip.Photos = trip.Photos || [];
         };
 
         var successHandlers = {

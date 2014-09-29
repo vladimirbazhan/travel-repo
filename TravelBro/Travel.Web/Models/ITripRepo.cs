@@ -15,5 +15,6 @@ namespace WebApplication1.Models
         void Remove(int id);
         bool Update(Trip item);
         Comment AddComment(int tripId ,Comment comment);
+        void AddPhotos(int tripId, IEnumerable<Photo> photos);
     }
 }

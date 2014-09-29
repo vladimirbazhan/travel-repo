@@ -6,5 +6,6 @@ define([
     './addTripItem',
     './placeAutocomplete',
     './notificationArea',
-    './nextOnEnter'
+    './nextOnEnter',
+    './photos'
 ], function () {});

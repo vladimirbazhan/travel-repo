@@ -22,5 +22,6 @@ namespace WebApplication1.Models.EntityModels
         public string FinishGPlaceId { get; set; }
 
         public virtual Collection<Comment> Comments { get; private set; }
+        public virtual Collection<Photo> Photos { get; private set; }
     }
 }
