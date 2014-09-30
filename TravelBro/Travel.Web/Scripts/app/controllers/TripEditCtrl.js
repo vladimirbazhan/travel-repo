@@ -35,22 +35,60 @@ define(['./module'], function (controllers) {
           }
         };
 
-        $scope.savePhotos = function () {
-            var fd = new FormData();
-            for (var i = 0; i < $scope.photos.length; ++i) {
-                fd.append('photo[]', $scope.photos[i]);
-            }
-            fd.append('fileType', 'tripphotos');
-            // TODO: implement via service
-            $http.post('/api/trips/' + $scope.trip.Id + '/photos', fd, {
-                withCredentials: true,
-                headers: { 'Content-Type': undefined },
-                transformRequest: angular.identity
-            }).success(function () {
-                Alerts.add('info', 'Photos Saved');
-                $route.reload();
-            }).error(function (err) {
-                Alerts.add('danger', err.Message);
+
+        $scope.uploadFiles = function () {
+            $scope.photos.forEach(function (currPhoto) {
+                var form = new FormData();
+                form.append('photo[]', currPhoto);
+
+                // implement via service
+                $.ajax({
+                    url: '/api/trips/' + $scope.trip.Id + '/photos',
+                    data: form,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    xhr: function() {
+                        var myXhr = $.ajaxSettings.xhr();
+                        if (myXhr.upload) {
+                            myXhr.upload.addEventListener('progress',function(e) {
+                                $scope.$apply(function () {
+                                    var percentCompleted;
+                                    if (e.lengthComputable) {
+                                        percentCompleted = Math.round(e.loaded / e.total * 100);
+                                        if (percentCompleted < 1) {
+                                            currPhoto.uploadStatus = 'Uploading...';
+                                        } else if (percentCompleted == 100) {
+                                            currPhoto.uploadStatus = 'Saving...';
+                                        } else {
+                                            currPhoto.uploadStatus = percentCompleted + '%';
+                                        }
+                                    } else {
+                                        currPhoto.uploadStatus = "Length is not computable";
+                                    }
+                                });
+                            }, false);
+                        }
+                        return myXhr;
+                    }
+                }).done(function (response) {
+                    $scope.$apply(function () {
+                        currPhoto.uploadStatus = 'Done';
+                        var totalDone = 0;
+                        $scope.photos.forEach(function (photo) {
+                            if (photo.uploadStatus == 'Done') {
+                                totalDone++;
+                            }
+                        });
+                        if (totalDone == $scope.photos.length) {
+                            Alerts.add('info', 'Photos Saved');
+                            $route.reload();
+                        }
+                    });
+                }).fail(function (err) {
+                    Alerts.add('danger', err.Message);
+                });
             });
         }
 

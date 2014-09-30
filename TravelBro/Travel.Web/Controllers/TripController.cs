@@ -21,19 +21,50 @@ namespace WebApplication1.Controllers
 {
     public class TripsController : ApiController
     {
-        public class CustomMultipartFormDataStreamProvider : MultipartFormDataStreamProvider
+        class CustomMultipartFormDataStreamProvider : MultipartFormDataStreamProvider
         {
-            private int _counter = 0;
-            public CustomMultipartFormDataStreamProvider(string path) : base(path) { }
+            private FileNameProvider _fnProvider;
+
+            public CustomMultipartFormDataStreamProvider(FileNameProvider fnProvider)
+                : base(fnProvider.FileSaveLocation)
+            {
+                _fnProvider = fnProvider;
+            }
 
             public override string GetLocalFileName(HttpContentHeaders headers)
             {
+                
                 string fileName = headers.ContentDisposition.FileName.Replace("\"", "");
-                return "_tmp_" + ++_counter + Path.GetExtension(fileName);
+                return _fnProvider.GetNewFileName(Path.GetExtension(fileName));
+            }
+        }
+
+        class FileNameProvider
+        {
+            private readonly object _lock = new object();
+
+            public string FileSaveLocation { get; private set; }
+
+            public FileNameProvider()
+            {
+                FileSaveLocation = HttpContext.Current.Server.MapPath("~/App_Data/Images");
+            }
+            public string GetNewFileName(string extension)
+            {
+                lock (_lock)
+                {
+                    string fileName = Guid.NewGuid().ToString("N");
+                    int counter = 0;
+                    while (File.Exists(FileSaveLocation + "\\" + fileName + counter + extension))
+                        counter++;
+                    return fileName + counter + extension;
+                }
             }
         }
 
         static private ITripRepo _repo = new TripRepo();
+        private FileNameProvider _fileNameProvider = new FileNameProvider();
+
         private Dictionary<string, string> _extensions = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
             {".jpg", "image/jpeg"},
@@ -154,7 +185,7 @@ namespace WebApplication1.Controllers
 
         [Route("api/trips/{tripId}/photos")]
         [HttpPost]
-        public async Task<HttpResponseMessage> PostPhoto(int tripId)
+        public async Task<HttpResponseMessage> PostPhotoAsync(int tripId)
         {
             string usrId = User.Identity.GetUserId();
             var usr = ApplicationDbContext.GetInstance().Users.FirstOrDefault(x => x.Id == usrId);
@@ -168,34 +199,21 @@ namespace WebApplication1.Controllers
             {
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
             }
-            // Prepare CustomMultipartFormDataStreamProvider in which our multipart form 
-            // data will be loaded. 
-            string fileSaveLocation = HttpContext.Current.Server.MapPath("~/App_Data/Images");
-            CustomMultipartFormDataStreamProvider provider = new CustomMultipartFormDataStreamProvider(fileSaveLocation);
+
+            // Read all contents of multipart message into CustomMultipartFormDataStreamProvider. 
+            CustomMultipartFormDataStreamProvider provider = new CustomMultipartFormDataStreamProvider(_fileNameProvider);
+
             try
             {
-                // Read all contents of multipart message into CustomMultipartFormDataStreamProvider. 
                 await Request.Content.ReadAsMultipartAsync(provider);
                 List<Photo> tripPhotos = new List<Photo>();
                 foreach (MultipartFileData file in provider.FileData)
                 {
-                    string hash = GetFileHash(file.LocalFileName);
-                    string newFileName = hash + Path.GetExtension(file.LocalFileName);
-                    string newFullFileName = fileSaveLocation + "\\" + newFileName;
-                    if (File.Exists(newFullFileName))
-                    {
-                        File.Delete(file.LocalFileName);
-                    }
-                    else
-                    {
-                        File.Move(file.LocalFileName, newFullFileName);
-                    }
-                    
                     Photo photo = new Photo()
                     {
                         Author = usr,
                         Published = DateTime.Now,
-                        ImagePath = newFileName
+                        ImagePath = Path.GetFileName(file.LocalFileName) 
                     };
                     tripPhotos.Add(photo);
                 }
