@@ -62,7 +62,6 @@ namespace WebApplication1.Controllers
             }
         }
 
-        static private ITripRepo _repo = new TripRepo();
         private FileNameProvider _fileNameProvider = new FileNameProvider();
 
         private Dictionary<string, string> _extensions = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
@@ -74,91 +73,113 @@ namespace WebApplication1.Controllers
 
         public IEnumerable<TripDTO> GetTrips()
         {
-            var trips = _repo.GetAll().Where(x => (!x.IsPrivate || x.Author.Id == User.Identity.GetUserId())).ToList();
-            var tripsDTO = from trip in trips
-                select new TripDTO(trip);
-            return tripsDTO;
+            using (var repo = new TripRepo())
+            {
+                var trips = repo.GetAll().Where(x => (!x.IsPrivate || x.Author.Id == User.Identity.GetUserId())).ToList();
+                var tripsDTO = from trip in trips
+                               select new TripDTO(trip);
+                return tripsDTO.ToList();
+            }
         }
 
         public IHttpActionResult GetTrip(int id)
         {
-            Trip res = _repo.Get(id);
-            if (res == null)
+            using (var repo = new TripRepo())
             {
-                return NotFound();
+                Trip res = repo.Get(id);
+                if (res == null)
+                {
+                    return NotFound();
+                }
+                return Ok(new TripDTO(res));
             }
-            return Ok(new TripDTO(res));
         }
 
         public IEnumerable<Trip> GetTripByName(string name)
         {
-            return _repo.GetAll().Where(x => string.Equals(x.Name, name, StringComparison.OrdinalIgnoreCase));
+            using (var repo = new TripRepo())
+            {
+                return repo.GetAll().Where(x => string.Equals(x.Name, name, StringComparison.OrdinalIgnoreCase)).ToList(); 
+                
+            }
         }
 
         [Authorize]
         public HttpResponseMessage PostTrip(Trip item)
         {
-            string id = User.Identity.GetUserId();
-            var usr = ApplicationDbContext.GetInstance().Users.FirstOrDefault(x => x.Id == id);
+            using (var repo = new TripRepo())
+            {
+                string id = User.Identity.GetUserId();
+                var usr = repo.Context.Users.FirstOrDefault(x => x.Id == id);
 
-            item.Author = usr;
-            Trip res = _repo.Add(item);
-            var response = Request.CreateResponse<TripDTO>(HttpStatusCode.Created, new TripDTO(res));
+                item.Author = usr;
+                Trip res = repo.Add(item);
+                var response = Request.CreateResponse<TripDTO>(HttpStatusCode.Created, new TripDTO(res));
 
-            string uri = Url.Link("DefaultApi", new { Id = res.Id });
-            response.Headers.Location = new Uri(uri);
-            return response;
+                string uri = Url.Link("DefaultApi", new { Id = res.Id });
+                response.Headers.Location = new Uri(uri);
+                return response;
+            }
         }
 
         [Authorize]
         public void PutTrip(int id, Trip item)
         {
-            if (_repo.Get(id).Author.Id != User.Identity.GetUserId())
+            using (var repo = new TripRepo())
             {
-                throw new HttpResponseException(HttpStatusCode.Unauthorized);
-            }
+                if (repo.Get(id).Author.Id != User.Identity.GetUserId())
+                {
+                    throw new HttpResponseException(HttpStatusCode.Unauthorized);
+                }
 
-            item.Id = id;
+                item.Id = id;
 
-            if (!_repo.Update(item))
-            {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                if (!repo.Update(item))
+                {
+                    throw new HttpResponseException(HttpStatusCode.NotFound);
+                }
             }
         }
 
         [Authorize]
         public void DeleteTrip(int id)
         {
-            Trip item = _repo.Get(id);
-            if (item == null)
+            using (var repo = new TripRepo())
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-            }
-            if (item.Author.Id != User.Identity.GetUserId())
-            {
-                throw new HttpResponseException(HttpStatusCode.Unauthorized);
-            }
+                Trip item = repo.Get(id);
+                if (item == null)
+                {
+                    throw new HttpResponseException(HttpStatusCode.NotFound);
+                }
+                if (item.Author.Id != User.Identity.GetUserId())
+                {
+                    throw new HttpResponseException(HttpStatusCode.Unauthorized);
+                }
 
-            _repo.Remove(id);
+                repo.Remove(id);
+            }
         }
 
         [Route("api/trips/{tripId}/comments/{id}", Name = "GetTripCommentById")]
         [HttpGet]
         public CommentDTO GetComment(int tripId, int id)
         {
-            Trip trip = _repo.Get(tripId);
-            if (trip == null)
+            using (var repo = new TripRepo())
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-            }
-            Comment comment = trip.Comments.Where(x => x.Id == id).FirstOrDefault();
-            if (comment != null)
-            {
-                return new CommentDTO(comment);
-            }
-            else
-            {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                Trip trip = repo.Get(tripId);
+                if (trip == null)
+                {
+                    throw new HttpResponseException(HttpStatusCode.NotFound);
+                }
+                Comment comment = trip.Comments.Where(x => x.Id == id).FirstOrDefault();
+                if (comment != null)
+                {
+                    return new CommentDTO(comment);
+                }
+                else
+                {
+                    throw new HttpResponseException(HttpStatusCode.NotFound);
+                }
             }
         }
         
@@ -166,66 +187,72 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public HttpResponseMessage PostComment(int tripId, Comment comment)
         {
-            comment.Published = DateTime.Now;
-
-            string usrId = User.Identity.GetUserId();
-            var usr = ApplicationDbContext.GetInstance().Users.FirstOrDefault(x => x.Id == usrId);
-            if (usr != null)
+            using (var repo = new TripRepo())
             {
-                comment.Author = usr;
+                comment.Published = DateTime.Now;
+
+                string usrId = User.Identity.GetUserId();
+                var usr = repo.Context.Users.FirstOrDefault(x => x.Id == usrId);
+                if (usr != null)
+                {
+                    comment.Author = usr;
+                }
+
+                Comment res = repo.AddComment(tripId, comment);
+                var response = Request.CreateResponse<CommentDTO>(HttpStatusCode.Created, new CommentDTO(res));
+
+                string uri = Url.Link("GetTripCommentById", new { tripId = tripId, id = res.Id });
+                response.Headers.Location = new Uri(uri);
+                return response;
             }
-
-            Comment res = _repo.AddComment(tripId, comment);
-            var response = Request.CreateResponse<CommentDTO>(HttpStatusCode.Created, new CommentDTO(res));
-
-            string uri = Url.Link("GetTripCommentById", new { tripId = tripId, id = res.Id });
-            response.Headers.Location = new Uri(uri);
-            return response;
         }
 
         [Route("api/trips/{tripId}/photos")]
         [HttpPost]
         public async Task<HttpResponseMessage> PostPhotoAsync(int tripId)
         {
-            string usrId = User.Identity.GetUserId();
-            var usr = ApplicationDbContext.GetInstance().Users.FirstOrDefault(x => x.Id == usrId);
-            if (usr == null)
+            using (var repo = new TripRepo())
             {
-                return Request.CreateResponse(HttpStatusCode.Unauthorized);
-            }
-
-            // Check whether the POST operation is MultiPart? 
-            if (!Request.Content.IsMimeMultipartContent())
-            {
-                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
-            }
-
-            // Read all contents of multipart message into CustomMultipartFormDataStreamProvider. 
-            CustomMultipartFormDataStreamProvider provider = new CustomMultipartFormDataStreamProvider(_fileNameProvider);
-
-            try
-            {
-                await Request.Content.ReadAsMultipartAsync(provider);
-                List<Photo> tripPhotos = new List<Photo>();
-                foreach (MultipartFileData file in provider.FileData)
+                string usrId = User.Identity.GetUserId();
+                var usr = repo.Context.Users.FirstOrDefault(x => x.Id == usrId);
+                if (usr == null)
                 {
-                    Photo photo = new Photo()
-                    {
-                        Author = usr,
-                        Published = DateTime.Now,
-                        ImagePath = Path.GetFileName(file.LocalFileName) 
-                    };
-                    tripPhotos.Add(photo);
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized);
                 }
 
-                _repo.AddPhotos(tripId, tripPhotos);
+                // Check whether the POST operation is MultiPart? 
+                if (!Request.Content.IsMimeMultipartContent())
+                {
+                    throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+                }
 
-                // Send OK Response along with saved file names to the client. 
-                return Request.CreateResponse(HttpStatusCode.OK);
-            }
-            catch (System.Exception e)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+                // Read all contents of multipart message into CustomMultipartFormDataStreamProvider. 
+                CustomMultipartFormDataStreamProvider provider = new CustomMultipartFormDataStreamProvider(_fileNameProvider);
+
+                try
+                {
+                    await Request.Content.ReadAsMultipartAsync(provider);
+                    List<Photo> tripPhotos = new List<Photo>();
+                    foreach (MultipartFileData file in provider.FileData)
+                    {
+                        Photo photo = new Photo()
+                        {
+                            Author = usr,
+                            Published = DateTime.Now,
+                            ImagePath = Path.GetFileName(file.LocalFileName)
+                        };
+                        tripPhotos.Add(photo);
+                    }
+
+                    repo.AddPhotos(tripId, tripPhotos);
+
+                    // Send OK Response along with saved file names to the client. 
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
+                catch (System.Exception e)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+                }
             }
         }
 
@@ -247,22 +274,6 @@ namespace WebApplication1.Controllers
                 string mimeType = _extensions[ext];
                 resp.Content.Headers.ContentType = new MediaTypeHeaderValue(mimeType);
                 return resp;
-            }
-        }
-
-        private string GetFileHash(string fileName)
-        {
-            using (FileStream fStream = File.OpenRead(fileName))
-            using (MD5 md5 = MD5.Create())
-            {
-                byte[] data = md5.ComputeHash(fStream);
-
-                StringBuilder sBuilder = new StringBuilder();
-                for (int i = 0; i < data.Length; i++)
-                {
-                    sBuilder.Append(data[i].ToString("x2"));
-                }
-                return sBuilder.ToString();
             }
         }
     }

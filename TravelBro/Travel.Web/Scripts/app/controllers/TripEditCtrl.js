@@ -87,6 +87,7 @@ define(['./module'], function (controllers) {
                         }
                     });
                 }).fail(function (err) {
+                    currPhoto.uploadStatus = 'Failed';
                     Alerts.add('danger', err.Message);
                 });
             });

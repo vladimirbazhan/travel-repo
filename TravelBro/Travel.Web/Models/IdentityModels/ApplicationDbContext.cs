@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -10,27 +11,32 @@ namespace WebApplication1.Models.IdentityModels
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        private static bool _dbInitialized = false;
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
-            
+            Initialize();
         }
 
-        private static ApplicationDbContext _instance;
-
-        public static ApplicationDbContext GetInstance()
+        private static void Initialize()
         {
-            if (_instance == null)
+            if (!_dbInitialized)
+            {
                 Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
-
-            return _instance ?? (_instance = new ApplicationDbContext());
+                _dbInitialized = true;
+            }
         }
-
+        
+        public static ApplicationDbContext CreateInstance()
+        {
+            Initialize();
+            return new ApplicationDbContext();
+        }
+        
         public DbSet<Trip> Trips { get; set; }
         public DbSet<Visit> Visits { get; set; }
         public DbSet<Route> Routes { get; set; }
-        // TODO: remove
-        //public DbSet<Place> Places { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Photo> Photos { get; set; }
 

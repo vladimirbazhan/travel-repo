@@ -9,14 +9,19 @@ using WebApplication1.Models.IdentityModels;
 
 namespace WebApplication1.Models
 {
-    public class TripRepo : ITripRepo
+    public class TripRepo : ITripRepo, IDisposable
     {
         public TripRepo()
         {
-            _context = ApplicationDbContext.GetInstance();
+            _context = new ApplicationDbContext();
         }
 
         private ApplicationDbContext _context;
+
+        public ApplicationDbContext Context
+        {
+            get { return _context; } 
+        }
 
         public IEnumerable<Trip> GetAll()
         {
@@ -89,6 +94,11 @@ namespace WebApplication1.Models
             }
 
             _context.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
         }
     }
 }

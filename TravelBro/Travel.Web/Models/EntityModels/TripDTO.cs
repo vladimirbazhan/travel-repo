@@ -17,15 +17,15 @@ namespace WebApplication1.Models.EntityModels
             IsPrivate = trip.IsPrivate;
             if (trip.Visits != null)
             {
-                Visits = from visit in trip.Visits select new VisitDTO(visit);
+                Visits = (from visit in trip.Visits select new VisitDTO(visit)).ToList();
             }
             if (trip.Routes != null)
             {
-                Routes = from route in trip.Routes select new RouteDTO(route);
+                Routes = (from route in trip.Routes select new RouteDTO(route)).ToList();
             }
             if (trip.Comments != null)
             {
-                Comments = from comment in trip.Comments select new CommentDTO(comment);
+                Comments = (from comment in trip.Comments select new CommentDTO(comment)).ToList();
             }
             if (trip.Photos != null)
             {
