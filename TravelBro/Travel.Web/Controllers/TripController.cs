@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -16,29 +17,12 @@ using Microsoft.AspNet.Identity;
 using WebApplication1.Models;
 using WebApplication1.Models.EntityModels;
 using WebApplication1.Models.IdentityModels;
+using WebApplication1.Utils;
 
 namespace WebApplication1.Controllers
 {
     public class TripsController : ApiController
     {
-        class CustomMultipartFormDataStreamProvider : MultipartFormDataStreamProvider
-        {
-            private FileNameProvider _fnProvider;
-
-            public CustomMultipartFormDataStreamProvider(FileNameProvider fnProvider)
-                : base(fnProvider.FileSaveLocation)
-            {
-                _fnProvider = fnProvider;
-            }
-
-            public override string GetLocalFileName(HttpContentHeaders headers)
-            {
-                
-                string fileName = headers.ContentDisposition.FileName.Replace("\"", "");
-                return _fnProvider.GetNewFileName(Path.GetExtension(fileName));
-            }
-        }
-
         class FileNameProvider
         {
             private readonly object _lock = new object();
@@ -47,7 +31,7 @@ namespace WebApplication1.Controllers
 
             public FileNameProvider()
             {
-                FileSaveLocation = HttpContext.Current.Server.MapPath("~/App_Data/Images");
+                FileSaveLocation = HttpContext.Current.Server.MapPath("~/App_Data/Images") + '\\';
             }
             public string GetNewFileName(string extension)
             {
@@ -64,7 +48,7 @@ namespace WebApplication1.Controllers
 
         private FileNameProvider _fileNameProvider = new FileNameProvider();
 
-        private Dictionary<string, string> _extensions = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        private readonly Dictionary<string, string> _extensions = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
             {".jpg", "image/jpeg"},
             {".png", "image/png"},
@@ -226,20 +210,26 @@ namespace WebApplication1.Controllers
                     throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
                 }
 
-                // Read all contents of multipart message into CustomMultipartFormDataStreamProvider. 
-                CustomMultipartFormDataStreamProvider provider = new CustomMultipartFormDataStreamProvider(_fileNameProvider);
-
                 try
                 {
+                    // Read all contents of multipart message into MultipartMemoryStreamProvider. 
+                    MultipartMemoryStreamProvider provider = new MultipartMemoryStreamProvider();
+
                     await Request.Content.ReadAsMultipartAsync(provider);
                     List<Photo> tripPhotos = new List<Photo>();
-                    foreach (MultipartFileData file in provider.FileData)
+                    foreach (var file in provider.Contents)
                     {
+                        Stream fileStream = await file.ReadAsStreamAsync();
+                        Image img = new Bitmap(fileStream);
+                        img = ImageHelper.ResizeImage(img, 1024, 768);
+                        string fileName = _fileNameProvider.GetNewFileName(".jpg");
+                        ImageHelper.SaveJpeg(_fileNameProvider.FileSaveLocation  + fileName, img, 70);
+
                         Photo photo = new Photo()
                         {
                             Author = usr,
                             Published = DateTime.Now,
-                            ImagePath = Path.GetFileName(file.LocalFileName)
+                            ImagePath = fileName
                         };
                         tripPhotos.Add(photo);
                     }
@@ -249,7 +239,7 @@ namespace WebApplication1.Controllers
                     // Send OK Response along with saved file names to the client. 
                     return Request.CreateResponse(HttpStatusCode.OK);
                 }
-                catch (System.Exception e)
+                catch (Exception e)
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
                 }
