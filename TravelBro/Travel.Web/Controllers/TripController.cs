@@ -75,16 +75,11 @@ namespace WebApplication1.Controllers
                 {
                     return NotFound();
                 }
+                if (res.IsPrivate && res.Author.Id != User.Identity.GetUserId())
+                {
+                    return Unauthorized(null);
+                }
                 return Ok(new TripDTO(res));
-            }
-        }
-
-        public IEnumerable<Trip> GetTripByName(string name)
-        {
-            using (var repo = new TripRepo())
-            {
-                return repo.GetAll().Where(x => string.Equals(x.Name, name, StringComparison.OrdinalIgnoreCase)).ToList(); 
-                
             }
         }
 
@@ -126,21 +121,22 @@ namespace WebApplication1.Controllers
         }
 
         [Authorize]
-        public void DeleteTrip(int id)
+        public HttpResponseMessage DeleteTrip(int id)
         {
             using (var repo = new TripRepo())
             {
                 Trip item = repo.Get(id);
                 if (item == null)
                 {
-                    throw new HttpResponseException(HttpStatusCode.NotFound);
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
                 }
                 if (item.Author.Id != User.Identity.GetUserId())
                 {
-                    throw new HttpResponseException(HttpStatusCode.Unauthorized);
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized);
                 }
 
                 repo.Remove(id);
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
         }
 
@@ -181,6 +177,10 @@ namespace WebApplication1.Controllers
                 {
                     comment.Author = usr;
                 }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized);
+                }
 
                 Comment res = repo.AddComment(tripId, comment);
                 var response = Request.CreateResponse<CommentDTO>(HttpStatusCode.Created, new CommentDTO(res));
@@ -190,16 +190,19 @@ namespace WebApplication1.Controllers
                 return response;
             }
         }
-
+        
         [Route("api/trips/{tripId}/photos")]
         [HttpPost]
+        [Authorize]
         public async Task<HttpResponseMessage> PostPhotoAsync(int tripId)
         {
             using (var repo = new TripRepo())
             {
                 string usrId = User.Identity.GetUserId();
                 var usr = repo.Context.Users.FirstOrDefault(x => x.Id == usrId);
-                if (usr == null)
+
+                Trip trip = repo.Get(tripId);
+                if (trip.Author.Id != usrId)
                 {
                     return Request.CreateResponse(HttpStatusCode.Unauthorized);
                 }
@@ -248,15 +251,22 @@ namespace WebApplication1.Controllers
 
         [Route("api/trips/photos/{photoId}")]
         [HttpGet]
-        public async Task<HttpResponseMessage> PhotosGet(string photoId)
+        public HttpResponseMessage PhotosGet(string photoId)
         {
             string fileSaveLocation = HttpContext.Current.Server.MapPath("~/App_Data/Images");
             string path = fileSaveLocation + "\\" + photoId;
             var fileStream = File.OpenRead(path);
             {
+                byte[] fileData = new byte[fileStream.Length];
+                var readResult = fileStream.ReadAsync(fileData, 0, (int)fileStream.Length);
+                if (readResult.Result == 0)
+                {
+                    Request.CreateResponse(HttpStatusCode.NotFound);
+                }
+
                 var resp = new HttpResponseMessage()
                 {
-                    Content = new StreamContent(fileStream)
+                    Content = new ByteArrayContent(fileData)
                 };
 
                 // Find the MIME type
