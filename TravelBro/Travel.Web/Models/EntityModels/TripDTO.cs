@@ -10,6 +10,7 @@ namespace WebApplication1.Models.EntityModels
         public TripDTO(Trip trip)
         {
             Id = trip.Id;
+            AuthorEmail = trip.Author.Email;
             Name = trip.Name;
             Description = trip.Description;
             DateFrom = trip.DateFrom;
@@ -34,6 +35,7 @@ namespace WebApplication1.Models.EntityModels
         }
 
         public int Id { get; set; }
+        public string AuthorEmail { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime DateFrom { get; set; }
