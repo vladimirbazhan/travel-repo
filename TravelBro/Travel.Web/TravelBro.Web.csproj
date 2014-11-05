@@ -178,10 +178,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\PlacesController.cs" />
     <Compile Include="Controllers\RoutesController.cs" />
     <Compile Include="Controllers\TripController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\VisitsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -219,7 +217,6 @@
       <DependentUpon>201409261351109_PhotosToX_Relations_Created.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\EntityModels\CommentDTO.cs" />
-    <Compile Include="Models\EntityModels\PlaceDTO.cs" />
     <Compile Include="Models\EntityModels\RouteDTO.cs" />
     <Compile Include="Models\EntityModels\TripDTO.cs" />
     <Compile Include="Migrations\201407311021141_InitialCreate.cs" />
@@ -240,7 +237,6 @@
     <Compile Include="Models\IdentityModels\ApplicationUserDTO.cs" />
     <Compile Include="Models\ITripRepo.cs" />
     <Compile Include="Models\EntityModels\Photo.cs" />
-    <Compile Include="Models\EntityModels\Place.cs" />
     <Compile Include="Models\EntityModels\Route.cs" />
     <Compile Include="Models\EntityModels\Trip.cs" />
     <Compile Include="Models\TripRepo.cs" />

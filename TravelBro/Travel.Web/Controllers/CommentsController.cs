@@ -15,6 +15,8 @@ namespace WebApplication1.Controllers
 {
     public class CommentsController : ApiController
     {
+        // TODO: implement authentification validation
+        // TODO: wrap ApplicationDbContext with using statements
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET api/Comments

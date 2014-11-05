@@ -4,6 +4,7 @@ define(['./module'], function (controllers) {
     controllers.controller('TripEditCtrl', ['$scope', '$routeParams', '$location', 'Backend', 'Auth', 'Entity', 'Alerts', '$http', '$route', function ($scope, $routeParams, $location, Backend, Auth, Entity, Alerts, $http, $route) {
         $scope.editMode = $routeParams.tripId == 'new' ? false : true;
         $scope.signedIn = Auth.token.isSet();
+        $scope.userName = Auth.getUserName();
         $scope.legend = $scope.editMode ? "Edit trip" : "Create trip";
         $scope.photos = [];
         $scope.dateOptions = {
@@ -13,7 +14,9 @@ define(['./module'], function (controllers) {
         };
 
         if ($scope.editMode) {
-            $scope.trip = Backend.trips.get({ tripId: $routeParams.tripId }, null, function (err) {
+            $scope.trip = Backend.trips.get({ tripId: $routeParams.tripId }, function() {
+                $scope.$apply();
+            }, function (err) {
                 Alerts.add('danger', JSON.stringify(err));
           });
         } else {
@@ -31,6 +34,8 @@ define(['./module'], function (controllers) {
               Backend.trips.save($scope.trip, function () {
                   Alerts.add('info', 'Trip created');
                   $location.path('/trips');
+              }, function (err) {
+                  Alerts.add('danger', 'Error ' + err.status + ': ' + err.statusText);
               });
           }
         };
@@ -41,7 +46,7 @@ define(['./module'], function (controllers) {
                 var form = new FormData();
                 form.append('photo[]', currPhoto);
 
-                // implement via service
+                // TODO: implement via service
                 $.ajax({
                     url: '/api/trips/' + $scope.trip.Id + '/photos',
                     data: form,

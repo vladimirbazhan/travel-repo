@@ -17,6 +17,9 @@ namespace WebApplication1.Controllers
 {
     public class RoutesController : ApiController
     {
+        // TODO: implement authentification validation
+        // TODO: wrap ApplicationDbContext with using statements
+
         static private ITripRepo _tripRepo = new TripRepo();
         private ApplicationDbContext db = new ApplicationDbContext();
 
