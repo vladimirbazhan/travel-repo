@@ -184,49 +184,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201408071314229_Comments-Update.cs" />
-    <Compile Include="Migrations\201408071314229_Comments-Update.Designer.cs">
-      <DependentUpon>201408071314229_Comments-Update.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201408201249341_Activity_Order_Added.cs" />
-    <Compile Include="Migrations\201408201249341_Activity_Order_Added.Designer.cs">
-      <DependentUpon>201408201249341_Activity_Order_Added.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201408291051461_Drop_Place_Id_FK_in_Routes.cs" />
-    <Compile Include="Migrations\201408291051461_Drop_Place_Id_FK_in_Routes.Designer.cs">
-      <DependentUpon>201408291051461_Drop_Place_Id_FK_in_Routes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201409010918530_mig2.cs" />
-    <Compile Include="Migrations\201409010918530_mig2.Designer.cs">
-      <DependentUpon>201409010918530_mig2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201409041236326_Comments.cs" />
-    <Compile Include="Migrations\201409041236326_Comments.Designer.cs">
-      <DependentUpon>201409041236326_Comments.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201409080917054_SwitchToGooglePlaceId.cs" />
-    <Compile Include="Migrations\201409080917054_SwitchToGooglePlaceId.Designer.cs">
-      <DependentUpon>201409080917054_SwitchToGooglePlaceId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201409261330344_Rename_XToComments_To_CommentsToX.cs" />
-    <Compile Include="Migrations\201409261330344_Rename_XToComments_To_CommentsToX.Designer.cs">
-      <DependentUpon>201409261330344_Rename_XToComments_To_CommentsToX.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201409261351109_PhotosToX_Relations_Created.cs" />
-    <Compile Include="Migrations\201409261351109_PhotosToX_Relations_Created.Designer.cs">
-      <DependentUpon>201409261351109_PhotosToX_Relations_Created.cs</DependentUpon>
+    <Compile Include="Migrations\201501141419480_Initial.cs" />
+    <Compile Include="Migrations\201501141419480_Initial.Designer.cs">
+      <DependentUpon>201501141419480_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\EntityModels\CommentDTO.cs" />
     <Compile Include="Models\EntityModels\RouteDTO.cs" />
     <Compile Include="Models\EntityModels\TripDTO.cs" />
-    <Compile Include="Migrations\201407311021141_InitialCreate.cs" />
-    <Compile Include="Migrations\201407311021141_InitialCreate.Designer.cs">
-      <DependentUpon>201407311021141_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201407311404551_Mig1.cs" />
-    <Compile Include="Migrations\201407311404551_Mig1.Designer.cs">
-      <DependentUpon>201407311404551_Mig1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\EntityModels\VisitDTO.cs" />
     <Compile Include="Models\IdentityModels\ApplicationUser.cs" />
@@ -341,35 +305,8 @@
     <Content Include="Scripts\test\e2e\README.md" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201407311021141_InitialCreate.resx">
-      <DependentUpon>201407311021141_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201407311404551_Mig1.resx">
-      <DependentUpon>201407311404551_Mig1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201408071314229_Comments-Update.resx">
-      <DependentUpon>201408071314229_Comments-Update.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201408201249341_Activity_Order_Added.resx">
-      <DependentUpon>201408201249341_Activity_Order_Added.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201408291051461_Drop_Place_Id_FK_in_Routes.resx">
-      <DependentUpon>201408291051461_Drop_Place_Id_FK_in_Routes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201409010918530_mig2.resx">
-      <DependentUpon>201409010918530_mig2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201409041236326_Comments.resx">
-      <DependentUpon>201409041236326_Comments.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201409080917054_SwitchToGooglePlaceId.resx">
-      <DependentUpon>201409080917054_SwitchToGooglePlaceId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201409261330344_Rename_XToComments_To_CommentsToX.resx">
-      <DependentUpon>201409261330344_Rename_XToComments_To_CommentsToX.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201409261351109_PhotosToX_Relations_Created.resx">
-      <DependentUpon>201409261351109_PhotosToX_Relations_Created.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201501141419480_Initial.resx">
+      <DependentUpon>201501141419480_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

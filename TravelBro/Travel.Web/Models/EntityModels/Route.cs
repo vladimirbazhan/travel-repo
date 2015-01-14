@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WebApplication1.Models.IdentityModels;
 
 namespace WebApplication1.Models.EntityModels
 {
@@ -14,6 +16,7 @@ namespace WebApplication1.Models.EntityModels
         public double Cost { get; set; }
         public int ActivityOrder { get; set; }
 
+        [Required]
         public int TripId { get; set; }
         [ForeignKey("TripId")]
         public virtual Trip Trip { get; set; }
@@ -23,5 +26,6 @@ namespace WebApplication1.Models.EntityModels
 
         public virtual Collection<Comment> Comments { get; private set; }
         public virtual Collection<Photo> Photos { get; private set; }
+        public virtual Collection<ApplicationUser> Members { get; private set; } 
     }
 }

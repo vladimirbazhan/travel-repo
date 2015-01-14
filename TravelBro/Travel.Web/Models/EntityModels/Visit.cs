@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.CompilerServices;
+using WebApplication1.Models.IdentityModels;
 
 namespace WebApplication1.Models.EntityModels
 {
@@ -16,11 +19,13 @@ namespace WebApplication1.Models.EntityModels
 
         public string GPlaceId { get; set; }
 
+        [Required]
         public int TripId { get; set; }
         [ForeignKey("TripId")]
         public virtual Trip Trip { get; set; }
 
         public virtual Collection<Comment> Comments { get; private set; }
         public virtual Collection<Photo> Photos { get; private set; }
+        public virtual Collection<ApplicationUser> Members { get; private set; } 
     }
 }

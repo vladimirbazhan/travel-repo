@@ -20,8 +20,8 @@ namespace WebApplication1.Models.IdentityModels
 
         public string VisibleName { get; set; }
 
-        public virtual Collection<Trip> Trips { get; private set; }
-        public virtual Collection<Photo> Photos { get; private set; }
-        public virtual Collection<Comment> Comments { get; private set; }
+        public virtual Collection<Trip> MemberInTrips { get; private set; }
+        public virtual Collection<Visit> MemberInVisits { get; private set; }
+        public virtual Collection<Route> MemberInRoutes { get; private set; } 
     }
 }
