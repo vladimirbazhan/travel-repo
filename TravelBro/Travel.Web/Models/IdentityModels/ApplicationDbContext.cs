@@ -1,10 +1,7 @@
-﻿using System;
-using System.Data.Entity;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
+﻿using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using WebApplication1.Migrations;
+using WebApplication1.Models.Conventions;
 using WebApplication1.Models.EntityModels;
 
 namespace WebApplication1.Models.IdentityModels
@@ -43,6 +40,8 @@ namespace WebApplication1.Models.IdentityModels
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Conventions.Add(new ManyToManyTableNameConvention());
         }
     }
 }
