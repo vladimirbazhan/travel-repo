@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -24,8 +25,8 @@ namespace WebApplication1.Models.EntityModels
         [ForeignKey("TripId")]
         public virtual Trip Trip { get; set; }
 
-        public virtual Collection<Comment> Comments { get; private set; }
-        public virtual Collection<Photo> Photos { get; private set; }
-        public virtual Collection<ApplicationUser> Members { get; private set; } 
+        public virtual ICollection<Comment> Comments { get; private set; }
+        public virtual ICollection<Photo> Photos { get; private set; }
+        public virtual ICollection<ApplicationUser> Members { get; private set; } 
     }
 }

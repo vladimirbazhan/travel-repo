@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using WebApplication1.Models.IdentityModels;
 
@@ -15,9 +16,9 @@ namespace WebApplication1.Models.EntityModels
 
         public virtual Comment ReplyTo { get; set; }
 
-        public virtual Collection<Trip> CommentsToTrips { get; set; }
-        public virtual Collection<Visit> CommentsToVisits { get; set; }
-        public virtual Collection<Route> CommentsToRoutes { get; set; }
-        public virtual Collection<Photo> CommentsToPhotos { get; set; } 
+        public virtual ICollection<Trip> CommentsToTrips { get; set; }
+        public virtual ICollection<Visit> CommentsToVisits { get; set; }
+        public virtual ICollection<Route> CommentsToRoutes { get; set; }
+        public virtual ICollection<Photo> CommentsToPhotos { get; set; } 
     }
 }

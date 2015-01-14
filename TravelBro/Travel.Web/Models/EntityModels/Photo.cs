@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using WebApplication1.Models.IdentityModels;
@@ -14,10 +15,10 @@ namespace WebApplication1.Models.EntityModels
 
         public virtual ApplicationUser Author { get; set; }
 
-        public virtual Collection<Comment> Comments { get; private set; }
+        public virtual ICollection<Comment> Comments { get; private set; }
 
-        public virtual Collection<Trip> PhotosToTrips { get; set; }
-        public virtual Collection<Visit> PhotosToVisits { get; set; }
-        public virtual Collection<Route> PhotosToRoutes { get; set; } 
+        public virtual ICollection<Trip> PhotosToTrips { get; set; }
+        public virtual ICollection<Visit> PhotosToVisits { get; set; }
+        public virtual ICollection<Route> PhotosToRoutes { get; set; } 
     }
 }

@@ -18,11 +18,11 @@ namespace WebApplication1.Models.EntityModels
 
         public virtual ApplicationUser Author { get; set; }
 
-        public virtual Collection<Route> Routes { get; private set; }
-        public virtual Collection<Visit> Visits { get; private set; }
+        public virtual ICollection<Route> Routes { get; private set; }
+        public virtual ICollection<Visit> Visits { get; private set; }
 
-        public virtual Collection<Comment> Comments { get; set; }
-        public virtual Collection<Photo> Photos { get; set; }
-        public virtual Collection<ApplicationUser> Members { get; set; } 
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Photo> Photos { get; set; }
+        public virtual ICollection<ApplicationUser> Members { get; set; } 
     }
 }
