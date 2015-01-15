@@ -1,5 +1,5 @@
 <header/>
-<form class="form-horizontal">
+<form class="form-horizontal" ng-submit="register()">
     <fieldset>
         <legend>Sign Up</legend>
         <div class="form-group">
@@ -28,8 +28,8 @@
     <div class="text-right">
         <div class="col-lg-4"></div>
         <div class="col-lg-4">
-            <button class="btn btn-default" tabindex="5" onclick="history.go(-1);">Cancel</button>
-            <button class="btn btn-primary" tabindex="4" ng-click="register();">Register</button>
+            <input type="button" class="btn btn-default" tabindex="5" value="Cancel" onclick="history.go(-1);">
+            <input type="button" class="btn btn-primary" tabindex="4" value="Register" ng-click="register();">
         </div>
         <div class="col-lg-4"></div>
     </div>
