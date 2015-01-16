@@ -188,6 +188,11 @@
     <Compile Include="Migrations\201501141419480_Initial.Designer.cs">
       <DependentUpon>201501141419480_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501141607284_ManyToManyTableName.cs" />
+    <Compile Include="Migrations\201501141607284_ManyToManyTableName.Designer.cs">
+      <DependentUpon>201501141607284_ManyToManyTableName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Conventions\ManyToManyTableNameConvention.cs" />
     <Compile Include="Models\EntityModels\CommentDTO.cs" />
     <Compile Include="Models\EntityModels\RouteDTO.cs" />
     <Compile Include="Models\EntityModels\TripDTO.cs" />
@@ -307,6 +312,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201501141419480_Initial.resx">
       <DependentUpon>201501141419480_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501141607284_ManyToManyTableName.resx">
+      <DependentUpon>201501141607284_ManyToManyTableName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
