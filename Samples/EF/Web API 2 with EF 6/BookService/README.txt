@@ -16,14 +16,14 @@
  IIS (local) Site Settigs:
     Site name - http://localhost:9810/
  
- Used Frameworks:
-    Web API 2.1
-    Visual Studio 2013 Update 2
-    Entity Framework 6
+ Frameworks & Tools:
     .NET 4.5
+    Visual Studio 2013 Update 2
+    Web API 2.1
+    Entity Framework 6.0.0
     Knockout.js 3.1
-    jQuery JavaScript Library v1.10.2
-    Bootstrap styling (http://getbootstrap.com/)
+    jQuery 1.10.2
+    Bootstrap styling 3.0.0 (http://getbootstrap.com/)
     
  Design:
     - single-page application (SPA)
@@ -61,7 +61,7 @@ beginning..
     - run command 'Update-Database' (executes that generated code above: EF created the DB *.mdf and call the Seed() method)
 
 1) How to change default Web API string to   e.g. /api/version2/AuthorLalala ??
-    - see API mapping in Global.asax or WebApiConfig.cs (like  routeTemplate: "api/{controller}/{id}")
+    - see API mapping in WebApiConfig.cs (like  routeTemplate: "api/{controller}/{id}")
     - use [Route] and [RoutePrefix] attribute for class or methods
     - http://www.asp.net/web-api/overview/web-api-routing-and-actions/attribute-routing-in-web-api-2
 

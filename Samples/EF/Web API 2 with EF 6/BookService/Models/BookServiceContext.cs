@@ -15,7 +15,7 @@ namespace BookService.Models
     
         public BookServiceContext() : base("name=BookServiceContext")
         {
-            // Enable tracing of the SQL queries that EF generates
+            // TODO AG: Enable tracing of the SQL queries that EF generates
 #if DEBUG
             this.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
 #endif

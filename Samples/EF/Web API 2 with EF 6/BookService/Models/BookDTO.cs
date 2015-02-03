@@ -1,6 +1,7 @@
 ﻿
 namespace BookService.Models
 {
+    // TODO AG: DTO for Book class
     /// <summary>
     /// Data Transfer Object for class Book
     /// </summary>

@@ -13,7 +13,7 @@ namespace BookService.Controllers
     /// Defines a Web API controller (here we DO NOT use default attribute routing for Web API-Uri !).
     /// The controller implements the REST API that clients use to perform CRUD operations on the list of Books.
     /// </summary>
-    [RoutePrefix("api/ver2/BooksNew")] // the attribute changes default Attribute Routing
+    [RoutePrefix("api/ver2/BooksNew")] // TODO AG: the attribute changes default Attribute Routing
     public class BooksController : ApiController
     {
         private BookServiceContext dbContext = new BookServiceContext();

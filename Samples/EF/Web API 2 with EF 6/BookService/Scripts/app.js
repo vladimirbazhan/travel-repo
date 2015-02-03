@@ -1,4 +1,5 @@
-﻿var ViewModel = function () {
+﻿// TODO AG: Knockout.js MVVM
+var ViewModel = function () {
     var booksUri = '/api/ver2/BooksNew/';
     var authorsUri = '/api/Authors/';
     var self = this;
