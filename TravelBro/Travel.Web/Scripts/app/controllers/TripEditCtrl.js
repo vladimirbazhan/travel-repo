@@ -9,13 +9,6 @@ define(['./module'], function (controllers) {
         $scope.photos = [];
 
         $scope.map = null;
-        setTimeout(function () {
-            var idleEventListener = google.maps.event.addListener($scope.map, 'idle', function (e) {
-                mapNavigateByTitle();
-                google.maps.event.removeListener(idleEventListener);
-            });
-        }, 0);
-
         $scope.mapOptions = {
             center: new google.maps.LatLng(31.203405, 7.382813),
             zoom: 2,
@@ -31,7 +24,7 @@ define(['./module'], function (controllers) {
 
         if ($scope.editMode) {
             $scope.trip = Backend.trips.get({ tripId: $routeParams.tripId }, function() {
-                $scope.$apply();
+                mapNavigateByTitle();
             }, function (err) {
                 Alerts.add('danger', JSON.stringify(err));
           });
