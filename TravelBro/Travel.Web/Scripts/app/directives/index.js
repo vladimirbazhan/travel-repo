@@ -7,5 +7,6 @@ define([
     './placeAutocomplete',
     './notificationArea',
     './nextOnEnter',
-    './photos'
+    './photos',
+    './map'
 ], function () {});

@@ -7,6 +7,22 @@ define(['./module'], function (controllers) {
         $scope.userName = Auth.getUserName();
         $scope.legend = $scope.editMode ? "Edit trip" : "Create trip";
         $scope.photos = [];
+
+        $scope.map = null;
+        setTimeout(function () {
+            var idleEventListener = google.maps.event.addListener($scope.map, 'idle', function (e) {
+                mapNavigateByTitle();
+                google.maps.event.removeListener(idleEventListener);
+            });
+        }, 0);
+
+        $scope.mapOptions = {
+            center: new google.maps.LatLng(31.203405, 7.382813),
+            zoom: 2,
+            minZoom: 1,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
         $scope.dateOptions = {
           showOn: "button",
           changeYear: true,
@@ -27,6 +43,7 @@ define(['./module'], function (controllers) {
           if ($scope.editMode) {
               Backend.trips.update({ tripId: $scope.trip.Id }, $scope.trip, function () {
                   Alerts.add('info', 'Changes saved');
+                  mapNavigateByTitle();
               }, function (err) {
                   Alerts.add('danger', 'Error ' + err.status + ': ' + err.statusText);
               });
@@ -39,8 +56,7 @@ define(['./module'], function (controllers) {
               });
           }
         };
-
-
+        
         $scope.uploadFiles = function () {
             $scope.photos.forEach(function (currPhoto) {
                 var form = new FormData();
@@ -125,5 +141,28 @@ define(['./module'], function (controllers) {
         $scope.addRoute = function () {
             $location.path($location.url() + '/route-new');
         }
+
+        // private methods
+        function mapNavigateByTitle() {
+            var nameWords = $scope.trip.Name.split(" ");
+            var curr = 0;
+            while (curr < nameWords.length) {
+                if (nameWords[curr][0] != nameWords[curr][0].toUpperCase()) {
+                    nameWords.splice(curr, 1);
+                } else {
+                    curr++;
+                }
+            }
+
+            if (nameWords.length == 0)
+                return;
+
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({ 'address': nameWords[0] }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    $scope.map.fitBounds(results[0].geometry.viewport || results[0].geometry.bounds);
+                }
+            });
+        };
     }]);
 });
