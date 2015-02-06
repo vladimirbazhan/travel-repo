@@ -1,0 +1,24 @@
+User should be able to:
+1. create easily visits.
+    - by selecting place on the map
+    - by typing place name in the field
+    - if something is selected on the map few variants should be offered for selection
+    - add description, time frame, spent money, photos to the place visited
+2. create easily routes:
+    - selecting start/end points (see selecting visit place)
+    - adding description, time frame, cost, transportation type, transport provider/vendor, photos
+3. move photos between items (trips, routes, visits).
+4. select main photo for every item
+5. reorder items by drag'n'dropping
+6. view trips in user-friendly manner (all the ordered items with description and photos, the whole trip on the map)
+7. send messages, share photos and other stuff to other users. 
+8. create groups of users, add groups/users to items
+9. manage profile settings using user page
+10. support tags in items
+11. filter/search trips by tags, dates, countries, regions, etc. Tags should be hyperlinks with filtering on the click
+12. plan trips (create future trip skeleton)
+13. fill up trip skeleton
+14. receive reminder notifications about planned items
+15. divide trips to the parts and show parts separately
+16. provide different view templates for showing trips
+17. multilingual 
