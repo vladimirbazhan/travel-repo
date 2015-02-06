@@ -44,6 +44,6 @@ require.config({
         }
     },
 
-    // kick start application
-    deps: ['./boot']
+    // kick start application, load common utils
+    deps: ['./boot', './utils/standartTypeExtensions']
 });
