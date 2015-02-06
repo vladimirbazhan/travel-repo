@@ -277,6 +277,7 @@
     <Content Include="Scripts\app\services\Auth.js" />
     <Content Include="Scripts\app\services\Backend.js" />
     <Content Include="Scripts\app\services\Entity.js" />
+    <Content Include="Scripts\app\services\GMapsUtils.js" />
     <Content Include="Scripts\app\services\index.js" />
     <Content Include="Scripts\app\services\module.js" />
     <Content Include="Scripts\app\utils\standartTypeExtensions.js" />

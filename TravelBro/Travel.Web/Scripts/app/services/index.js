@@ -9,5 +9,6 @@ define([
     './Backend',
     './Auth',
     './Entity',
-    './Alerts'
+    './Alerts',
+    './GMapsUtils'
 ], function () {});
