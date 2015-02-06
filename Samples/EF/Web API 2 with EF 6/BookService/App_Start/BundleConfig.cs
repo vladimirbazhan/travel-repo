@@ -31,7 +31,7 @@ namespace BookService
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862
-            // TODO AG: uncomment this
+            // TODO AG: JavaScript minimizing On/Off 
             BundleTable.EnableOptimizations = true;
         }
     }
