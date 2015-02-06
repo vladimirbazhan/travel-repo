@@ -19,14 +19,19 @@ define(['./module'], function (directives) {
 
                 var map = new google.maps.Map(element.get()[0], {});
                 var service = new google.maps.places.PlacesService(map);
-                service.getDetails({
-                    placeId: visit.GPlaceId
-                }, function(place, status) {
-                    if (status == google.maps.places.PlacesServiceStatus.OK) {
-                        visit.Place = place;
-                        element.append(buildHtml(visit));
-                    }
-                });
+                var exec = function() {
+                    service.getDetails({
+                        placeId: visit.GPlaceId
+                    }, function (place, status) {
+                        if (status == google.maps.places.PlacesServiceStatus.OK) {
+                            visit.Place = place;
+                            element.append(buildHtml(visit));
+                        } else {
+                            setTimeout(exec, 100);
+                        }
+                    });
+                }
+                exec();
             }
         };
     }]);
