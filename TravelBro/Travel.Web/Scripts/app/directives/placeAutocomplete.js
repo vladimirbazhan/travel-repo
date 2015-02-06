@@ -6,11 +6,20 @@
                 details: '=',
                 placeId: '=',
                 options: '=',
-                placeObject: '='
+                placeObject: '=',
+                map: '='
             },
             restrict: 'A',
             link: function (scope, element, attrs) {
                 var opts = {};
+
+                if (scope.map) {
+                    $.extend(opts, { bounds: scope.map.getBounds() });
+                    scope.map.bounds_changed = function () {
+                        scope.placeObject.setBounds(scope.map.getBounds());
+                    }
+                }
+
                 scope.placeObject = new google.maps.places.Autocomplete(element[0], opts);
                 google.maps.event.addListener(scope.placeObject, 'place_changed', function () {
                     scope.$apply(function () {
