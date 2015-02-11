@@ -105,7 +105,7 @@
                         });
                         if (requestData) {
                             this.callTimes++;
-                            requestData.func(zoom);
+                            requestData.func.call(this, zoom);
                         }
                         break;
                     }
