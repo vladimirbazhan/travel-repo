@@ -3,6 +3,14 @@
     <fieldset>
         <legend>{{legend}}</legend>    
         <div class="form-group">
+            <map class="col-lg-8" id="map_canvas" style="height: 480px;" map="map" control="mapControl" options="mapOptions"></map>
+            <div class="col-lg-4 list-group">
+                <span ng-repeat="place in nearbyPlaces" class="list-group-item">
+                    <a href>{{place.name}}</a>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
             <label for="select" class="col-lg-2 control-label">Start Place</label>
             <div class="col-lg-10">
                 <input type="text" place-autocomplete class="form-control" placeholder="Enter a start place"

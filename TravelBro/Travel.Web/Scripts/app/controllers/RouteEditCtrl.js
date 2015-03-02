@@ -16,6 +16,19 @@
             autoSize: true
         };
 
+        $scope.map = null;
+        $scope.mapControl = {};
+        $scope.mapOptions = {
+            center: new google.maps.LatLng(-34.397, 150.644),
+            zoom: 5,
+            minZoom: 1,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        setTimeout(function () {
+            $scope.mapControl.setContextMenu();
+        }, 0);
+
         if ($scope.editMode) {
             $scope.route = {};
         } else {
