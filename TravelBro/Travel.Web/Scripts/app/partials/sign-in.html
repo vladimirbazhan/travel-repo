@@ -1,29 +1,29 @@
 <header/>
-<form class="form-horizontal" ng-submit="ok()">
-  <fieldset>
-    <legend>Sign In</legend>    
-      <div class="form-group">
-          <label for="inputMail" class="col-lg-4 control-label">Email</label>      
-          <div class="col-lg-4">
-              <input next-on-enter type="text" class="form-control" tabindex="1" id="inputEmail" placeholder="Email" value="{{mail}}" ng-model="mail">
-          </div>
-          <div class="col-lg-4"></div>
-      </div>
-      <div class="form-group">
-          <label for="textPassword" class="col-lg-4 control-label">Password</label>
-          <div class="col-lg-4">
-              <input type="password" class="form-control" tabindex="2" id="inputPassword" placeholder="Password" value="{{password}}" ng-model="password">
-          </div>
-          <div class="col-lg-4"></div>
-      </div>
-      <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" />
-  </fieldset>  
-  <div class="text-right">
-    <div class="col-lg-4"></div>
-    <div class="col-lg-4">
-        <a href="#/sign-up"><button class="btn btn-success" tabindex="4">Sign Up</button></a>
-        <a class="btn btn-primary" tabindex="3" ng-click="ok();">Ok</a>
+<form class="form-horizontal" ng-submit="signInVm.onOk()">
+    <fieldset>
+        <legend>Sign In</legend>
+        <div class="form-group">
+            <label for="inputMail" class="col-lg-4 control-label">Email</label>
+            <div class="col-lg-4">
+                <input next-on-enter type="text" class="form-control" tabindex="1" id="inputEmail" placeholder="Email" value="{{signInVm.signInData.mail}}" ng-model="signInVm.signInData.mail">
+            </div>
+            <div class="col-lg-4"></div>
+        </div>
+        <div class="form-group">
+            <label for="textPassword" class="col-lg-4 control-label">Password</label>
+            <div class="col-lg-4">
+                <input type="password" class="form-control" tabindex="2" id="inputPassword" placeholder="Password" value="{{signInVm.signInData.password}}" ng-model="signInVm.signInData.password">
+            </div>
+            <div class="col-lg-4"></div>
+        </div>
+        <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" />
+    </fieldset>
+    <div class="text-right">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+            <a href="#/sign-up"><button class="btn btn-success" tabindex="4">Sign Up</button></a>
+            <a class="btn btn-primary" tabindex="3" ng-click="signInVm.onOk();">Ok</a>
+        </div>
+        <div class="col-lg-4"></div>
     </div>
-    <div class="col-lg-4"></div>
-  </div>
 </form>

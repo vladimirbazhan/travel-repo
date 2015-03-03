@@ -5,11 +5,13 @@ define(['app'], function (app) {
         $routeProvider.
             when('/sign-in', {
                 templateUrl: '/Scripts/app/partials/sign-in.html',
-                controller: 'SignInCtrl'
+                controller: 'SignInCtrl',
+                controllerAs: 'signInVm'
             }).
             when('/sign-up', {
                 templateUrl: '/Scripts/app/partials/sign-up.html',
-                controller: 'SignUpCtrl'
+                controller: 'SignUpCtrl',
+                controllerAs: 'signUpVm'
             }).
             when('/trips', {
                 templateUrl: '/Scripts/app/partials/trip-list.html',

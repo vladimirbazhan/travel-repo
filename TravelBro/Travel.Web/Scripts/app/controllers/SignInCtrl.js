@@ -1,15 +1,25 @@
-define(['./module'], function (controllers) {
+define(['./module'], function(controllers) {
     'use strict';
-    controllers.controller('SignInCtrl', ['$scope', '$location', 'Auth', 'Alerts', function ($scope, $location, Auth, Alerts) {
-        $scope.mail = "";
-        $scope.password = "";
+    controllers.controller('SignInCtrl', SignInCtrl);
 
-        $scope.ok = function () {
-          Auth.signIn($scope.mail, $scope.password, function() {
-              $location.path('/trips');
-          }, function (res) {
-              Alerts.add('danger', res.error_description);
-          });
+    SignInCtrl.$inject = ['$location', 'Auth', 'Alerts'];
+
+    function SignInCtrl($location, Auth, Alerts) {
+        var vm = {
+            signInData: {
+                mail: "",
+                password: "",
+            },
+            onOk: onOk
+        };
+        $.extend(this, vm);
+
+        function onOk() {
+            Auth.signIn(vm.signInData.mail, vm.signInData.password, function() {
+                $location.path('/trips');
+            }, function(res) {
+                Alerts.add('danger', res.error_description);
+            });
         }
-    }]);
+    };
 });
