@@ -1,16 +1,29 @@
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('TripListCtrl', ['$scope', '$location', '$route', '$window', 'Backend', 'Auth', 'Entity', function ($scope, $location, $route, $window, Backend, Auth, Entity) {
-        $scope.trips = Backend.trips.query();
-        $scope.tripsOrder = 'Name';
-        $scope.isCollapsed = true;
-        $scope.commentText = "";
+    controllers.controller('TripListCtrl', TripListCtrl);
 
-        $scope.create = function() {
-          $location.path('/trips/new');
+    TripListCtrl.$inject = ['$location', '$route', '$window', 'Backend', 'Auth', 'Entity'];
+
+    function TripListCtrl($location, $route, $window, Backend, Auth, Entity) {
+        var vm = {
+            trips: Backend.trips.query(),
+            tripsOrder: 'Name',
+            commentText: "",
+            create: function() {
+                $location.path('/trips/new');
+            },
+            sendComment: sendComment
         };
+        $.extend(this, vm);
 
-        $scope.sendComment = function (trip) {
+        // collapse all comments
+        vm.trips.$promise.then(function(items) {
+            items.forEach(function(item) {
+                item.isCommentsCollapsed = true;
+            });
+        });
+
+        function sendComment(trip) {
             if (!trip.commentText) {
                 return;
             }
@@ -22,5 +35,5 @@ define(['./module'], function (controllers) {
                 trip.commentText = "";
             });
         }
-  }]);
+  };
 });

@@ -1,19 +1,19 @@
 <header />
-<button type="button" class="btn btn-link" ng-click="create()"><span class="glyphicon glyphicon-plus"></span>&nbsp;New trip</button>
+<button type="button" class="btn btn-link" ng-click="tripListVm.create()"><span class="glyphicon glyphicon-plus"></span>&nbsp;New trip</button>
 <br>
 <div class="list-group">
-    <span ng-repeat="trip in trips | filter : headerFilter | orderBy : tripsOrder" class="list-group-item">
+    <span ng-repeat="trip in tripListVm.trips | filter : headerVm.headerFilter | orderBy : tripListVm.tripsOrder" class="list-group-item">
         <a href="#/trips/{{trip.Id}}"><bold><h4 class="list-group-item-heading">{{trip.Name}}</h4></bold></a>
         <p class="list-group-item-text">{{trip.Description}}</p>
-        <a class="btn-link" ng-class="{ dropup: !isCollapsed }" style=" color:grey;" ng-click="isCollapsed = !isCollapsed"><h6>Comments ({{trip.Comments.length}})<span class="caret"></span></h6></a>
-        <div collapse="isCollapsed">
+        <a class="btn-link" ng-class="{ dropup: !trip.isCommentsCollapsed }" style="color: grey;" ng-click="trip.isCommentsCollapsed = !trip.isCommentsCollapsed"><h6>Comments ({{trip.Comments.length}})<span class="caret"></span></h6></a>
+        <div collapse="trip.isCommentsCollapsed">
             <div ng-repeat="comment in trip.Comments" class="well well-sm" style="margin-left: 0px;">
                 <p>{{comment.Text}}</p>
                 <p style="text-align: right;"><i>({{comment.Author.Email}})</i></p>
             </div>
             <textarea class="form-control" ng-model="trip.commentText"></textarea>
             <div class="text-right" style="margin-top: 10px;">
-                <button class="btn btn-default" ng-click="sendComment(trip)">Send</button>
+                <button class="btn btn-default" ng-click="tripListVm.sendComment(trip)">Send</button>
             </div>
         </div>
     </span>

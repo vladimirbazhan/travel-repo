@@ -10,7 +10,6 @@ define([
     './TripEditCtrl',
     './SignInCtrl',
     './SignUpCtrl',
-    './PlaceListCtrl',
     './VisitEditCtrl',
     './RouteEditCtrl',
     './AlertsCtrl'

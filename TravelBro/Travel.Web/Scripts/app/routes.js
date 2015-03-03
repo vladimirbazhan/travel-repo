@@ -13,7 +13,8 @@ define(['app'], function (app) {
             }).
             when('/trips', {
                 templateUrl: '/Scripts/app/partials/trip-list.html',
-                controller: 'TripListCtrl'
+                controller: 'TripListCtrl',
+                controllerAs: 'tripListVm'
             }).
             when('/trips/:tripId', {
                 templateUrl: '/Scripts/app/partials/trip-edit.html',
@@ -22,10 +23,6 @@ define(['app'], function (app) {
             when('/trips/new', {
                 templateUrl: '/Scripts/app/partials/trip-edit.html',
                 controller: 'TripEditCtrl'
-            }).
-            when('/places', {
-                templateUrl: '/Scripts/app/partials/place-list.html',
-                controller: 'PlaceListCtrl'
             }).
             when('/trips/:tripId/visit-new', {
                 templateUrl: '/Scripts/app/partials/visit-edit.html',

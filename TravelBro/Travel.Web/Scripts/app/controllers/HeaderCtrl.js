@@ -1,18 +1,25 @@
 ﻿define(['./module'], function (controllers) {
     'use strict';
+    controllers.controller('HeaderCtrl', HeaderCtrl);
 
-    controllers.controller('HeaderCtrl', ['$scope', '$route', '$location', 'Auth', function ($scope, $route, $location, Auth) {
-        $scope.signedIn = Auth.token.isSet();
-        $scope.userName = Auth.getUserName();
-        $scope.headerFilter = '';
+    HeaderCtrl.$inject = ['$route', '$location', 'Auth'];
 
-        $scope.logOut = function () {
+    function HeaderCtrl($route, $location, Auth) {
+        var vm = {
+            signedIn: Auth.token.isSet(),
+            userName: Auth.getUserName(),
+            headerFilter: '',
+            logOut: logOut,
+            isActive: function(viewLoc) {
+                 return viewLoc == $location.path();
+            }
+        }
+        $.extend(this, vm);
+
+        // private methods
+        function logOut() {
             Auth.logOut();
             $route.reload();
         };
-
-        $scope.isActive = function(viewLoc) {
-            return viewLoc == $location.path();
-        };
-    }]);
+    };
 });

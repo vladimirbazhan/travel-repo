@@ -242,7 +242,6 @@
     <Content Include="Scripts\app\controllers\HeaderCtrl.js" />
     <Content Include="Scripts\app\controllers\index.js" />
     <Content Include="Scripts\app\controllers\module.js" />
-    <Content Include="Scripts\app\controllers\PlaceListCtrl.js" />
     <Content Include="Scripts\app\controllers\RouteEditCtrl.js" />
     <Content Include="Scripts\app\controllers\SignInCtrl.js" />
     <Content Include="Scripts\app\controllers\SignUpCtrl.js" />
@@ -265,7 +264,6 @@
     <Content Include="Scripts\app\main.js" />
     <Content Include="Scripts\app\partials\header.html" />
     <Content Include="Scripts\app\partials\notificationArea.html" />
-    <Content Include="Scripts\app\partials\place-list.html" />
     <Content Include="Scripts\app\partials\route-edit.html" />
     <Content Include="Scripts\app\partials\sign-in.html" />
     <Content Include="Scripts\app\partials\sign-up.html" />
