@@ -20,7 +20,8 @@ define(['app'], function (app) {
             }).
             when('/trips/:tripId', {
                 templateUrl: '/Scripts/app/partials/trip-edit.html',
-                controller: 'TripEditCtrl'
+                controller: 'TripEditCtrl',
+                controllerAs: 'vm'
             }).
             when('/trips/new', {
                 templateUrl: '/Scripts/app/partials/trip-edit.html',

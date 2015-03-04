@@ -249,10 +249,11 @@
     <Content Include="Scripts\app\controllers\TripListCtrl.js" />
     <Content Include="Scripts\app\controllers\VisitEditCtrl.js" />
     <Content Include="Scripts\app\css\app.css" />
-    <Content Include="Scripts\app\directives\addTripItem.js" />
+    <Content Include="Scripts\app\directives\dropdown.js" />
     <Content Include="Scripts\app\directives\map.js" />
     <Content Include="Scripts\app\directives\nextOnEnter.js" />
     <Content Include="Scripts\app\directives\notificationArea.js" />
+    <Content Include="Scripts\app\directives\onEvents.js" />
     <Content Include="Scripts\app\directives\photos.js" />
     <Content Include="Scripts\app\directives\placeAutocomplete.js" />
     <Content Include="Scripts\app\directives\header.js" />

@@ -3,10 +3,11 @@ define([
     './visit',
     './route',
     './tripItems',
-    './addTripItem',
     './placeAutocomplete',
     './notificationArea',
     './nextOnEnter',
     './photos',
-    './map'
+    './map',
+    './dropdown',
+    './onEvents'
 ], function () {});
