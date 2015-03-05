@@ -1,33 +1,41 @@
 /* app css stylesheet */
 
-body {
-  padding-top: 70px;
-}
+body { padding-top: 70px; }
 
 .notification-area {
-  position: fixed;
-  bottom: 1em;
-  right: 1em;
-  display: flex;
-  flex-direction: column-reverse;
+    bottom: 1em;
+    display: flex;
+    flex-direction: column-reverse;
+    position: fixed;
+    right: 1em;
 }
 
 .btn-file {
-  position: relative;
-  overflow: hidden;
+    overflow: hidden;
+    position: relative;
 }
 
-div.photos div.col-md-3 {
-    padding: 5px;
-}
+div.photos div.col-md-3 { padding: 5px; }
 
 .btn-file > input[type="file"] {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 0;
-  padding: 0;
-  cursor: pointer;
-  filter: alpha(opacity=0);
-  opacity: 0;
+    cursor: pointer;
+    filter: alpha(opacity=0);
+    margin: 0;
+    opacity: 0;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.mapcontextmenu .dropdown-menu > li > a {
+    padding: 2px 10px;
+}
+
+.mapcontextmenu .dropdown-menu {
+    min-width: 0px;
+}
+
+.mapcontextmenu .dropdown-menu .divider {
+    margin: 3px 0;
 }

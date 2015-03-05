@@ -3,11 +3,19 @@
     <fieldset>
         <legend>{{legend}}</legend>    
         <div class="form-group">
+            <map class="col-lg-8" id="map_canvas" style="height: 480px;" map="map" control="mapControl" options="mapOptions"></map>
+            <div class="col-lg-4 list-group">
+                <span ng-repeat="place in nearbyPlaces" class="list-group-item">
+                    <a href ng-click="selectPlace(place)">{{place.name}}</a>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
             <label for="select" class="col-lg-2 control-label">Start Place</label>
             <div class="col-lg-10">
                 <input type="text" place-autocomplete class="form-control" placeholder="Enter a start place"
                        details="startPlace.details" options="startPlace.options" place-object="startPlace.placeObject"
-                       place-id="route.StartGPlaceId" />
+                       place-id="route.StartGPlaceId" map="map" value="{{startPlace.formatted_address}}" ng-model="startPlace.formatted_address" />
             </div>
         </div>
         <div class="form-group">
@@ -15,7 +23,7 @@
             <div class="col-lg-10">
                 <input type="text" place-autocomplete class="form-control" placeholder="Enter a finish place"
                        details="finishPlace.details" options="finishPlace.options" place-object="finishPlace.placeObject"
-                       place-id="route.FinishGPlaceId" />
+                       place-id="route.FinishGPlaceId" map="map" value="{{finishPlace.formatted_address}}" ng-model="finishPlace.formatted_address" />
             </div>
         </div>
         <div class="form-group">
@@ -43,7 +51,7 @@
         </div>
     </fieldset>
     <div class="text-right">
-        <button class="btn btn-default" onclick="history.go(-1);">Cancel</button>
+        <button class="btn btn-default" onclick=" history.go(-1); ">Cancel</button>
         <button class="btn btn-primary" ng-click="save();">Save</button>
     </div>
 </form>
