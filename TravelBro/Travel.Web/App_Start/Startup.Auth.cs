@@ -29,7 +29,7 @@ namespace WebApplication1
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
-            app.UseCookieAuthentication(new CookieAuthenticationOptions());
+            //app.UseCookieAuthentication(new CookieAuthenticationOptions());
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Configure the application for OAuth based flow
