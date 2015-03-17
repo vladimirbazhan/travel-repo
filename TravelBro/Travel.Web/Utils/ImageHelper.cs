@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -83,6 +84,12 @@ namespace WebApplication1.Utils
             //set the quality parameter for the codec
             encoderParams.Param[0] = qualityParam;
             //save the image using the codec and the parameters
+
+            string imgPath = Path.GetDirectoryName(path);
+            if (!Directory.Exists(imgPath))
+            {
+                Directory.CreateDirectory(imgPath);
+            }
             image.Save(path, jpegCodec, encoderParams);
         }
 
