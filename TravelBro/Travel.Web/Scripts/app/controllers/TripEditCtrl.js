@@ -75,57 +75,43 @@ define(['./module'], function(controllers) {
 
         function uploadFiles() {
             vm.photos.forEach(function(currPhoto) {
-                var form = new FormData();
-                form.append('photo[]', currPhoto);
-
-                // TODO: implement via service
-                $.ajax({
-                    url: '/api/trips/' + vm.trip.Id + '/photos',
-                    data: form,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    type: 'POST',
-                    xhr: function() {
-                        var myXhr = $.ajaxSettings.xhr();
-                        if (myXhr.upload) {
-                            myXhr.upload.addEventListener('progress', function(e) {
-                                $scope.$apply(function() {
-                                    var percentCompleted;
-                                    if (e.lengthComputable) {
-                                        percentCompleted = Math.round(e.loaded / e.total * 100);
-                                        if (percentCompleted < 1) {
-                                            currPhoto.uploadStatus = 'Uploading...';
-                                        } else if (percentCompleted == 100) {
-                                            currPhoto.uploadStatus = 'Saving...';
-                                        } else {
-                                            currPhoto.uploadStatus = percentCompleted + '%';
-                                        }
-                                    } else {
-                                        currPhoto.uploadStatus = "Length is not computable";
-                                    }
-                                });
-                            }, false);
-                        }
-                        return myXhr;
-                    }
-                }).done(function(response) {
-                    $scope.$apply(function() {
-                        currPhoto.uploadStatus = 'Done';
-                        var totalDone = 0;
-                        vm.photos.forEach(function(photo) {
-                            if (photo.uploadStatus == 'Done') {
-                                totalDone++;
+                Backend.trips.savePhoto({ tripId: vm.trip.Id }, currPhoto, {
+                    onprogress: function (e) {
+                        $scope.$apply(function () {
+                            var percentCompleted;
+                            if (e.lengthComputable) {
+                                percentCompleted = Math.round(e.loaded / e.total * 100);
+                                if (percentCompleted < 1) {
+                                    currPhoto.uploadStatus = 'Uploading...';
+                                } else if (percentCompleted == 100) {
+                                    currPhoto.uploadStatus = 'Saving...';
+                                } else {
+                                    currPhoto.uploadStatus = percentCompleted + '%';
+                                }
+                            } else {
+                                currPhoto.uploadStatus = "Length is not computable";
                             }
                         });
-                        if (totalDone == vm.photos.length) {
-                            Alerts.add('info', 'Photos Saved');
-                            $route.reload();
-                        }
-                    });
-                }).fail(function(err) {
-                    currPhoto.uploadStatus = 'Failed';
-                    Alerts.add('danger', err.Message);
+                    },
+                    ondone: function (response) {
+                        $scope.$apply(function () {
+                            currPhoto.uploadStatus = 'Done';
+                            var totalDone = 0;
+                            vm.photos.forEach(function (photo) {
+                                if (photo.uploadStatus == 'Done') {
+                                    totalDone++;
+                                }
+                            });
+                            if (totalDone == vm.photos.length) {
+                                Alerts.add('info', 'Photos Saved');
+                                $route.reload();
+                            }
+                        });
+                    },
+                    onfail: function (err) {
+                        currPhoto.uploadStatus = 'Failed';
+                        Alerts.add('danger', err.Message);
+                    }
                 });
             });
         };

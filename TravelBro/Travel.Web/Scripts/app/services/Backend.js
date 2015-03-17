@@ -34,6 +34,31 @@
         return wrappedResource;
     };
 
+    function getTripCustomActions(Auth) {
+        return {
+            savePhoto: function(params, photo, handlers) {
+                var form = new FormData();
+                form.append('photo[]', photo);
+                $.ajax({
+                    url: '/api/trips/' + params.tripId + '/photos',
+                    data: form,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    headers: { 'Authorization': Auth.token.get() },
+                    xhr: function () {
+                        var myXhr = $.ajaxSettings.xhr();
+                        if (myXhr.upload) {
+                            myXhr.upload.addEventListener('progress', handlers.onprogress, false);
+                        }
+                        return myXhr;
+                    }
+                }).done(handlers.ondone).fail(handlers.onfail);
+            }
+        }
+    }
+
     services.factory('Backend', ['$resource', 'Auth', function ($resource, Auth) {
         var authHeaders = {
             transformRequest: function (data, headersGetter) {
@@ -88,7 +113,7 @@
                 'save': { url: '/api/routes', method: 'POST' }
             })
         };
-
+        
         var handleTrip = function(trip) {
             trip.Id = parseInt(trip.Id);
             trip.Comments = trip.Comments || [];
@@ -121,6 +146,7 @@
         service.trips = wrapActions(service.trips,
             ['query', 'get'],
             [successHandlers.trips.query, successHandlers.trips.get]);
+        $.extend(service.trips, getTripCustomActions(Auth));
 
         return service;
     }]);
