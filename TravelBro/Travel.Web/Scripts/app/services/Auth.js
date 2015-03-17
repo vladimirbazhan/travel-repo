@@ -4,6 +4,10 @@ define(['./module'], function (services) {
         var tokenVal = null;
         var token = {
             set: function (tokenData) {
+                if (typeof tokenData === 'string') {
+                    tokenData = JSON.parse(tokenData);
+                }
+
                 if (tokenData) {
                     tokenVal = tokenData.token_type + ' ' + tokenData.access_token;
                 } else {
