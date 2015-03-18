@@ -1,13 +1,19 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using Microsoft.AspNet.Identity.EntityFramework;
 using WebApplication1.Migrations;
 using WebApplication1.Models.Conventions;
 using WebApplication1.Models.EntityModels;
+using WebGrease.Css.Extensions;
 
 namespace WebApplication1.Models.IdentityModels
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        // entity processing delegates
+        public delegate void ProcessPhotoDelegate(Photo photo);
+
         private static bool _dbInitialized = false;
 
         public ApplicationDbContext()
@@ -29,6 +35,18 @@ namespace WebApplication1.Models.IdentityModels
         {
             Initialize();
             return new ApplicationDbContext();
+        }
+        
+        public void ClearUnusedPhotos(ProcessPhotoDelegate processPhoto)
+        {
+            // TODO: performance issues could arise because we fetch too much data from DB, remember about it
+            // all photos
+            var photoes = Photos.Include(x => x.PhotosToRoutes).Include(x => x.PhotosToTrips).Include(x => x.PhotosToVisits).ToList();
+            // unused photos
+            var unusedPhotos = photoes.Where(x => x.PhotosToRoutes.Count == 0 && x.PhotosToTrips.Count == 0 && x.PhotosToVisits.Count == 0);
+            unusedPhotos.ForEach(x => processPhoto(x));
+            Photos.RemoveRange(unusedPhotos);
+            SaveChanges();
         }
         
         public DbSet<Trip> Trips { get; set; }

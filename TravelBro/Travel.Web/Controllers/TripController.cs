@@ -135,6 +135,8 @@ namespace WebApplication1.Controllers
                     return Request.CreateResponse(HttpStatusCode.Unauthorized);
                 }
 
+                // TODO: crappy solution, change it using DI service
+                repo.PhotoLocationPath = _fileNameProvider.FileSaveLocation;
                 repo.Remove(id);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
@@ -253,8 +255,7 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public HttpResponseMessage PhotosGet(string photoId)
         {
-            string fileSaveLocation = HttpContext.Current.Server.MapPath("~/App_Data/Images");
-            string path = fileSaveLocation + "\\" + photoId;
+            string path = _fileNameProvider.FileSaveLocation + photoId;
             var fileStream = File.OpenRead(path);
             {
                 byte[] fileData = new byte[fileStream.Length];

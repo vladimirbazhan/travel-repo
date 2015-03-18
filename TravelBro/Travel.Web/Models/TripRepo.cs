@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Web;
 using WebApplication1.Models.EntityModels;
 using WebApplication1.Models.IdentityModels;
@@ -11,6 +13,8 @@ namespace WebApplication1.Models
 {
     public class TripRepo : ITripRepo, IDisposable
     {
+        public string PhotoLocationPath { get; set; }
+
         public TripRepo()
         {
             _context = new ApplicationDbContext();
@@ -48,7 +52,7 @@ namespace WebApplication1.Models
                 _context.Trips.Remove(trip);
                 _context.SaveChanges();
             }
-                
+            CleanUpPhotos();
         }
 
         public bool Update(Trip item)
@@ -99,6 +103,18 @@ namespace WebApplication1.Models
         public void Dispose()
         {
             _context.Dispose();
+        }
+
+        private void CleanUpPhotos()
+        {
+            _context.ClearUnusedPhotos(x =>
+            {
+                try
+                {
+                    File.Delete(PhotoLocationPath + x.ImagePath);
+                }
+                catch(Exception){}
+            });
         }
     }
 }
