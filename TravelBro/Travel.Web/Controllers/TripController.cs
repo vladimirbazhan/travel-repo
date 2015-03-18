@@ -77,27 +77,29 @@ namespace WebApplication1.Controllers
                 }
                 if (res.IsPrivate && res.Author.Id != User.Identity.GetUserId())
                 {
-                    return Unauthorized(null);
+                    return Unauthorized();
                 }
                 return Ok(new TripDTO(res));
             }
         }
 
         [Authorize]
-        public HttpResponseMessage PostTrip(Trip item)
+        public IHttpActionResult PostTrip(Trip item)
         {
             using (var repo = new TripRepo())
             {
                 string id = User.Identity.GetUserId();
                 var usr = repo.Context.Users.FirstOrDefault(x => x.Id == id);
 
+                if (usr == null)
+                {
+                    return Unauthorized();
+                }
+
                 item.Author = usr;
                 Trip res = repo.Add(item);
-                var response = Request.CreateResponse<TripDTO>(HttpStatusCode.Created, new TripDTO(res));
 
-                string uri = Url.Link("DefaultApi", new { Id = res.Id });
-                response.Headers.Location = new Uri(uri);
-                return response;
+                return CreatedAtRoute("DefaultApi", new { id = res.Id }, new TripDTO(res));
             }
         }
 
