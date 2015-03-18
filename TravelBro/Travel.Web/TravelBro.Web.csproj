@@ -192,6 +192,10 @@
     <Compile Include="Migrations\201501141607284_ManyToManyTableName.Designer.cs">
       <DependentUpon>201501141607284_ManyToManyTableName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503181548440_Photos_Comments_AreFirstPlace.cs" />
+    <Compile Include="Migrations\201503181548440_Photos_Comments_AreFirstPlace.Designer.cs">
+      <DependentUpon>201503181548440_Photos_Comments_AreFirstPlace.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Conventions\ManyToManyTableNameConvention.cs" />
     <Compile Include="Models\EntityModels\CommentDTO.cs" />
     <Compile Include="Models\EntityModels\RouteDTO.cs" />
@@ -317,6 +321,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501141607284_ManyToManyTableName.resx">
       <DependentUpon>201501141607284_ManyToManyTableName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503181548440_Photos_Comments_AreFirstPlace.resx">
+      <DependentUpon>201503181548440_Photos_Comments_AreFirstPlace.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

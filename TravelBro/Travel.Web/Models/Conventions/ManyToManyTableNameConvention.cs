@@ -17,12 +17,34 @@ namespace WebApplication1.Models.Conventions
             if (properties.Count == 2 &&
                 properties.All(x => x.Name.EndsWith("_ID", StringComparison.OrdinalIgnoreCase)))
             {
-                set.Table = properties.Aggregate(new StringBuilder(), (sb, next) =>
+                // CommentsTo and PhotosTo should go the first place in the table name
+                List<string> tmpProps = new List<string>(properties.Select(x => x.Name));
+                
+
+                bool moved = MovePropertyToFirstPlace("comment_id", tmpProps);
+                if (!moved)
+                {
+                    MovePropertyToFirstPlace("photo_id", tmpProps);
+                }
+
+                set.Table = tmpProps.Aggregate(new StringBuilder(), (sb, next) =>
                 {
                     sb = sb.Length == 0 ? sb : sb.Append("To");
-                    return sb.Append(next.Name.Substring(0, next.Name.Length - 3)).Append('s');
+                    return sb.Append(next.Substring(0, next.Length - 3)).Append('s');
                 }).ToString();
             }
+        }
+
+        private bool MovePropertyToFirstPlace(string propId, List<string> props)
+        {
+            int reqPropIndex =
+                props.FindIndex(
+                    x => (new[] { propId }).Contains(x, StringComparer.OrdinalIgnoreCase));
+            if (reqPropIndex == 1)
+            {
+                props.Reverse();
+            }
+            return reqPropIndex != -1;
         }
     }
 }
