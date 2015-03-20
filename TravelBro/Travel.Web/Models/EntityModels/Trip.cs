@@ -7,9 +7,8 @@ using WebApplication1.Models.IdentityModels;
 
 namespace WebApplication1.Models.EntityModels
 {
-    public class Trip
+    public class Trip : Entity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime DateFrom { get; set; }
@@ -23,6 +22,15 @@ namespace WebApplication1.Models.EntityModels
 
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Photo> Photos { get; set; }
-        public virtual ICollection<ApplicationUser> Members { get; set; } 
+        public virtual ICollection<ApplicationUser> Members { get; set; }
+
+        public void Merge(Trip other)
+        {
+            Name = other.Name;
+            Description = other.Description;
+            DateFrom = other.DateFrom;
+            DateTo = other.DateTo;
+            IsPrivate = other.IsPrivate;
+        }
     }
 }

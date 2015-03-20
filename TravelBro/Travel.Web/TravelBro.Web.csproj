@@ -198,6 +198,7 @@
     </Compile>
     <Compile Include="Models\Conventions\ManyToManyTableNameConvention.cs" />
     <Compile Include="Models\EntityModels\CommentDTO.cs" />
+    <Compile Include="Models\EntityModels\Entity.cs" />
     <Compile Include="Models\EntityModels\RouteDTO.cs" />
     <Compile Include="Models\EntityModels\TripDTO.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -208,12 +209,20 @@
     <Compile Include="Models\EntityModels\Comment.cs" />
     <Compile Include="Models\IdentityModels\ApplicationDbContext.cs" />
     <Compile Include="Models\IdentityModels\ApplicationUserDTO.cs" />
-    <Compile Include="Models\ITripRepo.cs" />
+    <Compile Include="Models\Repositories\RepositoryBase.cs" />
     <Compile Include="Models\EntityModels\Photo.cs" />
     <Compile Include="Models\EntityModels\Route.cs" />
     <Compile Include="Models\EntityModels\Trip.cs" />
-    <Compile Include="Models\TripRepo.cs" />
+    <Compile Include="Models\Repositories\IRepository.cs" />
+    <Compile Include="Models\Repositories\IUnitOfWork.cs" />
+    <Compile Include="Models\Repositories\IUserRepo.cs" />
+    <Compile Include="Models\Repositories\Repository.cs" />
+    <Compile Include="Models\Repositories\RouteRepo.cs" />
+    <Compile Include="Models\Repositories\TripRepo.cs" />
     <Compile Include="Models\EntityModels\Visit.cs" />
+    <Compile Include="Models\Repositories\UnitOfWork.cs" />
+    <Compile Include="Models\Repositories\UserRepositoryBase.cs" />
+    <Compile Include="Models\Repositories\VisitRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />

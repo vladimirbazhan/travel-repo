@@ -17,6 +17,7 @@ using Microsoft.AspNet.Identity;
 using WebApplication1.Models;
 using WebApplication1.Models.EntityModels;
 using WebApplication1.Models.IdentityModels;
+using WebApplication1.Models.Repositories;
 using WebApplication1.Utils;
 
 namespace WebApplication1.Controllers
@@ -57,9 +58,9 @@ namespace WebApplication1.Controllers
 
         public IEnumerable<TripDTO> GetTrips()
         {
-            using (var repo = new TripRepo())
+            using (IUnitOfWork uow = new UnitOfWork())
             {
-                var trips = repo.GetAll().Where(x => (!x.IsPrivate || x.Author.Id == User.Identity.GetUserId())).ToList();
+                var trips = uow.Repo<TripRepo>().GetAll().Where(x => (!x.IsPrivate || x.Author.Id == User.Identity.GetUserId())).ToList();
                 var tripsDTO = from trip in trips
                                select new TripDTO(trip);
                 return tripsDTO.ToList();
@@ -68,9 +69,9 @@ namespace WebApplication1.Controllers
 
         public IHttpActionResult GetTrip(int id)
         {
-            using (var repo = new TripRepo())
+            using (IUnitOfWork uow = new UnitOfWork())
             {
-                Trip res = repo.Get(id);
+                Trip res = uow.Repo<TripRepo>().Get(id);
                 if (res == null)
                 {
                     return NotFound();
@@ -86,10 +87,10 @@ namespace WebApplication1.Controllers
         [Authorize]
         public IHttpActionResult PostTrip(Trip item)
         {
-            using (var repo = new TripRepo())
+            using (IUnitOfWork uow = new UnitOfWork())
             {
                 string id = User.Identity.GetUserId();
-                var usr = repo.Context.Users.FirstOrDefault(x => x.Id == id);
+                var usr = uow.Repo<UserRepositoryBase>().Users.FirstOrDefault(x => x.Id == id);
 
                 if (usr == null)
                 {
@@ -97,7 +98,7 @@ namespace WebApplication1.Controllers
                 }
 
                 item.Author = usr;
-                Trip res = repo.Add(item);
+                Trip res = uow.Repo<TripRepo>().Insert(item);
 
                 return CreatedAtRoute("DefaultApi", new { id = res.Id }, new TripDTO(res));
             }
@@ -106,16 +107,17 @@ namespace WebApplication1.Controllers
         [Authorize]
         public void PutTrip(int id, Trip item)
         {
-            using (var repo = new TripRepo())
+            using (IUnitOfWork uow = new UnitOfWork())
             {
-                if (repo.Get(id).Author.Id != User.Identity.GetUserId())
+                Trip curr = uow.Repo<TripRepo>().Get(id);
+                if (curr.Author.Id != User.Identity.GetUserId())
                 {
                     throw new HttpResponseException(HttpStatusCode.Unauthorized);
                 }
 
-                item.Id = id;
-
-                if (!repo.Update(item))
+                curr.Merge(item);
+                
+                if (!uow.Repo<TripRepo>().Update(curr))
                 {
                     throw new HttpResponseException(HttpStatusCode.NotFound);
                 }
@@ -125,9 +127,9 @@ namespace WebApplication1.Controllers
         [Authorize]
         public HttpResponseMessage DeleteTrip(int id)
         {
-            using (var repo = new TripRepo())
+            using (IUnitOfWork uow = new UnitOfWork())
             {
-                Trip item = repo.Get(id);
+                Trip item = uow.Repo<TripRepo>().Get(id);
                 if (item == null)
                 {
                     return Request.CreateResponse(HttpStatusCode.NotFound);
@@ -138,8 +140,8 @@ namespace WebApplication1.Controllers
                 }
 
                 // TODO: crappy solution, change it using DI service
-                repo.PhotoLocationPath = _fileNameProvider.FileSaveLocation;
-                repo.Remove(id);
+                uow.Repo<TripRepo>().PhotoLocationPath = _fileNameProvider.FileSaveLocation;
+                uow.Repo<TripRepo>().Delete(id);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
         }
@@ -148,9 +150,9 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public CommentDTO GetComment(int tripId, int id)
         {
-            using (var repo = new TripRepo())
+            using (IUnitOfWork uow = new UnitOfWork())
             {
-                Trip trip = repo.Get(tripId);
+                Trip trip = uow.Repo<TripRepo>().Get(tripId);
                 if (trip == null)
                 {
                     throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -171,12 +173,12 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public HttpResponseMessage PostComment(int tripId, Comment comment)
         {
-            using (var repo = new TripRepo())
+            using (IUnitOfWork uow = new UnitOfWork())
             {
                 comment.Published = DateTime.Now;
 
                 string usrId = User.Identity.GetUserId();
-                var usr = repo.Context.Users.FirstOrDefault(x => x.Id == usrId);
+                var usr = uow.Repo<UserRepositoryBase>().Users.FirstOrDefault(x => x.Id == usrId);
                 if (usr != null)
                 {
                     comment.Author = usr;
@@ -186,7 +188,7 @@ namespace WebApplication1.Controllers
                     return Request.CreateResponse(HttpStatusCode.Unauthorized);
                 }
 
-                Comment res = repo.AddComment(tripId, comment);
+                Comment res = uow.Repo<TripRepo>().AddComment(tripId, comment);
                 var response = Request.CreateResponse<CommentDTO>(HttpStatusCode.Created, new CommentDTO(res));
 
                 string uri = Url.Link("GetTripCommentById", new { tripId = tripId, id = res.Id });
@@ -200,12 +202,12 @@ namespace WebApplication1.Controllers
         [Authorize]
         public async Task<HttpResponseMessage> PostPhotoAsync(int tripId)
         {
-            using (var repo = new TripRepo())
+            using (IUnitOfWork uow = new UnitOfWork())
             {
                 string usrId = User.Identity.GetUserId();
-                var usr = repo.Context.Users.FirstOrDefault(x => x.Id == usrId);
+                var usr = uow.Repo<UserRepositoryBase>().Users.FirstOrDefault(x => x.Id == usrId);
 
-                Trip trip = repo.Get(tripId);
+                Trip trip = uow.Repo<TripRepo>().Get(tripId);
                 if (trip.Author.Id != usrId)
                 {
                     return Request.CreateResponse(HttpStatusCode.Unauthorized);
@@ -241,7 +243,7 @@ namespace WebApplication1.Controllers
                         tripPhotos.Add(photo);
                     }
 
-                    repo.AddPhotos(tripId, tripPhotos);
+                    uow.Repo<TripRepo>().AddPhotos(tripId, tripPhotos);
 
                     // Send OK Response along with saved file names to the client. 
                     return Request.CreateResponse(HttpStatusCode.OK);

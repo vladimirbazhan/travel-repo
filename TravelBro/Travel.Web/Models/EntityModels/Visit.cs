@@ -8,10 +8,8 @@ using WebApplication1.Models.IdentityModels;
 
 namespace WebApplication1.Models.EntityModels
 {
-    public class Visit
+    public class Visit : Entity
     {
-        public int Id { get; set; }
-
         public string Description { get; set; }
         public double Cost { get; set; }
         public DateTime Start { get; set; }

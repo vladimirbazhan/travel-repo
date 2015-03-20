@@ -12,34 +12,37 @@ using Microsoft.AspNet.Identity;
 using WebApplication1.Models;
 using WebApplication1.Models.EntityModels;
 using WebApplication1.Models.IdentityModels;
+using WebApplication1.Models.Repositories;
 
 namespace WebApplication1.Controllers
 {
     public class RoutesController : ApiController
     {
         // TODO: implement authentification validation
-        // TODO: wrap ApplicationDbContext with using statements
-
-        static private ITripRepo _tripRepo = new TripRepo();
-        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET api/Routes
-        public IQueryable<Route> GetRoutes()
+        public IEnumerable<Route> GetRoutes()
         {
-            return db.Routes;
+            using (IUnitOfWork uow = new UnitOfWork())
+            {
+                return uow.Repo<RouteRepo>().GetAll();
+            }
         }
 
         // GET api/Routes/5
         [ResponseType(typeof(Route))]
         public IHttpActionResult GetRoute(int id)
         {
-            Route route = db.Routes.Find(id);
-            if (route == null)
+            using (IUnitOfWork uow = new UnitOfWork())
             {
-                return NotFound();
-            }
+                Route route = uow.Repo<RouteRepo>().Get(id);
+                if (route == null)
+                {
+                    return NotFound();
+                }
 
-            return Ok(route);
+                return Ok(route);
+            }
         }
 
         // PUT api/Routes/5
@@ -50,35 +53,36 @@ namespace WebApplication1.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (_tripRepo.Get(route.TripId).Author.Id != User.Identity.GetUserId())
+            using (IUnitOfWork uow = new UnitOfWork())
             {
-                return StatusCode(HttpStatusCode.Unauthorized);
-            }
-
-            if (id != route.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(route).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RouteExists(id))
+                if (uow.Repo<TripRepo>().Get(route.TripId).Author.Id != User.Identity.GetUserId())
                 {
-                    return NotFound();
+                    return StatusCode(HttpStatusCode.Unauthorized);
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return StatusCode(HttpStatusCode.NoContent);
+                if (id != route.Id)
+                {
+                    return BadRequest();
+                }
+                
+                try
+                {
+                    uow.Repo<RouteRepo>().Update(route);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!RouteExists(uow, id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
         }
 
         // POST api/Routes
@@ -90,50 +94,45 @@ namespace WebApplication1.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (_tripRepo.Get(route.TripId).Author.Id != User.Identity.GetUserId())
+            using (IUnitOfWork uow = new UnitOfWork())
             {
-                return StatusCode(HttpStatusCode.Unauthorized);
+                if (uow.Repo<TripRepo>().Get(route.TripId).Author.Id != User.Identity.GetUserId())
+                {
+                    return StatusCode(HttpStatusCode.Unauthorized);
+                }
+
+                uow.Repo<RouteRepo>().Insert(route);
+                
+                return CreatedAtRoute("DefaultApi", new { id = route.Id }, route);
             }
-
-            db.Routes.Add(route);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = route.Id }, route);
         }
 
         // DELETE api/Routes/5
         [ResponseType(typeof(Route))]
         public IHttpActionResult DeleteRoute(int id)
         {
-            Route route = db.Routes.Find(id);
-            if (route == null)
+            using (IUnitOfWork uow = new UnitOfWork())
             {
-                return NotFound();
+                Route route = uow.Repo<RouteRepo>().Get(id);
+                if (route == null)
+                {
+                    return NotFound();
+                }
+
+                if (uow.Repo<TripRepo>().Get(route.TripId).Author.Id != User.Identity.GetUserId())
+                {
+                    return StatusCode(HttpStatusCode.Unauthorized);
+                }
+
+                uow.Repo<RouteRepo>().Delete(route);
+
+                return Ok(route);
             }
-
-            if (_tripRepo.Get(route.TripId).Author.Id != User.Identity.GetUserId())
-            {
-                return StatusCode(HttpStatusCode.Unauthorized);
-            }
-
-            db.Routes.Remove(route);
-            db.SaveChanges();
-
-            return Ok(route);
         }
 
-        protected override void Dispose(bool disposing)
+        private bool RouteExists(IUnitOfWork uow, int id)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool RouteExists(int id)
-        {
-            return db.Routes.Count(e => e.Id == id) > 0;
+            return uow.Repo<RouteRepo>().FetchAll().Count(e => e.Id == id) > 0;
         }
     }
 }

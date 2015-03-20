@@ -12,37 +12,40 @@ using Microsoft.AspNet.Identity;
 using WebApplication1.Models;
 using WebApplication1.Models.EntityModels;
 using WebApplication1.Models.IdentityModels;
+using WebApplication1.Models.Repositories;
 
 namespace WebApplication1.Controllers
 {
     public class VisitsController : ApiController
     {
         // TODO: implement authentification validation
-        // TODO: wrap ApplicationDbContext with using statements
-
-        private ApplicationDbContext db = new ApplicationDbContext();
-        static private ITripRepo _tripRepo = new TripRepo();
 
         // GET api/Visits
-        public IQueryable<Visit> GetVisits()
+        public IEnumerable<Visit> GetVisits()
         {
-            return db.Visits;
+            using (IUnitOfWork uow = new UnitOfWork())
+            {
+                return uow.Repo<VisitRepo>().GetAll();
+            }
         }
 
         // GET api/Visits/5
-        [ResponseType(typeof(Visit))]
         public IHttpActionResult GetVisit(int id)
         {
-            Visit visit = db.Visits.Find(id);
-            if (visit == null)
+            using (IUnitOfWork uow = new UnitOfWork())
             {
-                return NotFound();
-            }
+                Visit visit = uow.Repo<VisitRepo>().Get(id);
+                if (visit == null)
+                {
+                    return NotFound();
+                }
 
-            return Ok(visit);
+                return Ok(visit);
+            }
         }
 
         // PUT api/Visits/5
+        [Authorize]
         public IHttpActionResult PutVisit(int id, Visit visit)
         {
             if (!ModelState.IsValid)
@@ -55,34 +58,35 @@ namespace WebApplication1.Controllers
                 return BadRequest();
             }
 
-            if (_tripRepo.Get(visit.TripId).Author.Id != User.Identity.GetUserId())
+            using (IUnitOfWork uow = new UnitOfWork())
             {
-                return StatusCode(HttpStatusCode.Unauthorized);
-            }
-
-            db.Entry(visit).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!VisitExists(id))
+                if (uow.Repo<TripRepo>().Get(visit.TripId).Author.Id != User.Identity.GetUserId())
                 {
-                    return NotFound();
+                    return StatusCode(HttpStatusCode.Unauthorized);
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return StatusCode(HttpStatusCode.NoContent);
+                try
+                {
+                    uow.Repo<VisitRepo>().Update(visit);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!VisitExists(uow, id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
         }
 
         // POST api/Visits
-        [ResponseType(typeof(Visit))]
+        [Authorize]
         public IHttpActionResult PostVisit(Visit visit)
         {
             if (!ModelState.IsValid)
@@ -90,50 +94,45 @@ namespace WebApplication1.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (_tripRepo.Get(visit.TripId).Author.Id != User.Identity.GetUserId())
+            using (IUnitOfWork uow = new UnitOfWork())
             {
-                return StatusCode(HttpStatusCode.Unauthorized);
+                if (uow.Repo<TripRepo>().Get(visit.TripId).Author.Id != User.Identity.GetUserId())
+                {
+                    return StatusCode(HttpStatusCode.Unauthorized);
+                }
+
+                uow.Repo<VisitRepo>().Insert(visit);
+
+                return CreatedAtRoute("DefaultApi", new { id = visit.Id }, visit);
             }
-
-            db.Visits.Add(visit);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = visit.Id }, visit);
         }
 
         // DELETE api/Visits/5
-        [ResponseType(typeof(Visit))]
+        [Authorize]
         public IHttpActionResult DeleteVisit(int id)
         {
-            Visit visit = db.Visits.Find(id);
-            if (visit == null)
+            using (IUnitOfWork uow = new UnitOfWork())
             {
-                return NotFound();
+                Visit visit = uow.Repo<VisitRepo>().Get(id);
+                if (visit == null)
+                {
+                    return NotFound();
+                }
+
+                if (uow.Repo<TripRepo>().Get(visit.TripId).Author.Id != User.Identity.GetUserId())
+                {
+                    return StatusCode(HttpStatusCode.Unauthorized);
+                }
+
+                uow.Repo<VisitRepo>().Delete(visit);
+
+                return Ok(visit);
             }
-
-            if (_tripRepo.Get(visit.TripId).Author.Id != User.Identity.GetUserId())
-            {
-                return StatusCode(HttpStatusCode.Unauthorized);
-            }
-
-            db.Visits.Remove(visit);
-            db.SaveChanges();
-
-            return Ok(visit);
         }
 
-        protected override void Dispose(bool disposing)
+        private bool VisitExists(IUnitOfWork uow, int id)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool VisitExists(int id)
-        {
-            return db.Visits.Count(e => e.Id == id) > 0;
+            return uow.Repo<VisitRepo>().FetchAll().Count(e => e.Id == id) > 0;
         }
     }
 }

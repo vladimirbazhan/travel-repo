@@ -7,10 +7,8 @@ using WebApplication1.Models.IdentityModels;
 
 namespace WebApplication1.Models.EntityModels
 {
-    public class Route
+    public class Route : Entity
     {
-        public int Id { get; set; }
-
         public string Description { get; set; }
         public DateTime Start { get; set; }
         public DateTime Finish { get; set; }
