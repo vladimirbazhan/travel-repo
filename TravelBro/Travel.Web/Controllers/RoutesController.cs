@@ -105,7 +105,7 @@ namespace WebApplication1.Controllers
                 uow.Repo<RouteRepo>().Insert(route);
                 uow.Commit();
                 
-                return CreatedAtRoute("DefaultApi", new { id = route.Id }, route);
+                return CreatedAtRoute("DefaultApi", new { id = route.Id }, new RouteDTO(route));
             }
         }
 
