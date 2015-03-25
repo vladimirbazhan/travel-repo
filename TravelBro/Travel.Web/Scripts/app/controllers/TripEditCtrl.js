@@ -23,6 +23,7 @@ define(['./module'], function(controllers) {
             changeYear: true,
             autoSize: true
         };
+
         // methods
         vm.save = save;
         vm.delete = deleteTrip;
@@ -35,7 +36,6 @@ define(['./module'], function(controllers) {
             }
         };
 
-        vm.uploadFiles = uploadFiles;
         vm.onSelectedPhotosChanged = onSelectedPhotosChanged;
         vm.removeSelectedPhoto = removeSelectedPhoto;
 
@@ -56,64 +56,8 @@ define(['./module'], function(controllers) {
         }
 
         function save() {
-            if (vm.editMode) {
-                Backend.trips.update({ tripId: vm.trip.Id }, vm.trip, function() {
-                    Alerts.add('info', 'Changes saved');
-                    mapNavigateByTitle();
-                }, function(err) {
-                    Alerts.add('danger', 'Error ' + err.status + ': ' + err.statusText);
-                });
-            } else {
-                Backend.trips.save(vm.trip, function() {
-                    Alerts.add('info', 'Trip created');
-                    $location.path('/trips');
-                }, function(err) {
-                    Alerts.add('danger', 'Error ' + err.status + ': ' + err.statusText);
-                });
-            }
-        };
-
-        function uploadFiles() {
-            vm.photos.forEach(function(currPhoto) {
-                Backend.trips.savePhoto({ tripId: vm.trip.Id }, currPhoto, {
-                    onprogress: function (e) {
-                        $scope.$apply(function () {
-                            var percentCompleted;
-                            if (e.lengthComputable) {
-                                percentCompleted = Math.round(e.loaded / e.total * 100);
-                                if (percentCompleted < 1) {
-                                    currPhoto.uploadStatus = 'Uploading...';
-                                } else if (percentCompleted == 100) {
-                                    currPhoto.uploadStatus = 'Saving...';
-                                } else {
-                                    currPhoto.uploadStatus = percentCompleted + '%';
-                                }
-                            } else {
-                                currPhoto.uploadStatus = "Length is not computable";
-                            }
-                        });
-                    },
-                    ondone: function (response) {
-                        $scope.$apply(function () {
-                            currPhoto.uploadStatus = 'Done';
-                            var totalDone = 0;
-                            vm.photos.forEach(function (photo) {
-                                if (photo.uploadStatus == 'Done') {
-                                    totalDone++;
-                                }
-                            });
-                            if (totalDone == vm.photos.length) {
-                                Alerts.add('info', 'Photos Saved');
-                                $route.reload();
-                            }
-                        });
-                    },
-                    onfail: function (err) {
-                        currPhoto.uploadStatus = 'Failed';
-                        Alerts.add('danger', err.Message);
-                    }
-                });
-            });
+            var saver = new TripChangesSaver(vm);
+            saver.save();
         };
 
         function onSelectedPhotosChanged(e) {
@@ -160,5 +104,88 @@ define(['./module'], function(controllers) {
                 }
             });
         };
+
+        // performs saving changes to the current trip
+        function TripChangesSaver(vm) {
+            var operationLeft = vm.photos.length + 1; // every photo + fields saving
+
+            this.save = function () {
+                if (vm.editMode) {
+                    Backend.trips.update({ tripId: vm.trip.Id }, vm.trip, function () {
+                        Alerts.add('info', 'Changes saved');
+                        mapNavigateByTitle();
+                        if (!--operationLeft)
+                            oncomplete();
+                    }, function (err) {
+                        alerts.push(['danger', 'Error ' + err.status + ': ' + err.statusText]);
+                        if (!--operationLeft)
+                            oncomplete();
+                    });
+                    savePhotos();
+                } else {
+                    Backend.trips.save(vm.trip, function (trip) {
+                        Alerts.add('info', 'Trip created');
+                        vm.trip = trip;
+                        savePhotos();
+                        if (!--operationLeft)
+                            oncomplete();
+                    }, function (err) {
+                        alerts.push(['danger', 'Error ' + err.status + ': ' + err.statusText]);
+                        if (!--operationLeft)
+                            oncomplete();
+                    });
+                }
+            }
+
+            function savePhotos() {
+                vm.photos.forEach(function (currPhoto) {
+                    Backend.trips.savePhoto({ tripId: vm.trip.Id }, currPhoto, {
+                        onprogress: function (e) {
+                            $scope.$apply(function () {
+                                var percentCompleted;
+                                if (e.lengthComputable) {
+                                    percentCompleted = Math.round(e.loaded / e.total * 100);
+                                    if (percentCompleted < 1) {
+                                        currPhoto.uploadStatus = 'Uploading...';
+                                    } else if (percentCompleted == 100) {
+                                        currPhoto.uploadStatus = 'Saving...';
+                                    } else {
+                                        currPhoto.uploadStatus = percentCompleted + '%';
+                                    }
+                                } else {
+                                    currPhoto.uploadStatus = "Length is not computable";
+                                }
+                            });
+                        },
+                        ondone: function (response) {
+                            $scope.$apply(function () {
+                                currPhoto.uploadStatus = 'Done';
+                                if (!--operationLeft) {
+                                    Alerts.add('info', 'Photos Saved');
+                                    oncomplete();
+                                }
+                            });
+                        },
+                        onfail: function (err) {
+                            currPhoto.uploadStatus = 'Failed';
+                            Alerts.add('danger', err.Message);
+                            if (!--operationLeft) {
+                                oncomplete();
+                            }
+                        }
+                    });
+                });
+            };
+
+            function oncomplete() {
+                if (!vm.editMode) {
+                    $location.path('/trips');
+                } else {
+                    if (vm.photos.length) {
+                        $route.reload();
+                    }
+                }
+            }
+        }
     };
 });

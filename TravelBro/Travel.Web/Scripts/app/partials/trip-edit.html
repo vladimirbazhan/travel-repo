@@ -60,7 +60,7 @@
         </ul>
       
         <div class="btn-file btn btn-xs btn-default">
-            <span>Select files</span>
+            <span>Add photos</span>
             <input type="file" multiple accept="image/*" on-events="{event: 'change', handler: vm.onSelectedPhotosChanged }">
         </div>
         <br /><br />
@@ -70,7 +70,6 @@
     <div class="text-right">
         <button class="btn btn-default" onclick=" history.go(-1); ">Cancel</button>
         <button class="btn btn-primary" ng-click="vm.save();"><span class="glyphicon glyphicon-ok"></span>&nbsp;Save</button>
-        <button class="btn btn-primary" ng-click="vm.uploadFiles();"><span class="glyphicon glyphicon-ok"></span>&nbsp;SavePhotos</button>
     </div>
 </form>
 <br />
