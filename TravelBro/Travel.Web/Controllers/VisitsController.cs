@@ -68,6 +68,7 @@ namespace WebApplication1.Controllers
                 try
                 {
                     uow.Repo<VisitRepo>().Update(visit);
+                    uow.Commit();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -102,6 +103,7 @@ namespace WebApplication1.Controllers
                 }
 
                 uow.Repo<VisitRepo>().Insert(visit);
+                uow.Commit();
 
                 return CreatedAtRoute("DefaultApi", new { id = visit.Id }, visit);
             }
@@ -125,6 +127,7 @@ namespace WebApplication1.Controllers
                 }
 
                 uow.Repo<VisitRepo>().Delete(visit);
+                uow.Commit();
 
                 return Ok(visit);
             }

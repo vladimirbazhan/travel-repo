@@ -5,8 +5,8 @@ namespace WebApplication1.Models.Repositories
 {
     public class RouteRepo : Repository<Route>
     {
-        public RouteRepo(ApplicationDbContext context)
-            : base(context)
+        public RouteRepo(ApplicationDbContext context, IUnitOfWork parent)
+            : base(context, parent)
         {
         }
     }

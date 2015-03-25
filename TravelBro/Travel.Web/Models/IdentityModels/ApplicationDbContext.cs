@@ -37,18 +37,6 @@ namespace WebApplication1.Models.IdentityModels
             return new ApplicationDbContext();
         }
         
-        public void ClearUnusedPhotos(ProcessPhotoDelegate processPhoto)
-        {
-            // TODO: performance issues could arise because we fetch too much data from DB, remember about it
-            // all photos
-            var photoes = Photos.Include(x => x.PhotosToRoutes).Include(x => x.PhotosToTrips).Include(x => x.PhotosToVisits).ToList();
-            // unused photos
-            var unusedPhotos = photoes.Where(x => x.PhotosToRoutes.Count == 0 && x.PhotosToTrips.Count == 0 && x.PhotosToVisits.Count == 0);
-            unusedPhotos.ForEach(x => processPhoto(x));
-            Photos.RemoveRange(unusedPhotos);
-            SaveChanges();
-        }
-        
         public DbSet<Trip> Trips { get; set; }
         public DbSet<Visit> Visits { get; set; }
         public DbSet<Route> Routes { get; set; }

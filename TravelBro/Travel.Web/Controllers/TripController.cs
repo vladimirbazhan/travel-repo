@@ -90,7 +90,7 @@ namespace WebApplication1.Controllers
             using (IUnitOfWork uow = new UnitOfWork())
             {
                 string id = User.Identity.GetUserId();
-                var usr = uow.Repo<UserRepositoryBase>().Users.FirstOrDefault(x => x.Id == id);
+                var usr = uow.Repo<UserRepo>().Users.FirstOrDefault(x => x.Id == id);
 
                 if (usr == null)
                 {
@@ -99,6 +99,7 @@ namespace WebApplication1.Controllers
 
                 item.Author = usr;
                 Trip res = uow.Repo<TripRepo>().Insert(item);
+                uow.Commit();
 
                 return CreatedAtRoute("DefaultApi", new { id = res.Id }, new TripDTO(res));
             }
@@ -121,6 +122,7 @@ namespace WebApplication1.Controllers
                 {
                     throw new HttpResponseException(HttpStatusCode.NotFound);
                 }
+                uow.Commit();
             }
         }
 
@@ -142,6 +144,8 @@ namespace WebApplication1.Controllers
                 // TODO: crappy solution, change it using DI service
                 uow.Repo<TripRepo>().PhotoLocationPath = _fileNameProvider.FileSaveLocation;
                 uow.Repo<TripRepo>().Delete(id);
+                uow.Commit();
+
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
         }
@@ -178,7 +182,7 @@ namespace WebApplication1.Controllers
                 comment.Published = DateTime.Now;
 
                 string usrId = User.Identity.GetUserId();
-                var usr = uow.Repo<UserRepositoryBase>().Users.FirstOrDefault(x => x.Id == usrId);
+                var usr = uow.Repo<UserRepo>().Users.FirstOrDefault(x => x.Id == usrId);
                 if (usr != null)
                 {
                     comment.Author = usr;
@@ -189,7 +193,9 @@ namespace WebApplication1.Controllers
                 }
 
                 Comment res = uow.Repo<TripRepo>().AddComment(tripId, comment);
-                var response = Request.CreateResponse<CommentDTO>(HttpStatusCode.Created, new CommentDTO(res));
+                uow.Commit();
+
+                var response = Request.CreateResponse(HttpStatusCode.Created, new CommentDTO(res));
 
                 string uri = Url.Link("GetTripCommentById", new { tripId = tripId, id = res.Id });
                 response.Headers.Location = new Uri(uri);
@@ -205,7 +211,7 @@ namespace WebApplication1.Controllers
             using (IUnitOfWork uow = new UnitOfWork())
             {
                 string usrId = User.Identity.GetUserId();
-                var usr = uow.Repo<UserRepositoryBase>().Users.FirstOrDefault(x => x.Id == usrId);
+                var usr = uow.Repo<UserRepo>().Users.FirstOrDefault(x => x.Id == usrId);
 
                 Trip trip = uow.Repo<TripRepo>().Get(tripId);
                 if (trip.Author.Id != usrId)
@@ -244,6 +250,7 @@ namespace WebApplication1.Controllers
                     }
 
                     uow.Repo<TripRepo>().AddPhotos(tripId, tripPhotos);
+                    uow.Commit();
 
                     // Send OK Response along with saved file names to the client. 
                     return Request.CreateResponse(HttpStatusCode.OK);

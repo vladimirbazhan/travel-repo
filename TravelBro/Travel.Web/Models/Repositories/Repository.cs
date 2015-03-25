@@ -1,22 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using WebApplication1.Models.EntityModels;
 using WebApplication1.Models.IdentityModels;
-
 
 namespace WebApplication1.Models.Repositories
 {
     public class Repository<TEntity> : RepositoryBase, IRepository<TEntity> where TEntity : Entity
     {
-        protected IDbSet<TEntity> dbSet; 
+        protected DbSet<TEntity> dbSet;
+        protected IUnitOfWork parent;
 
-        public Repository(ApplicationDbContext context)
-            :base(context)
+        private ApplicationDbContext context;
+
+        public Repository(ApplicationDbContext context, IUnitOfWork parent)
+            : base(context, parent)
         {
-            this.dbSet = this.context.Set<TEntity>();
+            this.context = context;
+            this.parent = parent;
+            dbSet = context.Set<TEntity>();
         }
 
         public virtual IEnumerable<TEntity> GetAll()
@@ -26,27 +28,23 @@ namespace WebApplication1.Models.Repositories
 
         public virtual TEntity Get(int id)
         {
-            return dbSet.Where(x => x.Id == id).FirstOrDefault();
+            return dbSet.FirstOrDefault(x => x.Id == id);
         }
 
         public virtual TEntity Insert(TEntity entity)
         {
-            dbSet.Add(entity);
-            context.SaveChanges();
-            return Get(entity.Id);
+            return dbSet.Add(entity);
         }
 
         public virtual bool Update(TEntity entity)
         {
-            context.Entry(entity).State = System.Data.Entity.EntityState.Modified;
-            context.SaveChanges();
+            context.Entry(entity).State = EntityState.Modified;
             return true;
         }
 
         public virtual void Delete(TEntity entity)
         {
             dbSet.Remove(entity);
-            context.SaveChanges();
         }
 
         public virtual void Delete(int id)

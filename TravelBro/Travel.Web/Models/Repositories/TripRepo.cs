@@ -14,8 +14,8 @@ namespace WebApplication1.Models
     {
         public string PhotoLocationPath { get; set; }
 
-        public TripRepo(ApplicationDbContext context)
-            : base(context)
+        public TripRepo(ApplicationDbContext context, IUnitOfWork parent)
+            : base(context, parent)
         {
         }
 
@@ -38,7 +38,6 @@ namespace WebApplication1.Models
                 curr.Comments = new Collection<Comment>();
             }
             curr.Comments.Add(comment);
-            context.SaveChanges();
 
             return comment;
         }
@@ -54,13 +53,11 @@ namespace WebApplication1.Models
             {
                 curr.Photos.Add(tripPhoto);
             }
-
-            context.SaveChanges();
         }
 
         private void CleanUpPhotos()
         {
-            context.ClearUnusedPhotos(x =>
+            parent.Repo<PhotoRepo>().ClearUnusedPhotos(x =>
             {
                 try
                 {

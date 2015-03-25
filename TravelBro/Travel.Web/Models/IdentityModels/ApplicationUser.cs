@@ -22,6 +22,6 @@ namespace WebApplication1.Models.IdentityModels
 
         public virtual Collection<Trip> MemberInTrips { get; private set; }
         public virtual Collection<Visit> MemberInVisits { get; private set; }
-        public virtual Collection<Route> MemberInRoutes { get; private set; } 
+        public virtual Collection<Route> MemberInRoutes { get; private set; }
     }
 }

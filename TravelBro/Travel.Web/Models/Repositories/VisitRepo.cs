@@ -5,8 +5,8 @@ namespace WebApplication1.Models.Repositories
 {
     public class VisitRepo : Repository<Visit>
     {
-        public VisitRepo(ApplicationDbContext context)
-            : base(context)
+        public VisitRepo(ApplicationDbContext context, IUnitOfWork parent)
+            : base(context, parent)
         {
         }
     }
