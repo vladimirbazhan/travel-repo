@@ -106,11 +106,11 @@
             }),
             visits: $resource('/api/visits', {},
             {
-                'save': { url: '/api/visits', method: 'POST' }
+                'save': angular.extend({ url: '/api/visits', method: 'POST' }, authHeaders)
             }),
             routes: $resource('/api/routes', {},
             {
-                'save': { url: '/api/routes', method: 'POST' }
+                'save': angular.extend({ url: '/api/routes', method: 'POST' }, authHeaders)
             })
         };
         
