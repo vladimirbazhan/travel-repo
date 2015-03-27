@@ -42,6 +42,7 @@ namespace WebApplication1.Models.IdentityModels
         public DbSet<Route> Routes { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Photo> Photos { get; set; }
+        public DbSet<TransType> TransTypes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

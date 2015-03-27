@@ -15,6 +15,18 @@ namespace WebApplication1.Models.EntityModels
         public double Cost { get; set; }
         public int ActivityOrder { get; set; }
 
+        public int TransTypeId { get; set; }
+        private TransType transType;
+        [ForeignKey("TransTypeId")]
+        public virtual TransType TransType {
+            get { return transType; }
+            set
+            {
+                transType = value;
+                TransTypeId = value.Id;
+            } 
+        }
+
         [Required]
         public int TripId { get; set; }
         [ForeignKey("TripId")]

@@ -7,6 +7,7 @@
             $scope.signedIn = Auth.token.isSet();
             $scope.legend = $scope.editMode ? "Edit route" : "Create route";
             $scope.trip = Backend.trips.get({ tripId: $routeParams.tripId });
+            $scope.transTypes = Backend.transTypes.query();
 
             $scope.startPlace = {};
             $scope.finishPlace = {};
@@ -35,6 +36,10 @@
                 $scope.route = {};
             } else {
                 $scope.route = Entity.route.Default();
+            }
+
+            $scope.transTypeSelected = function (transType) {
+                $scope.route.TransType = transType;
             }
 
             $scope.save = function() {

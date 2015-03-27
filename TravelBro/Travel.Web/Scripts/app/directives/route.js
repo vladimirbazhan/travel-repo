@@ -8,6 +8,7 @@
                     '<bold><h4 class="list-group-item-heading">Finish place: ' + route.finishPlace.name + ' (' + route.finishPlace.formatted_address + ')' + '</h4></bold>' +
                     '<p class="list-group-item-text">' + (route.Comment || '') + '</p>' +
                     '<p class="list-group-item-text">Spent money: ' + route.Cost + '</p>' +
+                    (route.TransType ? '<p> Transport: ' + route.TransType.Name + '</p>': '') +
                     '</a>';
             };
 
@@ -18,7 +19,6 @@
                 link: function(scope, element, attrs) {
                     var route = element.data('route').data;
                     if (!(route.StartGPlaceId && route.FinishGPlaceId)) {
-                        debugger;
                         return;
                     }
                     var map = new google.maps.Map(element.get()[0], {});

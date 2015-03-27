@@ -56,10 +56,10 @@
                     }
                 }).done(handlers.ondone).fail(handlers.onfail);
             }
-        }
+        };
     }
 
-    services.factory('Backend', ['$resource', 'Auth', function ($resource, Auth) {
+    services.factory('Backend', ['$resource', 'Auth', 'Entity', function ($resource, Auth, Entity) {
         var authHeaders = {
             transformRequest: function (data, headersGetter) {
                 if (Auth.token.isSet()) {
@@ -75,7 +75,7 @@
                 var dataObj = JSON.parse(data);
                 var parseDate = function(str) {
                     return new Date(Date.parse(str));
-                }
+                };
                 var fTransformObj = function(obj) {
                     if (obj.hasOwnProperty('DateFrom')) {
                         obj.DateFrom = parseDate(obj.DateFrom);
@@ -111,7 +111,11 @@
             routes: $resource('/api/routes', {},
             {
                 'save': angular.extend({ url: '/api/routes', method: 'POST' }, authHeaders)
-            })
+            }),
+            transTypes: $resource('/api/transtypes', {},
+            {
+                'query': angular.extend({ url: '/api/transtypes', method: 'GET', isArray: true }, authHeaders),
+            }),
         };
         
         var handleTrip = function(trip) {
@@ -121,12 +125,14 @@
             var items = [];
 
             trip.Visits = trip.Visits || [];
-            trip.Visits.forEach(function(curr) {
+            trip.Visits.forEach(function (curr) {
+                handleVisit(curr);
                 items.push({ type: "visit", data: curr });
             });
 
             trip.Routes = trip.Routes || [];
-            trip.Routes.forEach(function(curr) {
+            trip.Routes.forEach(function (curr) {
+                handleRoute(curr);
                 items.push({ type: "route", data: curr });
             });
 
@@ -134,19 +140,41 @@
             trip.Photos = trip.Photos || [];
         };
 
+        function handleRoute(route) {
+            route.TransType = route.TransType || Entity.transType.Default();
+            handleTransType(route.TransType);
+        }
+
+        function handleVisit(visit) {
+            // do nothing
+        }
+
+        function handleTransType(transType) {
+            transType.Name = transType.Name || "";
+            transType.Name = transType.Name.replace(/([a-z])([A-Z])/g, '$1 $2');
+        }
+
         var successHandlers = {
             trips: {
                 query: function (trips) {
                     trips.forEach(handleTrip);
                 },
                 get: handleTrip
+            },
+            transTypes: {
+                query: function(transTypes) {
+                    transTypes.forEach(handleTransType);
+                }
             }
-        }
-        
+        };
         service.trips = wrapActions(service.trips,
             ['query', 'get'],
             [successHandlers.trips.query, successHandlers.trips.get]);
         $.extend(service.trips, getTripCustomActions(Auth));
+
+        service.transTypes = wrapActions(service.transTypes,
+            ['query'],
+            [successHandlers.transTypes.query]);
 
         return service;
     }]);

@@ -15,6 +15,7 @@ namespace WebApplication1.Models.EntityModels
             Finish = r.Finish;
             Cost = r.Cost;
             ActivityOrder = r.ActivityOrder;
+            TransType = r.TransType;
             TripId = r.TripId;
             StartGPlaceId = r.StartGPlaceId;
             FinishGPlaceId = r.FinishGPlaceId;
@@ -26,6 +27,7 @@ namespace WebApplication1.Models.EntityModels
         public DateTime Finish { get; set; }
         public double Cost { get; set; }
         public int ActivityOrder { get; set; }
+        public TransType TransType { get; set; }
         public int TripId { get; set; }
         public string StartGPlaceId { get; set; }
         public string FinishGPlaceId { get; set; }

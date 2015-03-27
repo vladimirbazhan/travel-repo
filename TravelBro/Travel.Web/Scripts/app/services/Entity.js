@@ -19,10 +19,16 @@
         this.Start = new Date();
         this.Finish = new Date();
         this.ActivityOrder = 0;
+        this.TransType = new transType();
         this.Cost = 0;
     }
 
     function comment() {
+    }
+
+    function transType() {
+        this.Id = 0;
+        this.Name = 'NotSpecified';
     }
 
     services.factory('Entity', [function () {
@@ -45,6 +51,11 @@
             comment: {
                 Default: function() {
                     return new comment();
+                }
+            },
+            transType: {
+                Default: function() {
+                    return new transType();
                 }
             }
         };

@@ -11,7 +11,7 @@ namespace WebApplication1.Models.Repositories
         protected DbSet<TEntity> dbSet;
         protected IUnitOfWork parent;
 
-        private ApplicationDbContext context;
+        protected ApplicationDbContext context;
 
         public Repository(ApplicationDbContext context, IUnitOfWork parent)
             : base(context, parent)

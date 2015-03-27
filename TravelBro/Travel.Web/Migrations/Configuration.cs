@@ -1,3 +1,6 @@
+using System.Diagnostics;
+using WebApplication1.Models.EntityModels;
+
 namespace WebApplication1.Migrations
 {
     using System;
@@ -27,6 +30,13 @@ namespace WebApplication1.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+            // fill TransType table with hardcoded data
+            foreach (TransTypeEnum transpType in Enum.GetValues(typeof (TransTypeEnum)))
+            {
+                context.TransTypes.AddOrUpdate(x => x.Id, new TransType() {Id = (int)transpType, Name = transpType.ToString()});
+            }
+            context.SaveChanges();
         }
     }
 }

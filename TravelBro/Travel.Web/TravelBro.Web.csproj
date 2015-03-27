@@ -178,6 +178,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RoutesController.cs" />
+    <Compile Include="Controllers\TransTypesController.cs" />
     <Compile Include="Controllers\TripController.cs" />
     <Compile Include="Controllers\VisitsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -195,10 +196,15 @@
     <Compile Include="Migrations\201503181639373_Photos_Comments_AreFirstPlace.Designer.cs">
       <DependentUpon>201503181639373_Photos_Comments_AreFirstPlace.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503270852195_TransTypeAdded.cs" />
+    <Compile Include="Migrations\201503270852195_TransTypeAdded.Designer.cs">
+      <DependentUpon>201503270852195_TransTypeAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Conventions\ManyToManyTableNameConvention.cs" />
     <Compile Include="Models\EntityModels\CommentDTO.cs" />
     <Compile Include="Models\EntityModels\Entity.cs" />
     <Compile Include="Models\EntityModels\RouteDTO.cs" />
+    <Compile Include="Models\EntityModels\TransType.cs" />
     <Compile Include="Models\EntityModels\TripDTO.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\EntityModels\VisitDTO.cs" />
@@ -217,6 +223,7 @@
     <Compile Include="Models\Repositories\Repository.cs" />
     <Compile Include="Models\Repositories\RepositoryBase.cs" />
     <Compile Include="Models\Repositories\RouteRepo.cs" />
+    <Compile Include="Models\Repositories\TransportTypeRepo.cs" />
     <Compile Include="Models\Repositories\TripRepo.cs" />
     <Compile Include="Models\EntityModels\Visit.cs" />
     <Compile Include="Models\Repositories\UnitOfWork.cs" />
@@ -332,6 +339,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503181639373_Photos_Comments_AreFirstPlace.resx">
       <DependentUpon>201503181639373_Photos_Comments_AreFirstPlace.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503270852195_TransTypeAdded.resx">
+      <DependentUpon>201503270852195_TransTypeAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
