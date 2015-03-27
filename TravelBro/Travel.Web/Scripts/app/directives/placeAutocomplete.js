@@ -27,6 +27,13 @@
                         scope.placeId = scope.details.place_id;
                     });
                 });
+
+                google.maps.event.addDomListener(element[0], 'keydown', function(e) {
+                    if (e.keyCode == 13)
+                    {
+                        e.preventDefault(); 
+                    } 
+                }); 
             }
         };
     }]);
