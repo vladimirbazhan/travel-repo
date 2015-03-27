@@ -117,7 +117,7 @@ define(['./module'], function(controllers) {
                         if (!--operationLeft)
                             oncomplete();
                     }, function (err) {
-                        alerts.push(['danger', 'Error ' + err.status + ': ' + err.statusText]);
+                        Alerts.add('danger', 'Error ' + err.status + ': ' + err.statusText);
                         if (!--operationLeft)
                             oncomplete();
                     });
@@ -130,7 +130,7 @@ define(['./module'], function(controllers) {
                         if (!--operationLeft)
                             oncomplete();
                     }, function (err) {
-                        alerts.push(['danger', 'Error ' + err.status + ': ' + err.statusText]);
+                        Alerts.add('danger', 'Error ' + err.status + ': ' + err.statusText);
                         if (!--operationLeft)
                             oncomplete();
                     });

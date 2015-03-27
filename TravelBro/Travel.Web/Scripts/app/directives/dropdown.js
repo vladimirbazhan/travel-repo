@@ -15,7 +15,7 @@
                     element.append('<a href="" class="dropdown-toggle">' + scope.text + '</a>');
                     var ul = $('<ul class="dropdown-menu"></ul>');
                     scope.items.forEach(function(item) {
-                        var li = $('<li><a href ng-click="addVisit()">' + item.text + '</a></li>').click(function() {
+                        var li = $('<li><a href="">' + item.text + '</a></li>').click(function() {
                             scope.$apply(function(e) {
                                 item.onclick(e);
                             });
