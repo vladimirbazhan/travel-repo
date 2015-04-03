@@ -36,8 +36,10 @@
             $scope.save = function () {
                 $scope.visit.TripId = $scope.trip.Id;
                 $scope.visit.Cost = parseFloat($scope.visit.Cost) || 0;
+                $scope.visit.Order = $routeParams.order !== 'undefined' ? $routeParams.order : -1;
                 Backend.visits.save($scope.visit, function () {
                     Alerts.add('info', 'Changes saved');
+                    $location.$$search = {};
                     $location.path('/trips/' + $routeParams.tripId);
                 }, function (err) {
                     Alerts.add('danger', 'Error ' + err.status + ': ' + err.statusText);

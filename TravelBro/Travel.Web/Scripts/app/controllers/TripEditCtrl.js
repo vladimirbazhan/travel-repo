@@ -28,11 +28,11 @@ define(['./module'], function(controllers) {
         vm.save = save;
         vm.delete = deleteTrip;
         vm.handlers = {
-            addVisit: function() {
-                $location.path($location.url() + '/visit-new');
+            addVisit: function(e, params) {
+                $location.path($location.url() + '/visit-new').search({ order: params.order });
             },
-            addRoute: function() {
-                $location.path($location.url() + '/route-new');
+            addRoute: function (e, params) {
+                $location.path($location.url() + '/route-new').search({ order: params.order });
             }
         };
 

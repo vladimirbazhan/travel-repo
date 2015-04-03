@@ -7,13 +7,13 @@ using WebApplication1.Models.IdentityModels;
 
 namespace WebApplication1.Models.EntityModels
 {
-    public class Route : Entity
+    public class Route : Entity, ITripEntity, IOrderedEntity
     {
         public string Description { get; set; }
-        public DateTime Start { get; set; }
-        public DateTime Finish { get; set; }
+        public DateTime? Start { get; set; }
+        public DateTime? Finish { get; set; }
         public double Cost { get; set; }
-        public int ActivityOrder { get; set; }
+        public int Order { get; set; }
 
         public int TransTypeId { get; set; }
         private TransType transType;

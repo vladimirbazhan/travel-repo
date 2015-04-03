@@ -8,16 +8,16 @@
     }
 
     function visit() {
-        this.Start = new Date();
-        this.Finish = new Date();
+        this.Start = null;
+        this.Finish = null;
         this.ActivityOrder = 0;
         this.Cost = 0;
         this.GPlaceId = '';
     }
 
     function route() {
-        this.Start = new Date();
-        this.Finish = new Date();
+        this.Start = null;
+        this.Finish = null;
         this.ActivityOrder = 0;
         this.TransType = new transType();
         this.Cost = 0;
@@ -28,7 +28,7 @@
 
     function transType() {
         this.Id = 0;
-        this.Name = 'NotSpecified';
+        this.Name = 'Not Specified';
     }
 
     services.factory('Entity', [function () {

@@ -15,7 +15,8 @@
 
                     scope.$watch('items', function(newVal, oldVal) {
                         if (newVal) {
-                            element.append(aBtn);
+                            var addBtn = $(aBtn).data('params', { order: 0 });
+                            element.append(addBtn);
                             for (var i = 0; i < newVal.length; i++) {
                                 switch (newVal[i].type) {
                                 case "visit":
@@ -29,7 +30,8 @@
                                     element.append(routeElem);
                                     break;
                                 }
-                                element.append(aBtn);
+                                addBtn = $(aBtn).data('params', { order: newVal[i].data.Order + 1 });
+                                element.append(addBtn);
                             }
                             $compile(element.contents())(scope);
                         }
@@ -41,7 +43,7 @@
                 return [
                     {
                         text: 'Add visit',
-                        onclick: scope.handlers.addVisit
+                        onclick: scope.handlers.addVisit,
                     },
                     {
                         text: 'Add route',

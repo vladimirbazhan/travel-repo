@@ -14,7 +14,7 @@ namespace WebApplication1.Models.EntityModels
             Cost = v.Cost;
             Start = v.Start;
             Finish = v.Finish;
-            ActivityOrder = v.ActivityOrder;
+            Order = v.Order;
             GPlaceId = v.GPlaceId;
             TripId = v.TripId;
         }
@@ -23,9 +23,9 @@ namespace WebApplication1.Models.EntityModels
 
         public string Description { get; set; }
         public double Cost { get; set; }
-        public DateTime Start { get; set; }
-        public DateTime Finish { get; set; }
-        public int ActivityOrder { get; set; }
+        public DateTime? Start { get; set; }
+        public DateTime? Finish { get; set; }
+        public int Order { get; set; }
 
         public string GPlaceId { get; set; }
         public int TripId { get; set; }

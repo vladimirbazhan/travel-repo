@@ -8,13 +8,13 @@ using WebApplication1.Models.IdentityModels;
 
 namespace WebApplication1.Models.EntityModels
 {
-    public class Visit : Entity
+    public class Visit : Entity, ITripEntity, IOrderedEntity
     {
         public string Description { get; set; }
         public double Cost { get; set; }
-        public DateTime Start { get; set; }
-        public DateTime Finish { get; set; }
-        public int ActivityOrder { get; set; }
+        public DateTime? Start { get; set; }
+        public DateTime? Finish { get; set; }
+        public int Order { get; set; }
 
         public string GPlaceId { get; set; }
 

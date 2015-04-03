@@ -23,20 +23,21 @@
             return newArr;
         };
 
+        // filters array, returns removed items
         Array.prototype.filter = function (predic) {
             if (!predic) {
                 return this;
             }
-            var newArr = this.concat();
+            var removed = [];
             var curr = 0;
-            while (curr < newArr.length) {
-                if (predic(newArr[curr])) {
-                    newArr.splice(curr, 1);
+            while (curr < this.length) {
+                if (predic(this[curr])) {
+                    removed.push(this.splice(curr, 1)[0]);
                 } else {
                     curr++;
                 }
             }
-            return newArr;
+            return removed;
         };
 
         Array.prototype.find = function (callback) {

@@ -97,10 +97,10 @@
         var service = {
             trips: $resource("/api/trips", {},
             {
-                'query': angular.extend({ url: '/api/trips', method: 'GET', isArray: true }, authHeaders, dateTransform),
+                'query': angular.extend({ url: '/api/trips', method: 'GET', isArray: true }, authHeaders),
                 'save': angular.extend({ url: '/api/trips', method: 'POST' }, authHeaders),
                 'delete': angular.extend({ url: '/api/trips/:tripId', method: 'DELETE' }, authHeaders),
-                'get': angular.extend({ url: '/api/trips/:tripId', method: 'GET' }, authHeaders, dateTransform),
+                'get': angular.extend({ url: '/api/trips/:tripId', method: 'GET' }, authHeaders),
                 'update': angular.extend({ url: '/api/trips/:tripId', method: 'PUT' }, authHeaders),
                 'saveComment': angular.extend({ url: '/api/trips/:tripId/comments', method: 'POST' }, authHeaders)
             }),
@@ -117,10 +117,51 @@
                 'query': angular.extend({ url: '/api/transtypes', method: 'GET', isArray: true }, authHeaders),
             }),
         };
+
+        function parseDate(str) {
+            return new Date(Date.parse(str));
+        };
+
+        function handleDate(obj, datePropName) {
+            if (obj.hasOwnProperty(datePropName) && !!obj[datePropName]) {
+                obj[datePropName] = parseDate(obj[datePropName]);
+            }
+        }
+
+        // sorts visits and routes taking into account Start-Finish date order and relative items order.
+        function sortTripItems(items) {
+            var itemsWithDate = items.filter(function (item) {
+                return item.data.Start && item.data.Finish;
+            });
+            itemsWithDate.sort(function (a, b) {
+                return a.data.Finish - b.data.Start;
+            });
+
+            var sortedItems = [];
+            itemsWithDate.forEach(function (x) {
+                var tempSet = items.filter(function (item) {
+                    return item.data.Order <= x.data.Order;
+                });
+                tempSet.sort(function (a, b) {
+                    return a.data.Order > b.data.Order ? 1 : -1;
+                });
+                sortedItems = sortedItems.concat(tempSet);
+                sortedItems.push(x);
+            });
+            items.sort(function (a, b) {
+                return a.data.Order > b.data.Order ? 1 : -1;
+            });
+            sortedItems = sortedItems.concat(items);
+
+            return sortedItems;
+        }
         
         var handleTrip = function(trip) {
             trip.Id = parseInt(trip.Id);
             trip.Comments = trip.Comments || [];
+
+            handleDate(trip, 'DateFrom');
+            handleDate(trip, 'DateTo');
 
             var items = [];
 
@@ -135,18 +176,22 @@
                 handleRoute(curr);
                 items.push({ type: "route", data: curr });
             });
-
-            trip.tripItems = items;
+            
+            trip.tripItems = sortTripItems(items);
             trip.Photos = trip.Photos || [];
         };
 
         function handleRoute(route) {
             route.TransType = route.TransType || Entity.transType.Default();
             handleTransType(route.TransType);
+
+            handleDate(route, 'Start');
+            handleDate(route, 'Finish');
         }
 
         function handleVisit(visit) {
-            // do nothing
+            handleDate(visit, 'Start');
+            handleDate(visit, 'Finish');
         }
 
         function handleTransType(transType) {

@@ -81,7 +81,7 @@
             switch (status) {
                 case google.maps.places.PlacesServiceStatus.OK:
                     {
-                        results = results.filter(function (a) {
+                        results.filter(function (a) {
                             return a.types.indexOf("establishment") != -1;
                         });
                         if (results.length == 0) {
@@ -144,7 +144,7 @@
                 }
             }
 
-            results = results.filter(function (a) {
+            results.filter(function (a) {
                 return a.types.indexOf("establishment") != -1;
             });
 

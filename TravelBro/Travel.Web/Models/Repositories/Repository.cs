@@ -49,7 +49,7 @@ namespace WebApplication1.Models.Repositories
 
         public virtual void Delete(int id)
         {
-            TEntity entity = dbSet.FirstOrDefault(x => x.Id == id);
+            TEntity entity = Get(id);
             if (entity != null)
             {
                 Delete(entity);

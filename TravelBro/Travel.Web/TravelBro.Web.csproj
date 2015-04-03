@@ -200,9 +200,16 @@
     <Compile Include="Migrations\201503270852195_TransTypeAdded.Designer.cs">
       <DependentUpon>201503270852195_TransTypeAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504021017205_OrderingTripItems.cs" />
+    <Compile Include="Migrations\201504021017205_OrderingTripItems.Designer.cs">
+      <DependentUpon>201504021017205_OrderingTripItems.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Conventions\ManyToManyTableNameConvention.cs" />
     <Compile Include="Models\EntityModels\CommentDTO.cs" />
     <Compile Include="Models\EntityModels\Entity.cs" />
+    <Compile Include="Models\EntityModels\IEntity.cs" />
+    <Compile Include="Models\EntityModels\IOrderedTripEntity.cs" />
+    <Compile Include="Models\EntityModels\ITripEntity.cs" />
     <Compile Include="Models\EntityModels\RouteDTO.cs" />
     <Compile Include="Models\EntityModels\TransType.cs" />
     <Compile Include="Models\EntityModels\TripDTO.cs" />
@@ -214,6 +221,7 @@
     <Compile Include="Models\EntityModels\Comment.cs" />
     <Compile Include="Models\IdentityModels\ApplicationDbContext.cs" />
     <Compile Include="Models\IdentityModels\ApplicationUserDTO.cs" />
+    <Compile Include="Models\Repositories\OrderedItemRepo.cs" />
     <Compile Include="Models\Repositories\PhotoRepo.cs" />
     <Compile Include="Models\EntityModels\Photo.cs" />
     <Compile Include="Models\EntityModels\Route.cs" />
@@ -342,6 +350,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503270852195_TransTypeAdded.resx">
       <DependentUpon>201503270852195_TransTypeAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504021017205_OrderingTripItems.resx">
+      <DependentUpon>201504021017205_OrderingTripItems.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
