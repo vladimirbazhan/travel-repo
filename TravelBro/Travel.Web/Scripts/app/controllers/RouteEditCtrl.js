@@ -45,7 +45,7 @@
             $scope.save = function() {
                 $scope.route.TripId = $scope.trip.Id;
                 $scope.route.Cost = parseFloat($scope.route.Cost) || 0;
-                $scope.route.Order = $routeParams.order !== 'undefined' ? $routeParams.order : -1;
+                $scope.route.Order = $routeParams.order !== 'undefined' ? $routeParams.order + 1 : -1;
                 Backend.routes.save($scope.route, function() {
                     Alerts.add('info', 'Changes saved');
                     $location.$$search = {};

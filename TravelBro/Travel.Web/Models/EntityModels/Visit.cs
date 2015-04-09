@@ -25,6 +25,16 @@ namespace WebApplication1.Models.EntityModels
 
         public virtual ICollection<Comment> Comments { get; private set; }
         public virtual ICollection<Photo> Photos { get; private set; }
-        public virtual ICollection<ApplicationUser> Members { get; private set; } 
+        public virtual ICollection<ApplicationUser> Members { get; private set; }
+
+        public void Merge(Visit other)
+        {
+            Description = other.Description;
+            Cost = other.Cost;
+            Start = other.Start;
+            Finish = other.Finish;
+            Order = other.Order;
+            GPlaceId = other.GPlaceId;
+        }
     }
 }

@@ -8,16 +8,21 @@
                     '<bold><h4 class="list-group-item-heading">Finish place: ' + route.finishPlace.name + ' (' + route.finishPlace.formatted_address + ')' + '</h4></bold>' +
                     '<p class="list-group-item-text">' + (route.Comment || '') + '</p>' +
                     '<p class="list-group-item-text">Spent money: ' + route.Cost + '</p>' +
+                    '<p class="list-group-item-text">Order: ' + route.Order + '</p>' +
+                    '<p class="list-group-item-text">Start: ' + route.Start + ' Finish: ' + route.Finish +'</p>' +
                     (route.TransType ? '<p> Transport: ' + route.TransType.Name + '</p>': '') +
                     '</a>';
             };
 
             return {
+                scope: {
+                    item: '='
+                },
                 restrict: 'E',
                 replace: true,
                 template: '<div></div>',
-                link: function(scope, element, attrs) {
-                    var route = element.data('route').data;
+                link: function (scope, element, attrs) {
+                    var route = scope.item;
                     if (!(route.StartGPlaceId && route.FinishGPlaceId)) {
                         return;
                     }

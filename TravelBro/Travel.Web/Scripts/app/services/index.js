@@ -10,5 +10,6 @@ define([
     './Auth',
     './Entity',
     './Alerts',
-    './GMapsUtils'
+    './GMapsUtils',
+    './DragNDrop'
 ], function () {});

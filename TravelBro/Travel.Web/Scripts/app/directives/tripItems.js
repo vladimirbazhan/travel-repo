@@ -9,45 +9,41 @@
                 },
                 restrict: 'E',
                 link: function(scope, element, attrs) {
-
-                    scope.dropdownItems = getDropdownItems(scope);
-                    var aBtn = '<dropdown text="add item" items="dropdownItems" />';
-
                     scope.$watch('items', function(newVal, oldVal) {
                         if (newVal) {
-                            var addBtn = $(aBtn).data('params', { order: 0 });
-                            element.append(addBtn);
+                            scope.groups = 'orderTripItems';
+                            element.append(createDropdown(scope, 0));
                             for (var i = 0; i < newVal.length; i++) {
-                                switch (newVal[i].type) {
-                                case "visit":
-                                    var visitElem = $('<visit></visit>');
-                                    visitElem.data('visit', newVal[i]);
-                                    element.append(visitElem);
-                                    break;
-                                case "route":
-                                    var routeElem = $('<route></route>');
-                                    routeElem.data('route', newVal[i]);
-                                    element.append(routeElem);
-                                    break;
-                                }
-                                addBtn = $(aBtn).data('params', { order: newVal[i].data.Order + 1 });
-                                element.append(addBtn);
+                                scope.item = newVal[i].data;
+                                var itemElem = $('<div ' + newVal[i].type + ' item="item" draggable-item draggable-item-groups="{{groups}}" draggable-item-data="' + escape(JSON.stringify(scope.item)) + '"></div>');
+                                $compile(itemElem)(scope);
+                                element.append(itemElem);
+                                element.append(createDropdown(scope, scope.item.Order + 1));
                             }
-                            $compile(element.contents())(scope);
                         }
                     });
                 }
             };
 
-            function getDropdownItems(scope) {
+            function createDropdown(scope, order) {
+                scope.dropdownItems = getDropdownItems(scope, order);
+                var aBtn = '<div droppable-item droppable-item-groups="{{groups}}" droppable-item-data="' + escape(JSON.stringify({ order: order })) + '" width="100%"><dropdown text="add item" items="dropdownItems" style="border: 1px;" /></div>';
+                var addBtn = $(aBtn);
+                $compile(addBtn)(scope);
+                return addBtn;
+            }
+
+            function getDropdownItems(scope, order) {
                 return [
                     {
                         text: 'Add visit',
                         onclick: scope.handlers.addVisit,
+                        clickData: order
                     },
                     {
                         text: 'Add route',
-                        onclick: scope.handlers.addRoute
+                        onclick: scope.handlers.addRoute,
+                        clickData: order
                     }
                 ];
             }

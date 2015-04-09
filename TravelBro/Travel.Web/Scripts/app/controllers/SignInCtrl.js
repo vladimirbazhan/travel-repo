@@ -7,8 +7,8 @@ define(['./module'], function(controllers) {
     function SignInCtrl($location, Auth, Alerts) {
         var vm = {
             signInData: {
-                mail: "",
-                password: "",
+                mail: "a@a.a",
+                password: "password",
             },
             onOk: onOk
         };

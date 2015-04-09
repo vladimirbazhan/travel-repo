@@ -39,3 +39,15 @@ div.photos div.col-md-3 { padding: 5px; }
 .mapcontextmenu .dropdown-menu .divider {
     margin: 3px 0;
 }
+
+[draggable] {
+    cursor: move
+}
+
+.droppable {
+  background-color: #cfc;
+}
+
+.dragging {
+  border: 2px dashed #0A5;
+}

@@ -8,14 +8,17 @@ define(['./module'], function(directives) {
                     '<bold><h4 class="list-group-item-heading">Visited: ' + (visit.Place ? visit.Place.name + ' (' + visit.Place.formatted_address + ')' : '') + '</h4></bold>' +
                     (visit.Description ? '<p class="list-group-item-text">' + visit.Description + '</p>' : '') +
                     '<p class="list-group-item-text">Spent money: ' + visit.Cost + '</p>' +
+                    '<p class="list-group-item-text">Order: ' + visit.Order + '</p>' +
+                    '<p class="list-group-item-text">Start: ' + visit.Start + ' Finish: ' + visit.Finish + '</p>' +
                     '</a>';
             };
             return {
-                restrict: 'E',
-                template: '<div></div>',
-                replace: true,
-                link: function(scope, element, attrs) {
-                    var visit = element.data('visit').data;
+                scope: {
+                    item: '=',
+                },
+                restrict: 'A',
+                link: function (scope, element) {
+                    var visit = scope.item;
 
                     var map = new google.maps.Map(element.get()[0], {});
                     var service = new google.maps.places.PlacesService(map);

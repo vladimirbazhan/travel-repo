@@ -12,13 +12,12 @@
                 template: '<span class="dropdown"></span>',
                 link: function(scope, element) {
                     scope.items = scope.items || [];
-                    var params = element.data('params');
                     element.append('<a href="" class="dropdown-toggle">' + scope.text + '</a>');
                     var ul = $('<ul class="dropdown-menu"></ul>');
                     scope.items.forEach(function(item) {
                         var li = $('<li><a href="">' + item.text + '</a></li>').click(function() {
                             scope.$apply(function(e) {
-                                item.onclick(e, params);
+                                item.onclick(e, item.clickData);
                             });
                         });
                         ul.append(li);

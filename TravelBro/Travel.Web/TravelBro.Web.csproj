@@ -276,6 +276,8 @@
     <Content Include="Scripts\app\controllers\TripListCtrl.js" />
     <Content Include="Scripts\app\controllers\VisitEditCtrl.js" />
     <Content Include="Scripts\app\css\app.css" />
+    <Content Include="Scripts\app\directives\draggableItem.js" />
+    <Content Include="Scripts\app\directives\droppableItem.js" />
     <Content Include="Scripts\app\directives\dropdown.js" />
     <Content Include="Scripts\app\directives\map.js" />
     <Content Include="Scripts\app\directives\nextOnEnter.js" />
@@ -302,6 +304,7 @@
     <Content Include="Scripts\app\services\Alerts.js" />
     <Content Include="Scripts\app\services\Auth.js" />
     <Content Include="Scripts\app\services\Backend.js" />
+    <Content Include="Scripts\app\services\DragNDrop.js" />
     <Content Include="Scripts\app\services\Entity.js" />
     <Content Include="Scripts\app\services\GMapsUtils.js" />
     <Content Include="Scripts\app\services\index.js" />

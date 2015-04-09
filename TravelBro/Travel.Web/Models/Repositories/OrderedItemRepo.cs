@@ -17,19 +17,19 @@ namespace WebApplication1.Models.Repositories
 
         public override TEntity Insert(TEntity entity)
         {
-            RecalculateTripItemsOrder(entity.TripId, entity.Order, true);
+            RecalculateTripItemsOrder(entity.TripId, entity, true);
             return base.Insert(entity);
         }
 
         public override bool Update(TEntity entity)
         {
-            RecalculateTripItemsOrder(entity.TripId, entity.Order, true);
+            RecalculateTripItemsOrder(entity.TripId, entity, true);
             return base.Update(entity);
         }
 
         public override void Delete(TEntity entity)
         {
-            RecalculateTripItemsOrder(entity.TripId, entity.Order, false);
+            RecalculateTripItemsOrder(entity.TripId, entity, false);
             base.Delete(entity);
         }
 
@@ -38,17 +38,16 @@ namespace WebApplication1.Models.Repositories
             TEntity entity = Get(id);
             if (entity != null)
             {
-                RecalculateTripItemsOrder(entity.TripId, entity.Order, false);
+                RecalculateTripItemsOrder(entity.TripId, entity, false);
                 Delete(entity);
             }
         }
 
-        private void RecalculateTripItemsOrder(int tripId, int currentItemOrder, bool increase)
+        private void RecalculateTripItemsOrder(int tripId, TEntity entity, bool increase)
         {
             Trip trip = parent.Repo<TripRepo>().Get(tripId);
-            trip.Visits.Where(x => x.Order >= currentItemOrder).ForEach(x => x.Order += increase ? 1 : -1 );
-            trip.Routes.Where(x => x.Order >= currentItemOrder).ForEach(x => x.Order += increase ? 1 : -1 );
+            trip.Visits.Where(x => x.Id != entity.Id && x.Order >= entity.Order).ForEach(x => x.Order += increase ? 1 : -1 );
+            trip.Routes.Where(x => x.Id != entity.Id && x.Order >= entity.Order).ForEach(x => x.Order += increase ? 1 : -1);
         }
-
     }
 }

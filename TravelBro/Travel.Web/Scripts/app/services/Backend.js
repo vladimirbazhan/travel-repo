@@ -106,11 +106,13 @@
             }),
             visits: $resource('/api/visits', {},
             {
-                'save': angular.extend({ url: '/api/visits', method: 'POST' }, authHeaders)
+                'save': angular.extend({ url: '/api/visits', method: 'POST' }, authHeaders),
+                'update': angular.extend({ url: '/api/visits/:visitId', method: 'PUT' }, authHeaders),
             }),
             routes: $resource('/api/routes', {},
             {
-                'save': angular.extend({ url: '/api/routes', method: 'POST' }, authHeaders)
+                'save': angular.extend({ url: '/api/routes', method: 'POST' }, authHeaders),
+                'update': angular.extend({ url: '/api/routes/:routeId', method: 'PUT' }, authHeaders),
             }),
             transTypes: $resource('/api/transtypes', {},
             {

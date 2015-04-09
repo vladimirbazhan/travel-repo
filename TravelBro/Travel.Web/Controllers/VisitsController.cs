@@ -67,7 +67,9 @@ namespace WebApplication1.Controllers
 
                 try
                 {
-                    uow.Repo<VisitRepo>().Update(visit);
+                    Visit curr = uow.Repo<VisitRepo>().Get(visit.Id);
+                    curr.Merge(visit);
+                    uow.Repo<VisitRepo>().Update(curr);
                     uow.Commit();
                 }
                 catch (DbUpdateConcurrencyException)

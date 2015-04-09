@@ -9,5 +9,7 @@ define([
     './photos',
     './map',
     './dropdown',
-    './onEvents'
+    './onEvents',
+    './draggableItem',
+    './droppableItem'
 ], function () {});
