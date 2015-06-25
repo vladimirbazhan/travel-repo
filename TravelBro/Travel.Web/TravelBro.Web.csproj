@@ -204,6 +204,10 @@
     <Compile Include="Migrations\201504021017205_OrderingTripItems.Designer.cs">
       <DependentUpon>201504021017205_OrderingTripItems.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506250958151_Photo-IsMain-Added.cs" />
+    <Compile Include="Migrations\201506250958151_Photo-IsMain-Added.Designer.cs">
+      <DependentUpon>201506250958151_Photo-IsMain-Added.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Conventions\ManyToManyTableNameConvention.cs" />
     <Compile Include="Models\EntityModels\CommentDTO.cs" />
     <Compile Include="Models\EntityModels\Entity.cs" />
@@ -356,6 +360,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504021017205_OrderingTripItems.resx">
       <DependentUpon>201504021017205_OrderingTripItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506250958151_Photo-IsMain-Added.resx">
+      <DependentUpon>201506250958151_Photo-IsMain-Added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

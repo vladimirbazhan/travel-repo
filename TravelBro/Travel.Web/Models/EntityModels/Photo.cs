@@ -10,6 +10,7 @@ namespace WebApplication1.Models.EntityModels
     {
         public DateTime Published { get; set; }
         public string ImagePath { get; set; }
+        public bool IsMain { get; set; }
 
         public virtual ApplicationUser Author { get; set; }
 
