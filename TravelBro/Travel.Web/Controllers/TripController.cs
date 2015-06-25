@@ -24,38 +24,6 @@ namespace WebApplication1.Controllers
 {
     public class TripsController : ApiController
     {
-        class FileNameProvider
-        {
-            private readonly object _lock = new object();
-
-            public string FileSaveLocation { get; private set; }
-
-            public FileNameProvider()
-            {
-                FileSaveLocation = HttpContext.Current.Server.MapPath("~/App_Data/Images") + '\\';
-            }
-            public string GetNewFileName(string extension)
-            {
-                lock (_lock)
-                {
-                    string fileName = Guid.NewGuid().ToString("N");
-                    int counter = 0;
-                    while (File.Exists(FileSaveLocation + "\\" + fileName + counter + extension))
-                        counter++;
-                    return fileName + counter + extension;
-                }
-            }
-        }
-
-        private FileNameProvider _fileNameProvider = new FileNameProvider();
-
-        private readonly Dictionary<string, string> _extensions = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-        {
-            {".jpg", "image/jpeg"},
-            {".png", "image/png"},
-            {".gif", "image/gif"}
-        };
-
         public IEnumerable<TripDTO> GetTrips()
         {
             using (IUnitOfWork uow = new UnitOfWork())
@@ -141,8 +109,6 @@ namespace WebApplication1.Controllers
                     return Request.CreateResponse(HttpStatusCode.Unauthorized);
                 }
 
-                // TODO: crappy solution, change it using DI service
-                uow.Repo<TripRepo>().PhotoLocationPath = _fileNameProvider.FileSaveLocation;
                 uow.Repo<TripRepo>().Delete(id);
                 uow.Commit();
 
@@ -203,90 +169,5 @@ namespace WebApplication1.Controllers
             }
         }
         
-        [Route("api/trips/{tripId}/photos")]
-        [HttpPost]
-        [Authorize]
-        public async Task<HttpResponseMessage> PostPhotoAsync(int tripId)
-        {
-            using (IUnitOfWork uow = new UnitOfWork())
-            {
-                string usrId = User.Identity.GetUserId();
-                var usr = uow.Repo<UserRepo>().Users.FirstOrDefault(x => x.Id == usrId);
-
-                Trip trip = uow.Repo<TripRepo>().Get(tripId);
-                if (trip.Author.Id != usrId)
-                {
-                    return Request.CreateResponse(HttpStatusCode.Unauthorized);
-                }
-
-                // Check whether the POST operation is MultiPart? 
-                if (!Request.Content.IsMimeMultipartContent())
-                {
-                    throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
-                }
-
-                try
-                {
-                    // Read all contents of multipart message into MultipartMemoryStreamProvider. 
-                    MultipartMemoryStreamProvider provider = new MultipartMemoryStreamProvider();
-
-                    await Request.Content.ReadAsMultipartAsync(provider);
-                    List<Photo> tripPhotos = new List<Photo>();
-                    foreach (var file in provider.Contents)
-                    {
-                        Stream fileStream = await file.ReadAsStreamAsync();
-                        Image img = new Bitmap(fileStream);
-                        img = ImageHelper.ResizeImage(img, 1024, 768);
-                        string fileName = _fileNameProvider.GetNewFileName(".jpg");
-                        ImageHelper.SaveJpeg(_fileNameProvider.FileSaveLocation  + fileName, img, 70);
-
-                        Photo photo = new Photo()
-                        {
-                            Author = usr,
-                            Published = DateTime.Now,
-                            ImagePath = fileName
-                        };
-                        tripPhotos.Add(photo);
-                    }
-
-                    uow.Repo<TripRepo>().AddPhotos(tripId, tripPhotos);
-                    uow.Commit();
-
-                    // Send OK Response along with saved file names to the client. 
-                    return Request.CreateResponse(HttpStatusCode.OK);
-                }
-                catch (Exception e)
-                {
-                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
-                }
-            }
-        }
-
-        [Route("api/trips/photos/{photoId}")]
-        [HttpGet]
-        public HttpResponseMessage PhotosGet(string photoId)
-        {
-            string path = _fileNameProvider.FileSaveLocation + photoId;
-            var fileStream = File.OpenRead(path);
-            {
-                byte[] fileData = new byte[fileStream.Length];
-                var readResult = fileStream.ReadAsync(fileData, 0, (int)fileStream.Length);
-                if (readResult.Result == 0)
-                {
-                    Request.CreateResponse(HttpStatusCode.NotFound);
-                }
-
-                var resp = new HttpResponseMessage()
-                {
-                    Content = new ByteArrayContent(fileData)
-                };
-
-                // Find the MIME type
-                string ext = Path.GetExtension(path);
-                string mimeType = _extensions[ext];
-                resp.Content.Headers.ContentType = new MediaTypeHeaderValue(mimeType);
-                return resp;
-            }
-        }
     }
 }

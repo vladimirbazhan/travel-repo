@@ -23,9 +23,9 @@ namespace WebApplication1.Models.EntityModels
         [ForeignKey("TripId")]
         public virtual Trip Trip { get; set; }
 
-        public virtual ICollection<Comment> Comments { get; private set; }
-        public virtual ICollection<Photo> Photos { get; private set; }
-        public virtual ICollection<ApplicationUser> Members { get; private set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Photo> Photos { get; set; }
+        public virtual ICollection<ApplicationUser> Members { get; set; }
 
         public void Merge(Visit other)
         {

@@ -35,8 +35,8 @@ namespace WebApplication1.Models.EntityModels
         public string StartGPlaceId { get; set; }
         public string FinishGPlaceId { get; set; }
 
-        public virtual ICollection<Comment> Comments { get; private set; }
-        public virtual ICollection<Photo> Photos { get; private set; }
-        public virtual ICollection<ApplicationUser> Members { get; private set; } 
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Photo> Photos { get; set; }
+        public virtual ICollection<ApplicationUser> Members { get; set; } 
     }
 }

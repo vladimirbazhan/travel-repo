@@ -6,14 +6,12 @@ using System.IO;
 using System.Linq;
 using WebApplication1.Models.EntityModels;
 using WebApplication1.Models.IdentityModels;
-using WebApplication1.Models.Repositories;
+using WebApplication1.Utils;
 
-namespace WebApplication1.Models
+namespace WebApplication1.Models.Repositories
 {
     public class TripRepo : Repository<Trip>
     {
-        public string PhotoLocationPath { get; set; }
-
         public TripRepo(ApplicationDbContext context, IUnitOfWork parent)
             : base(context, parent)
         {
@@ -27,7 +25,7 @@ namespace WebApplication1.Models
         public override void Delete(int id)
         {
             base.Delete(id);
-            CleanUpPhotos();
+            parent.Repo<PhotoRepo>().ClearUnusedPhotos();
         }
 
         public Comment AddComment(int tripId, Comment comment)
@@ -53,20 +51,6 @@ namespace WebApplication1.Models
             {
                 curr.Photos.Add(tripPhoto);
             }
-        }
-
-        private void CleanUpPhotos()
-        {
-            parent.Repo<PhotoRepo>().ClearUnusedPhotos(x =>
-            {
-                try
-                {
-                    File.Delete(PhotoLocationPath + x.ImagePath);
-                }
-                catch (Exception)
-                {
-                }
-            });
         }
     }
 }
