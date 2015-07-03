@@ -246,6 +246,7 @@
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\ImageHelper.cs" />
+    <Compile Include="Utils\PhotoFileNameProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
