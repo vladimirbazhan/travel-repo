@@ -30,7 +30,7 @@ namespace WebApplication1.Models.EntityModels
             }
             if (trip.Photos != null)
             {
-                Photos = from photo in trip.Photos select photo.ImagePath;
+                Photos = (from photo in trip.Photos select new PhotoDTO(photo)).ToList();
             }
         }
 
@@ -44,6 +44,6 @@ namespace WebApplication1.Models.EntityModels
         public IEnumerable<VisitDTO> Visits;
         public IEnumerable<RouteDTO> Routes;
         public IEnumerable<CommentDTO> Comments;
-        public IEnumerable<string> Photos;
+        public IEnumerable<PhotoDTO> Photos;
     }
 }
