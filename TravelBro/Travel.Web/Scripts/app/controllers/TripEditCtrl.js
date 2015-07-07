@@ -27,14 +27,6 @@ define(['./module'], function(controllers) {
         // methods
         vm.save = save;
         vm.delete = deleteTrip;
-        vm.handlers = {
-            addVisit: function(e, order) {
-                $location.path($location.url() + '/visit-new').search({ order: order });
-            },
-            addRoute: function (e, order) {
-                $location.path($location.url() + '/route-new').search({ order: order });
-            }
-        };
 
         vm.onSelectedPhotosChanged = onSelectedPhotosChanged;
         vm.removeSelectedPhoto = removeSelectedPhoto;
@@ -45,7 +37,7 @@ define(['./module'], function(controllers) {
 
         function init() {
             if (vm.editMode) {
-                vm.trip = Backend.trips.get({ tripId: $routeParams.tripId }, function() {
+                vm.trip = Backend.trips.get({ tripId: $routeParams.tripId }, function () {
                     mapNavigateByTitle();
                 }, function(err) {
                     Alerts.add('danger', JSON.stringify(err));
@@ -59,6 +51,21 @@ define(['./module'], function(controllers) {
             var saver = new TripChangesSaver(vm);
             saver.save();
         };
+
+        function getDropdownItems(scope, order) {
+            return [
+                {
+                    text: 'Add visit',
+                    onclick: scope.handlers.addVisit,
+                    clickData: order
+                },
+                {
+                    text: 'Add route',
+                    onclick: scope.handlers.addRoute,
+                    clickData: order
+                }
+            ];
+        }
 
         function onSelectedPhotosChanged(e) {
             $scope.$apply(function() {

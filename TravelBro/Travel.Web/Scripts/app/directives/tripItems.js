@@ -1,52 +1,71 @@
 ﻿define(['./module'], function(directives) {
     'use strict';
     directives.directive('tripItems', [
-        '$compile', function($compile) {
+        '$location', '$route', 'Backend', 'Alerts', function ($location, $route, Backend, Alerts) {
             return {
                 scope: {
                     items: '=',
-                    handlers: '='
                 },
+                templateUrl: '/Scripts/app/partials/trip-items.html',
                 restrict: 'E',
-                link: function(scope, element, attrs) {
-                    scope.$watch('items', function(newVal, oldVal) {
+                link: function (scope, element, attrs) {
+                    scope.dropdownOrders = [0];
+                    scope.dropdownItems = [getDropdownItems(scope, 0)];
+
+                    scope.changeOrder = function (dragItem, newOrder) {
+                        dragItem.data.Order = newOrder;
+
+                        var onsuccess = function() {
+                            Alerts.add('info', 'Changes saved');
+                            $route.reload();
+                        };
+                        var onfailure = function(res) {
+                            Alerts.add('danger', res.error_description);
+                        };
+
+                        switch (dragItem.type) {
+                            case 'visit':
+                                Backend.visits.update({ visitId: dragItem.data.Id }, dragItem.data, onsuccess, onfailure);
+                                break;
+                            case 'route':
+                                Backend.routes.update({ routeId: dragItem.data.Id }, dragItem.data, onsuccess, onfailure);
+                                break;
+                        }
+                    }
+
+                    scope.$watch('items', function(newVal) {
                         if (newVal) {
-                            scope.groups = 'orderTripItems';
-                            element.append(createDropdown(scope, 0));
-                            for (var i = 0; i < newVal.length; i++) {
-                                scope.item = newVal[i].data;
-                                var itemElem = $('<div ' + newVal[i].type + ' item="item" draggable-item draggable-item-groups="{{groups}}" draggable-item-data="' + escape(JSON.stringify(scope.item)) + '"></div>');
-                                $compile(itemElem)(scope);
-                                element.append(itemElem);
-                                element.append(createDropdown(scope, scope.item.Order + 1));
-                            }
+                            scope.items.forEach(function (x, i) {
+                                scope.dropdownOrders.push(x.data.Order + 1);
+                                scope.dropdownItems.push(getDropdownItems(scope, x.data.Order + 1));
+                            });
                         }
                     });
                 }
             };
 
-            function createDropdown(scope, order) {
-                scope.dropdownItems = getDropdownItems(scope, order);
-                var aBtn = '<div droppable-item droppable-item-groups="{{groups}}" droppable-item-data="' + escape(JSON.stringify({ order: order })) + '" width="100%"><dropdown text="add item" items="dropdownItems" style="border: 1px;" /></div>';
-                var addBtn = $(aBtn);
-                $compile(addBtn)(scope);
-                return addBtn;
-            }
-
             function getDropdownItems(scope, order) {
                 return [
                     {
                         text: 'Add visit',
-                        onclick: scope.handlers.addVisit,
+                        onclick: addVisit,
                         clickData: order
                     },
                     {
                         text: 'Add route',
-                        onclick: scope.handlers.addRoute,
+                        onclick: addRoute,
                         clickData: order
                     }
                 ];
             }
+
+            function addVisit(e, order) {
+                $location.path($location.url() + '/visit-new').search({ order: order });
+            };
+
+            function addRoute(e, order) {
+                $location.path($location.url() + '/route-new').search({ order: order });
+            };
         }
     ]);
 });

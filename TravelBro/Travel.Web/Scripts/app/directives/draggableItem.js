@@ -1,23 +1,13 @@
 ﻿define(['./module'], function(directives) {
     'use strict';
-    directives.directive('draggableItem', ['DragNDrop',
-        function (DragNDrop) {
+    directives.directive('draggableItem', [function () {
             return {
                 restrict: 'A',
-
-                // necessary parameters are passed by attributes. 
-                // Required attributes: 
-                //      draggableItemGroups: groups in DragNDrop service which will be notified about element drag events
-                //      draggableItemData: data that will be put to dragging item and retrieved by drop item
+                scope: {
+                    draggableItemData : '='
+                },
                 link: function (scope, element, attrs) {
-                    var linkData = {
-                        scope: scope,
-                        attrs: attrs,
-                        element: element
-                    }
-                    element.data('linkData', linkData);
-                    init(element);
-                    console.info(getAttr(element, 'data'));
+                    init.call(scope, element);
                 }
             };
 
@@ -25,27 +15,20 @@
                 element.attr('draggable', 'true');
                 element.addClass('draggable');
 
-                element.bind('dragstart', onDragStart);
-                element.bind('dragend', onDragEnd);
-            }
-
-            function getAttr(element, attr) {
-                attr = attr[0].toUpperCase() + attr.toLowerCase().substr(1);
-                return unescape(element.data('linkData').attrs['draggableItem' + attr]);
+                element.bind('dragstart', $.proxy(onDragStart, this));
+                element.bind('dragend', $.proxy(onDragEnd, this));
             }
 
             // event handlers
             function onDragStart(e) {
-                $(this).addClass('dragging');
-                $(this).css('opacity', '0.4');
-
-                e.originalEvent.dataTransfer.setData('text', getAttr($(this), 'data'));
+                $(e.target).addClass('dragging');
+                $(e.target).css('opacity', '0.4');
+                e.originalEvent.dataTransfer.setData('dragData', JSON.stringify(this.draggableItemData));
             }
 
             function onDragEnd(e) {
                 $(this).removeClass('dragging');
                 $(this).css('opacity', '1');
-                //$('.dragging-over').removeClass('dragging-over');
             }
         }
     ]);

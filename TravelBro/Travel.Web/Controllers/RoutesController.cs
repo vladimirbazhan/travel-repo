@@ -67,7 +67,9 @@ namespace WebApplication1.Controllers
                 
                 try
                 {
-                    uow.Repo<RouteRepo>().Update(route);
+                    Route curr = uow.Repo<RouteRepo>().Get(route.Id);
+                    curr.Merge(route);
+                    uow.Repo<RouteRepo>().Update(curr);
                     uow.Commit();
                 }
                 catch (DbUpdateConcurrencyException)

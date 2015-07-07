@@ -37,6 +37,18 @@ namespace WebApplication1.Models.EntityModels
 
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Photo> Photos { get; set; }
-        public virtual ICollection<ApplicationUser> Members { get; set; } 
+        public virtual ICollection<ApplicationUser> Members { get; set; }
+
+        public void Merge(Route other)
+        {
+            Description = other.Description;
+            Cost = other.Cost;
+            Start = other.Start;
+            Finish = other.Finish;
+            Order = other.Order;
+            TransTypeId = other.TransTypeId;
+            StartGPlaceId = other.StartGPlaceId;
+            FinishGPlaceId = other.FinishGPlaceId;
+        }
     }
 }

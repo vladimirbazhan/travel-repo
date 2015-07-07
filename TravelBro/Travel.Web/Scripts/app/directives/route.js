@@ -1,65 +1,67 @@
 ﻿define(['./module'], function(directives) {
     'use strict';
-    directives.directive('route', [
-        function() {
-            var buildHtml = function(route) {
-                return '<a class="list-group-item">' +
-                    '<bold><h4 class="list-group-item-heading">Start place: ' + route.startPlace.name + ' (' + route.startPlace.formatted_address + ')' + '</h4></bold>' +
-                    '<bold><h4 class="list-group-item-heading">Finish place: ' + route.finishPlace.name + ' (' + route.finishPlace.formatted_address + ')' + '</h4></bold>' +
-                    '<p class="list-group-item-text">' + (route.Comment || '') + '</p>' +
-                    '<p class="list-group-item-text">Spent money: ' + route.Cost + '</p>' +
-                    '<p class="list-group-item-text">Order: ' + route.Order + '</p>' +
-                    '<p class="list-group-item-text">Start: ' + route.Start + ' Finish: ' + route.Finish +'</p>' +
-                    (route.TransType ? '<p> Transport: ' + route.TransType.Name + '</p>': '') +
-                    '</a>';
-            };
-
+    directives.directive('route', ['$timeout',
+        function($timeout) {
             return {
                 scope: {
                     item: '='
                 },
-                restrict: 'E',
-                replace: true,
-                template: '<div></div>',
+                restrict: 'A',
+                replace: false,
+                templateUrl: '/Scripts/app/partials/route-small.html',
                 link: function (scope, element, attrs) {
                     var route = scope.item;
                     if (!(route.StartGPlaceId && route.FinishGPlaceId)) {
                         return;
                     }
-                    var map = new google.maps.Map(element.get()[0], {});
+
+                    var mapDiv = $('<div>');
+                    var map = new google.maps.Map(mapDiv.get()[0], {});
                     var service = new google.maps.places.PlacesService(map);
-                    var getStartPlace = function() {
-                        service.getDetails({
-                            placeId: route.StartGPlaceId
-                        }, function(place, status) {
-                            if (status == google.maps.places.PlacesServiceStatus.OK) {
-                                route.startPlace = place;
-                                if (route.finishPlace) {
-                                    element.append(buildHtml(route));
-                                }
-                            } else {
-                                setTimeout(getStartPlace, 100);
-                            }
-                        });
-                    };
-                    var getFinishPlace = function() {
-                        service.getDetails({
-                            placeId: route.FinishGPlaceId
-                        }, function(place, status) {
-                            if (status == google.maps.places.PlacesServiceStatus.OK) {
-                                route.finishPlace = place;
-                                if (route.startPlace) {
-                                    element.append(buildHtml(route));
-                                }
-                            } else {
-                                setTimeout(getFinishPlace, 100);
-                            }
-                        });
-                    };
-                    getStartPlace();
-                    getFinishPlace();
+
+                    getStartPlace(scope, service);
+                    getFinishPlace(scope, service);
                 }
             };
+
+            function getStartPlace(scope, service) {
+                service.getDetails({
+                    placeId: scope.item.StartGPlaceId
+                }, function (place, status) {
+                    if (status == google.maps.places.PlacesServiceStatus.OK) {
+                        onSuccess(scope, true, place);
+                    } else {
+                        $timeout(getStartPlace, 100);
+                    }
+                });
+            };
+
+            function getFinishPlace(scope, service) {
+                service.getDetails({
+                    placeId: scope.item.FinishGPlaceId
+                }, function (place, status) {
+                    if (status == google.maps.places.PlacesServiceStatus.OK) {
+                        onSuccess(scope, false, place);
+                    } else {
+                        $timeout(getFinishPlace, 100);
+                    }
+                });
+            };
+
+            function onSuccess(scope, isStartPlace, place) {
+                scope.$apply(function () {
+                    if (isStartPlace) 
+                        scope.item.startPlace = place;
+                    else {
+                        scope.item.finishPlace = place;
+                    }
+                    
+                    if (scope.item.startPlace && scope.item.finishPlace) {
+                        scope.item.loaded = true;
+                    }
+                });
+            }
+
         }
     ]);
 });

@@ -11,5 +11,4 @@ define([
     './Entity',
     './Alerts',
     './GMapsUtils',
-    './DragNDrop'
 ], function () {});

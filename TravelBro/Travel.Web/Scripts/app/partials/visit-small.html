@@ -1,0 +1,12 @@
+﻿<div>
+    <div ng-if="!item.loaded">loading...</div>
+    <a class="list-group-item">
+        <b>
+            <h4 class="list-group-item-heading">Visited: {{(item.Place ? item.Place.name + ' (' + item.Place.formatted_address + ')' : '')}}</h4>
+        </b>
+        <p ng-if="item.Description" class="list-group-item-text">{{item.Description}}</p>
+        <p class="list-group-item-text">Spent money: {{item.Cost}}</p>
+        <p class="list-group-item-text">Order: {{item.Order}}</p>
+        <p class="list-group-item-text">Start: {{item.Start}} Finish: {{item.Finish}}</p>
+    </a>
+</div>

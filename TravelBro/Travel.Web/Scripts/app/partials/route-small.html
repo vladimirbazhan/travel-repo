@@ -1,0 +1,12 @@
+﻿<div>
+  <div ng-if="!item.loaded">loading...</div>
+  <a ng-if="item.loaded" class="list-group-item">
+    <b><h4 class="list-group-item-heading">Start place: {{item.startPlace.name + ' (' + item.startPlace.formatted_address + ')'}}</h4></b>
+    <b><h4 class="list-group-item-heading">Finish place: {{item.finishPlace.name + ' (' + item.finishPlace.formatted_address + ')'}}</h4></b>
+    <p class="list-group-item-text">{{item.Comment || ''}}</p>
+    <p class="list-group-item-text">Spent money: {{item.Cost}}</p>
+    <p class="list-group-item-text">Order: {{item.Order}}</p>
+    <p class="list-group-item-text">Start: {{item.Start}} Finish: {{item.Finish}}</p>
+    <p ng-if="item.TransType">Transport: {{item.TransType.Name}}</p>
+  </a>
+</div>

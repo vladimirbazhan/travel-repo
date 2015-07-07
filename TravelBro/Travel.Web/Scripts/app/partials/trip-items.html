@@ -1,0 +1,13 @@
+﻿<div ng-if="items.length" droppable-item droppable-item-data="dropdownOrders[0]" on-drop="changeOrder(dragData, dropData)" width="100%">
+  <dropdown text="add item" items="dropdownItems[0]" style="border: 1px;" />
+</div>
+<div ng-repeat-start="item in items"></div>
+
+<div ng-switch="item.type">
+    <div draggable-item draggable-item-data="item"><div ng-switch-when="visit" visit item="item.data">{{item.type}}</div></div>
+    <div draggable-item draggable-item-data="item"><div ng-switch-when="route" route item="item.data">{{item.type}}</div></div>
+</div>
+<div droppable-item droppable-item-data="dropdownOrders[$index + 1]" on-drop="changeOrder(dragData, dropData)" width="100%">
+  <dropdown text="add item" items="dropdownItems[$index + 1]" style="border: 1px;" />
+</div>
+<div ng-repeat-end=""></div>
