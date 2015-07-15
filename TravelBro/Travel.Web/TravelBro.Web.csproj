@@ -302,6 +302,7 @@
     <Content Include="Scripts\app\partials\dropdown.html" />
     <Content Include="Scripts\app\partials\header.html" />
     <Content Include="Scripts\app\partials\notificationArea.html" />
+    <Content Include="Scripts\app\partials\photos.html" />
     <Content Include="Scripts\app\partials\route-edit.html" />
     <Content Include="Scripts\app\partials\route-small.html" />
     <Content Include="Scripts\app\partials\sign-in.html" />
