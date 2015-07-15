@@ -7,7 +7,7 @@
                     onEvents: '='
                 },
                 restrict: 'A',
-                link: function(scope, element, attrs) {
+                link: function (scope, element, attrs) {
                     if (!!scope.onEvents) {
                         if (Array.isArray(scope.onEvents)) {
                             scope.onEvents.forEach(function(item) {

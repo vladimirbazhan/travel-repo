@@ -34,29 +34,43 @@
         return wrappedResource;
     };
 
-    function getTripCustomActions(Auth) {
+    function getRouteCustomActions(Auth) {
         return {
             savePhoto: function(params, photo, handlers) {
-                var form = new FormData();
-                form.append('photo[]', photo);
-                $.ajax({
-                    url: '/api/trips/' + params.tripId + '/photos',
-                    data: form,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    type: 'POST',
-                    headers: { 'Authorization': Auth.token.get() },
-                    xhr: function () {
-                        var myXhr = $.ajaxSettings.xhr();
-                        if (myXhr.upload) {
-                            myXhr.upload.addEventListener('progress', handlers.onprogress, false);
-                        }
-                        return myXhr;
-                    }
-                }).done(handlers.ondone).fail(handlers.onfail);
+                var url = '/api/trips/' + params.tripId + '/route/' + params.routeId + '/photos';
+                return ajaxSavePhoto(url, Auth.token.get(), photo, handlers);
+            }
+        }
+    }
+
+    function getTripCustomActions(Auth) {
+        return {
+            savePhoto: function (params, photo, handlers) {
+                var url = '/api/trips/' + params.tripId + '/photos';
+                return ajaxSavePhoto(url, Auth.token.get(), photo, handlers);
             }
         };
+    }
+
+    function ajaxSavePhoto(url, authToken, photo, handlers) {
+        var form = new FormData();
+        form.append('photo[]', photo);
+        $.ajax({
+            url: url,
+            data: form,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            headers: { 'Authorization': authToken },
+            xhr: function () {
+                var myXhr = $.ajaxSettings.xhr();
+                if (myXhr.upload) {
+                    myXhr.upload.addEventListener('progress', handlers.onprogress, false);
+                }
+                return myXhr;
+            }
+        }).done(handlers.ondone).fail(handlers.onfail);
     }
 
     services.factory('Backend', ['$resource', 'Auth', 'Entity', function ($resource, Auth, Entity) {
@@ -189,11 +203,13 @@
 
             handleDate(route, 'Start');
             handleDate(route, 'Finish');
+            route.loaded = false;
         }
 
         function handleVisit(visit) {
             handleDate(visit, 'Start');
             handleDate(visit, 'Finish');
+            visit.loaded = false;
         }
 
         function handleTransType(transType) {
@@ -218,6 +234,8 @@
             ['query', 'get'],
             [successHandlers.trips.query, successHandlers.trips.get]);
         $.extend(service.trips, getTripCustomActions(Auth));
+
+        $.extend(service.routes, getRouteCustomActions(Auth));
 
         service.transTypes = wrapActions(service.transTypes,
             ['query'],

@@ -1,0 +1,26 @@
+﻿<div>
+  <div class="photos">
+    <div class="row" ng-repeat="row in rows">
+      <div class="col-md-3" ng-repeat="img in row">
+        <img ng-src="{{img.Path}}/" class="img-responsive img-rounded center-block" ng-attr-style="{{img.IsMain ? 'outline: 3px solid orange' : ''}}" />
+      </div>
+    </div>
+  </div>
+
+  <ul class="list-group" ng-show="selectedPhotos.length > 0">
+    <h4><b>Selected files: </b></h4>
+    <li ng-repeat="photo in selectedPhotos" class="list-group-item">
+      <span class="glyphicon glyphicon-picture"></span>
+      &nbsp;{{photo.name}}
+      <a href="" ng-click="removeSelectedPhoto($index)"><span class="glyphicon glyphicon-remove"></span></a>
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;{{photo.uploadStatus || ''}}</span>
+    </li>
+  </ul>
+
+  <div class="btn-file btn btn-xs btn-default">
+    <span>Add photos</span>
+    <input type="file" multiple accept="image/*" on-events="fileChangedHandler">
+  </div>
+  
+  <button class="btn btn-xs btn-primary" ng-show="selectedPhotos.length > 0" ng-click="save()"><span class="glyphicon"></span>Save photos</button>
+</div>
