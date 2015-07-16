@@ -14,7 +14,7 @@ namespace WebApplication1.Models.EntityModels
 
         public virtual ApplicationUser Author { get; set; }
 
-        public virtual ICollection<Comment> Comments { get; private set; }
+        public virtual ICollection<Comment> Comments { get; set; }
 
         public virtual ICollection<Trip> PhotosToTrips { get; set; }
         public virtual ICollection<Visit> PhotosToVisits { get; set; }

@@ -34,6 +34,18 @@ namespace WebApplication1.Models.Repositories
             }
         }
 
+        public void AddComment(int routeId, Comment comment)
+        {
+            Route curr = Get(routeId);
+            
+            if (curr.Comments == null)
+            {
+                curr.Comments = new Collection<Comment>();
+            }
+
+            curr.Comments.Add(comment);
+        }
+
         public override void Delete(int id)
         {
             base.Delete(id);

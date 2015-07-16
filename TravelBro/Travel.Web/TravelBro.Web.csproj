@@ -176,6 +176,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\RoutesController.cs" />
@@ -227,6 +228,7 @@
     <Compile Include="Models\EntityModels\Comment.cs" />
     <Compile Include="Models\IdentityModels\ApplicationDbContext.cs" />
     <Compile Include="Models\IdentityModels\ApplicationUserDTO.cs" />
+    <Compile Include="Models\Repositories\CommentRepo.cs" />
     <Compile Include="Models\Repositories\OrderedItemRepo.cs" />
     <Compile Include="Models\Repositories\PhotoRepo.cs" />
     <Compile Include="Models\EntityModels\Photo.cs" />
