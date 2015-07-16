@@ -28,6 +28,7 @@ namespace WebApplication1.Models.Repositories
         public override void Delete(int id)
         {
             base.Delete(id);
+            parent.Commit();
             parent.Repo<PhotoRepo>().ClearUnusedPhotos();
         }
     }

@@ -48,13 +48,18 @@ namespace WebApplication1.Controllers
         public HttpResponseMessage PhotosGet(string photoId)
         {
             string path = PhotoFileNameProvider.FileSaveLocation + photoId;
-            var fileStream = File.OpenRead(path);
+            if (!File.Exists(path))
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+
+            using (var fileStream = File.OpenRead(path))
             {
                 byte[] fileData = new byte[fileStream.Length];
                 var readResult = fileStream.ReadAsync(fileData, 0, (int)fileStream.Length);
                 if (readResult.Result == 0)
                 {
-                    Request.CreateResponse(HttpStatusCode.NotFound);
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
                 }
 
                 var resp = new HttpResponseMessage()
@@ -96,16 +101,20 @@ namespace WebApplication1.Controllers
                 {
                     // Read all contents of multipart message into MultipartMemoryStreamProvider. 
                     MultipartMemoryStreamProvider provider = new MultipartMemoryStreamProvider();
-
                     await Request.Content.ReadAsMultipartAsync(provider);
                     List<Photo> photos = new List<Photo>();
                     foreach (var file in provider.Contents)
                     {
-                        Stream fileStream = await file.ReadAsStreamAsync();
-                        Image img = new Bitmap(fileStream);
-                        img = ImageHelper.ResizeImage(img, 1024, 768);
                         string fileName = _fileNameProvider.GetNewFileName(".jpg");
-                        ImageHelper.SaveJpeg(PhotoFileNameProvider.FileSaveLocation + fileName, img, 70);
+                        using (file)
+                        {
+                            using (Stream fileStream = await file.ReadAsStreamAsync())
+                            using (Image img = new Bitmap(fileStream))
+                            using (Image convertedImage = ImageHelper.ResizeImage(img, 1024, 768))
+                            {
+                                ImageHelper.SaveJpeg(PhotoFileNameProvider.FileSaveLocation + fileName, convertedImage, 70);
+                            }
+                        }
 
                         Photo photo = new Photo()
                         {

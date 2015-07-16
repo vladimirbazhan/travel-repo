@@ -23,11 +23,19 @@ namespace WebApplication1.Models.Repositories
             // all photos
             var photoes = dbSet.Include(x => x.PhotosToRoutes).Include(x => x.PhotosToTrips).Include(x => x.PhotosToVisits).ToList();
             // unused photos
-            var unusedPhotos = photoes.Where(x => x.PhotosToRoutes.Count == 0 && x.PhotosToTrips.Count == 0 && x.PhotosToVisits.Count == 0);
+            var unusedPhotos = photoes.Where(x => x.PhotosToRoutes.Count == 0 && x.PhotosToTrips.Count == 0 && x.PhotosToVisits.Count == 0).ToList();
             unusedPhotos.ForEach(x =>
             {
-                try { File.Delete(PhotoFileNameProvider.FileSaveLocation + x.ImagePath); }
-                catch (Exception) { }
+                bool success = false;
+                while (!success)
+                {
+                    try
+                    {
+                        File.Delete(PhotoFileNameProvider.FileSaveLocation + x.ImagePath);
+                        success = true;
+                    }
+                    catch (Exception e) { System.Threading.Thread.Sleep(50); }
+                }
             });
             dbSet.RemoveRange(unusedPhotos);
         }

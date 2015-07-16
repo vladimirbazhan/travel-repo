@@ -75,22 +75,23 @@ namespace WebApplication1.Utils
             }
 
             //create an encoder parameter for the image quality
-            EncoderParameter qualityParam = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, quality);
-            //get the jpeg codec
-            ImageCodecInfo jpegCodec = GetEncoderInfo("image/jpeg");
-
+            using (EncoderParameter qualityParam = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, quality))
             //create a collection of all parameters that we will pass to the encoder
-            EncoderParameters encoderParams = new EncoderParameters(1);
-            //set the quality parameter for the codec
-            encoderParams.Param[0] = qualityParam;
-            //save the image using the codec and the parameters
-
-            string imgPath = Path.GetDirectoryName(path);
-            if (!Directory.Exists(imgPath))
+            using (EncoderParameters encoderParams = new EncoderParameters(1))
             {
-                Directory.CreateDirectory(imgPath);
+                //get the jpeg codec
+                ImageCodecInfo jpegCodec = GetEncoderInfo("image/jpeg");
+                //set the quality parameter for the codec
+                encoderParams.Param[0] = qualityParam;
+                //save the image using the codec and the parameters
+
+                string imgPath = Path.GetDirectoryName(path);
+                if (!Directory.Exists(imgPath))
+                {
+                    Directory.CreateDirectory(imgPath);
+                }
+                image.Save(path, jpegCodec, encoderParams);
             }
-            image.Save(path, jpegCodec, encoderParams);
         }
 
         private static ImageCodecInfo GetEncoderInfo(string mimeType)
