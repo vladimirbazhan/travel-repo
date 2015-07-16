@@ -1,7 +1,7 @@
 ﻿define(['./module'], function(directives) {
     'use strict';
-    directives.directive('route', ['$timeout',
-        function($timeout) {
+    directives.directive('route', ['$timeout', '$location',
+        function ($timeout, $location) {
             return {
                 scope: {
                     item: '='
@@ -11,6 +11,10 @@
                 templateUrl: '/Scripts/app/partials/route-small.html',
                 link: function (scope, element, attrs) {
                     var route = scope.item;
+                    scope.edit = function () {
+                        $location.path('/trips/' + route.TripId + '/route/' + route.Id);
+                    }
+
                     if (!(route.StartGPlaceId && route.FinishGPlaceId)) {
                         return;
                     }

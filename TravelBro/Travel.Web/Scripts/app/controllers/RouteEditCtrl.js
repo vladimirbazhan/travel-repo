@@ -2,8 +2,11 @@
     'use strict';
 
     controllers.controller('RouteEditCtrl', [
-        '$scope', '$routeParams', '$location', 'Auth', 'Backend', 'Entity', 'Alerts', 'GMapsUtils', function($scope, $routeParams, $location, Auth, Backend, Entity, Alerts, GMapsUtils) {
-            $scope.editMode = false;
+        '$scope', '$routeParams', '$location', 'Auth', 'Backend', 'Entity', 'Alerts', 'GMapsUtils', function ($scope, $routeParams, $location, Auth, Backend, Entity, Alerts, GMapsUtils) {
+
+            // init scope
+
+            $scope.editMode = $routeParams.routeId == 'new' ? false : true;
             $scope.signedIn = Auth.token.isSet();
             $scope.legend = $scope.editMode ? "Edit route" : "Create route";
             $scope.trip = Backend.trips.get({ tripId: $routeParams.tripId });
@@ -28,67 +31,115 @@
             };
             $scope.nearbyPlaces = [];
 
-            setTimeout(function() {
-                $scope.mapControl.setContextMenu(geContextMenuItems);
-            }, 0);
-
-            if ($scope.editMode) {
-                $scope.route = {};
-            } else {
-                $scope.route = Entity.route.Default();
-            }
-
             $scope.transTypeSelected = function (transType) {
                 $scope.route.TransType = transType;
             }
 
-            $scope.save = function() {
+            $scope.save = save;
+            $scope.delete = deleteRoute;
+            $scope.savePhoto = savePhoto;
+            $scope.onAllPhotosSaved = onAllPhotosSaved;
+
+            $scope.selectPlace = function (placeId) {
+                selectPlaceImpl(placeId, nearbyShowsDirectionsFrom);
+            };
+
+            var markerFrom = null;
+            var markerTo = null;
+            var nearbyShowsDirectionsFrom = true;
+
+            init();
+
+            function init() {
+                setTimeout(function () {
+                    $scope.mapControl.setContextMenu(geContextMenuItems);
+                }, 0);
+
+                if ($scope.editMode) {
+                    $scope.route = Backend.routes.get({ routeId: $routeParams.routeId }, function (res) {
+                        selectPlaceImpl(res.StartGPlaceId, true);
+                        selectPlaceImpl(res.FinishGPlaceId, false);
+                    }, function (err) {
+                        Alerts.add('danger', JSON.stringify(err));
+                    });
+                } else {
+                    $scope.route = Entity.route.Default();
+                }
+            }
+
+            function save() {
                 $scope.route.TripId = $scope.trip.Id;
                 $scope.route.Cost = parseFloat($scope.route.Cost) || 0;
-                $scope.route.Order = $routeParams.order !== 'undefined' ? $routeParams.order + 1 : -1;
-                Backend.routes.save($scope.route, function() {
-                    Alerts.add('info', 'Changes saved');
-                    $location.$$search = {};
-                    $location.path('/trips/' + $routeParams.tripId);
-                }, function(err) {
+                if (!$scope.editMode) {
+                    $scope.route.Order = $routeParams.order !== 'undefined' ? $routeParams.order + 1 : -1;
+                }
+
+                if ($scope.editMode) {
+                    Backend.routes.update({ routeId: $scope.route.Id }, $scope.route, function () {
+                        Alerts.add('info', 'Changes saved');
+                    }, function (err) {
+                        Alerts.add('danger', 'Error ' + err.status + ': ' + err.statusText);
+                    });
+                } else {
+                    Backend.routes.save($scope.route, function () {
+                        Alerts.add('info', 'Changes saved');
+                        $location.$$search = {};
+                        $location.path('/trips/' + $routeParams.tripId);
+                    }, function (err) {
+                        Alerts.add('danger', 'Error ' + err.status + ': ' + err.statusText);
+                    });
+                }
+            }
+
+            function deleteRoute () {
+                Backend.routes.delete({ routeId: $scope.route.Id, }, function () {
+                    Alerts.add('info', 'Route deleted');
+                    $location.path('/trips/' + $scope.trip.Id);
+                }, function (err) {
                     Alerts.add('danger', 'Error ' + err.status + ': ' + err.statusText);
                 });
             };
 
-            $scope.selectPlace = function(place) {
+            function savePhoto (photo, callbacks) {
+                Backend.routes.savePhoto({ tripId: $scope.trip.Id, routeId: $scope.route.Id }, photo, callbacks);
+            }
+
+            function onAllPhotosSaved () {
+                Backend.routes.get({ routeId: $routeParams.routeId }, function (res) {
+                    $scope.route.Photos = res.Photos;
+                });
+            }
+
+            function selectPlaceImpl (placeId, isFrom) {
                 var service = new google.maps.places.PlacesService($scope.map);
                 service.getDetails({
-                    placeId: place.place_id
-                }, function(place, status) {
+                    placeId: placeId
+                }, function (place, status) {
                     if (status == google.maps.places.PlacesServiceStatus.OK) {
-                        if (nearbyShowsDirectionsFrom) {
-                            $scope.$apply(function() {
+                        if (isFrom) {
+                            $scope.$apply(function () {
                                 $scope.startPlace = place;
                                 $scope.route.StartGPlaceId = place.place_id;
                             });
 
                         } else {
-                            $scope.$apply(function() {
+                            $scope.$apply(function () {
                                 $scope.finishPlace = place;
                                 $scope.route.FinishGPlaceId = place.place_id;
                             });
                         }
                     }
                 });
-            };
-
-            // context menu stuff
-            var menuItems = {
-                from: { text: 'Directions from here', handler: onDirectionsFrom },
-                to: { text: 'Directions to here', handler: onDirectionsTo },
-                clear: { text: 'Clear', handler: onDirectionsClear },
-                divider: { divider: 0 }
-            };
-            var markerFrom = null;
-            var markerTo = null;
-            var nearbyShowsDirectionsFrom = true;
+            }
 
             function geContextMenuItems() {
+                var menuItems = {
+                    from: { text: 'Directions from here', handler: onDirectionsFrom },
+                    to: { text: 'Directions to here', handler: onDirectionsTo },
+                    clear: { text: 'Clear', handler: onDirectionsClear },
+                    divider: { divider: 0 }
+                };
+
                 var items = [];
                 if (!markerFrom) {
                     items.push(menuItems.from);

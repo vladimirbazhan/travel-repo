@@ -1,7 +1,7 @@
 define(['./module'], function(directives) {
     'use strict';
-    directives.directive('visit', [
-        function() {
+    directives.directive('visit', ['$location',
+        function ($location) {
             return {
                 scope: {
                     item: '=',
@@ -10,6 +10,11 @@ define(['./module'], function(directives) {
                 templateUrl: '/Scripts/app/partials/visit-small.html',
                 link: function (scope, element) {
                     var visit = scope.item;
+
+                    scope.edit = function() {
+                        $location.path('/trips/' + visit.TripId + '/visit/' + visit.Id);
+                    }
+                    
                     var mapDiv = $('<div>');
                     var map = new google.maps.Map(mapDiv.get()[0], {});
                     var service = new google.maps.places.PlacesService(map);

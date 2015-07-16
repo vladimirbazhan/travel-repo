@@ -17,6 +17,14 @@ namespace WebApplication1.Models.EntityModels
             Order = v.Order;
             GPlaceId = v.GPlaceId;
             TripId = v.TripId;
+            if (v.Comments != null)
+            {
+                Comments = (from comment in v.Comments select new CommentDTO(comment)).ToList();
+            }
+            if (v.Photos != null)
+            {
+                Photos = (from photo in v.Photos select new PhotoDTO(photo)).ToList();
+            }
         }
 
         public int Id { get; set; }
@@ -29,5 +37,8 @@ namespace WebApplication1.Models.EntityModels
 
         public string GPlaceId { get; set; }
         public int TripId { get; set; }
+
+        public IEnumerable<CommentDTO> Comments;
+        public IEnumerable<PhotoDTO> Photos;
     }
 }

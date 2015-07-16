@@ -1,68 +1,75 @@
 <header/>
 <form class="form-horizontal" >
-    <fieldset>
-        <legend>{{legend}}</legend>    
-        <div class="form-group">
-            <map class="col-lg-8" id="map_canvas" style="height: 480px;" map="map" control="mapControl" options="mapOptions"></map>
-            <div class="col-lg-4 list-group">
-                <span ng-repeat="place in nearbyPlaces" class="list-group-item">
-                    <a href ng-click="selectPlace(place)">{{place.name}}</a>
-                </span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="select" class="col-lg-2 control-label">Transportation</label>
-            <div class="btn-group col-lg-10">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    {{route.TransType.Name}} <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li ng-repeat="transType in transTypes"><a href="" ng-click="transTypeSelected(transType)">{{transType.Name}}</a></li>
-                </ul>
-            </div>        
-        </div>
-        <div class="form-group">
-            <label for="select" class="col-lg-2 control-label">Start Place</label>
-            <div class="col-lg-10">
-                <input type="text" place-autocomplete class="form-control" placeholder="Enter a start place"
-                       details="startPlace.details" options="startPlace.options" place-object="startPlace.placeObject"
-                       place-id="route.StartGPlaceId" map="map" value="{{startPlace.formatted_address}}" ng-model="startPlace.formatted_address" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="select" class="col-lg-2 control-label">Finish Place</label>
-            <div class="col-lg-10">
-                <input type="text" place-autocomplete class="form-control" placeholder="Enter a finish place"
-                       details="finishPlace.details" options="finishPlace.options" place-object="finishPlace.placeObject"
-                       place-id="route.FinishGPlaceId" map="map" value="{{finishPlace.formatted_address}}" ng-model="finishPlace.formatted_address" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="textDescription" class="col-lg-2 control-label">Description</label>
-            <div class="col-lg-10">
-                <textarea class="form-control" rows="3" id="textDescription" ng-model="route.Description">{{route.Description}}</textarea>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2"></label>
-            <div class="col-lg-5">
-                <label>Start: </label><br />
-                <input ui-date="dateOptions" ui-date-format="DD, d MM, yy" ng-model="route.Start">
-            </div>
-            <div class="col-lg-5">
-                <label>Finish: </label><br />
-                <input ui-date="dateOptions" ui-date-format="DD, d MM, yy" ng-model="route.Finish">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="inputName" class="col-lg-2 control-label">Cost</label>
-            <div class="col-lg-10">
-                <input type="text" class="form-control" id="inputName" value="{{route.Cost}}" ng-model="route.Cost">
-            </div>
-        </div>
-    </fieldset>
-    <div class="text-right">
-        <button class="btn btn-default" onclick=" history.go(-1); ">Cancel</button>
-        <button class="btn btn-primary" ng-click="save();">Save</button>
+  <fieldset>
+    <legend>{{legend}}
+      <button class="btn btn-link" ng-show="{{editMode && signedIn}}" ng-click="delete();">delete</button>
+    </legend>
+    <div class="form-group">
+      <map class="col-lg-8" id="map_canvas" style="height: 480px;" map="map" control="mapControl" options="mapOptions"></map>
+      <div class="col-lg-4 list-group">
+        <span ng-repeat="place in nearbyPlaces" class="list-group-item">
+          <a href ng-click="selectPlace(place.place_id)">{{place.name}}</a>
+        </span>
+      </div>
     </div>
+    <div class="form-group">
+      <label for="select" class="col-lg-2 control-label">Transportation</label>
+      <div class="btn-group col-lg-10">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+          {{route.TransType.Name}} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li ng-repeat="transType in transTypes"><a href="" ng-click="transTypeSelected(transType)">{{transType.Name}}</a></li>
+        </ul>
+      </div>        
+    </div>
+    <div class="form-group">
+      <label for="select" class="col-lg-2 control-label">Start Place</label>
+      <div class="col-lg-10">
+        <input type="text" place-autocomplete class="form-control" placeholder="Enter a start place"
+               details="startPlace.details" options="startPlace.options" place-object="startPlace.placeObject"
+               place-id="route.StartGPlaceId" map="map" value="{{startPlace.formatted_address}}" ng-model="startPlace.formatted_address" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="select" class="col-lg-2 control-label">Finish Place</label>
+      <div class="col-lg-10">
+        <input type="text" place-autocomplete class="form-control" placeholder="Enter a finish place"
+               details="finishPlace.details" options="finishPlace.options" place-object="finishPlace.placeObject"
+               place-id="route.FinishGPlaceId" map="map" value="{{finishPlace.formatted_address}}" ng-model="finishPlace.formatted_address" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="textDescription" class="col-lg-2 control-label">Description</label>
+      <div class="col-lg-10">
+        <textarea class="form-control" rows="3" id="textDescription" ng-model="route.Description">{{route.Description}}</textarea>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-lg-2"></label>
+      <div class="col-lg-5">
+        <label>Start: </label><br />
+        <input ui-date="dateOptions" ui-date-format="DD, d MM, yy" ng-model="route.Start">
+      </div>
+      <div class="col-lg-5">
+        <label>Finish: </label><br />
+        <input ui-date="dateOptions" ui-date-format="DD, d MM, yy" ng-model="route.Finish">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputName" class="col-lg-2 control-label">Cost</label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" id="inputName" value="{{route.Cost}}" ng-model="route.Cost">
+      </div>
+    </div>
+        
+    <photos photos="route.Photos" save-photo="savePhoto(photo, callbacks)" on-all-saved="onAllPhotosSaved()" />
+
+    <br /><br />
+
+  </fieldset>
+  <div class="text-right">
+    <button class="btn btn-default" onclick=" history.go(-1); ">Cancel</button>
+    <button class="btn btn-primary" ng-click="save();">Save</button>
+  </div>
 </form>

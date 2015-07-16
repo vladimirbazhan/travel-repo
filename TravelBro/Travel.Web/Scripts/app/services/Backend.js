@@ -34,9 +34,18 @@
         return wrappedResource;
     };
 
+    function getVisitCustomActions(Auth) {
+        return {
+            savePhoto: function (params, photo, handlers) {
+                var url = '/api/trips/' + params.tripId + '/visit/' + params.visitId + '/photos';
+                return ajaxSavePhoto(url, Auth.token.get(), photo, handlers);
+            }
+        }
+    }
+
     function getRouteCustomActions(Auth) {
         return {
-            savePhoto: function(params, photo, handlers) {
+            savePhoto: function (params, photo, handlers) {
                 var url = '/api/trips/' + params.tripId + '/route/' + params.routeId + '/photos';
                 return ajaxSavePhoto(url, Auth.token.get(), photo, handlers);
             }
@@ -120,13 +129,16 @@
             }),
             visits: $resource('/api/visits', {},
             {
+                'get': angular.extend({ url: '/api/visits/:visitId', method: 'GET' }, authHeaders),
                 'save': angular.extend({ url: '/api/visits', method: 'POST' }, authHeaders),
                 'update': angular.extend({ url: '/api/visits/:visitId', method: 'PUT' }, authHeaders),
             }),
             routes: $resource('/api/routes', {},
             {
+                'get': angular.extend({ url: '/api/routes/:routeId', method: 'GET' }, authHeaders),
                 'save': angular.extend({ url: '/api/routes', method: 'POST' }, authHeaders),
                 'update': angular.extend({ url: '/api/routes/:routeId', method: 'PUT' }, authHeaders),
+                'delete': angular.extend({ url: '/api/routes/:routeId', method: 'DELETE' }, authHeaders),
             }),
             transTypes: $resource('/api/transtypes', {},
             {
@@ -233,9 +245,10 @@
         service.trips = wrapActions(service.trips,
             ['query', 'get'],
             [successHandlers.trips.query, successHandlers.trips.get]);
-        $.extend(service.trips, getTripCustomActions(Auth));
 
+        $.extend(service.trips, getTripCustomActions(Auth));
         $.extend(service.routes, getRouteCustomActions(Auth));
+        $.extend(service.visits, getVisitCustomActions(Auth));
 
         service.transTypes = wrapActions(service.transTypes,
             ['query'],

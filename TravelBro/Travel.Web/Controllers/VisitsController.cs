@@ -40,7 +40,7 @@ namespace WebApplication1.Controllers
                     return NotFound();
                 }
 
-                return Ok(visit);
+                return Ok(new VisitDTO(visit));
             }
         }
 

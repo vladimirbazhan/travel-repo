@@ -1,48 +1,52 @@
 <header/>
 <form class="form-horizontal" >
-    <fieldset>
-        <legend>{{legend}}</legend>
-        <div class="form-group">
-            <map class="col-lg-8" id="map_canvas" style="height: 480px;" map="map" options="mapOptions"></map>
-            <div class="col-lg-4 list-group">
-                <span ng-repeat="place in nearbyPlaces" class="list-group-item">
-                    <a href ng-click="selectPlace(place)">{{place.name}}</a>
-                </span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="select" class="col-lg-2 control-label">Place</label>
-            <div class="col-lg-10">
-                <input type="text" place-autocomplete class="form-control" placeholder="Enter a place"
-                       place-object="placeObject" place-id="visit.GPlaceId" map="map" value="{{place.formatted_address}}" ng-model="place.formatted_address" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="textDescription" class="col-lg-2 control-label">Description</label>
-            <div class="col-lg-10">
-                <textarea class="form-control" rows="3" id="textDescription" ng-model="visit.Description">{{visit.Description}}</textarea>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2"></label>
-            <div class="col-lg-5">
-                <label>Start: </label><br/>
-                <input ui-date="dateOptions" ui-date-format="DD, d MM, yy" ng-model="visit.Start">
-            </div>
-            <div class="col-lg-5">
-                <label>Finish: </label><br />
-                <input ui-date="dateOptions" ui-date-format="DD, d MM, yy" ng-model="visit.Finish">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="inputName" class="col-lg-2 control-label">Cost</label>
-            <div class="col-lg-10">
-                <input type="text" class="form-control" id="inputName" value="{{visit.Cost}}" ng-model="visit.Cost">
-            </div>
-        </div>
-    </fieldset>
-    <div class="text-right">
-        <button class="btn btn-default" onclick=" history.go(-1); ">Cancel</button>
-        <button class="btn btn-primary" ng-click="save();">Save</button>
+  <fieldset>
+    <legend>{{legend}}</legend>
+    <div class="form-group">
+      <map class="col-lg-8" id="map_canvas" style="height: 480px;" map="map" options="mapOptions"></map>
+      <div class="col-lg-4 list-group">
+        <span ng-repeat="place in nearbyPlaces" class="list-group-item">
+          <a href ng-click="selectPlace(place.place_id)">{{place.name}}</a>
+        </span>
+      </div>
     </div>
+    <div class="form-group">
+      <label for="select" class="col-lg-2 control-label">Place</label>
+      <div class="col-lg-10">
+        <input type="text" place-autocomplete class="form-control" placeholder="Enter a place"
+               place-object="placeObject" place-id="visit.GPlaceId" map="map" value="{{place.formatted_address}}" ng-model="place.formatted_address" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="textDescription" class="col-lg-2 control-label">Description</label>
+      <div class="col-lg-10">
+        <textarea class="form-control" rows="3" id="textDescription" ng-model="visit.Description">{{visit.Description}}</textarea>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-lg-2"></label>
+      <div class="col-lg-5">
+        <label>Start: </label><br/>
+        <input ui-date="dateOptions" ui-date-format="DD, d MM, yy" ng-model="visit.Start">
+      </div>
+      <div class="col-lg-5">
+        <label>Finish: </label><br />
+        <input ui-date="dateOptions" ui-date-format="DD, d MM, yy" ng-model="visit.Finish">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputName" class="col-lg-2 control-label">Cost</label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" id="inputName" value="{{visit.Cost}}" ng-model="visit.Cost">
+      </div>
+    </div>
+
+    <photos photos="visit.Photos" save-photo="savePhoto(photo, callbacks)" on-all-saved="onAllPhotosSaved()" />
+    <br /><br />
+
+  </fieldset>
+  <div class="text-right">
+    <button class="btn btn-default" onclick=" history.go(-1); ">Cancel</button>
+    <button class="btn btn-primary" ng-click="save();">Save</button>
+  </div>
 </form>

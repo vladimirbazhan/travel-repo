@@ -30,7 +30,6 @@ namespace WebApplication1.Controllers
         }
 
         // GET api/Routes/5
-        [ResponseType(typeof(Route))]
         public IHttpActionResult GetRoute(int id)
         {
             using (IUnitOfWork uow = new UnitOfWork())
@@ -41,7 +40,7 @@ namespace WebApplication1.Controllers
                     return NotFound();
                 }
 
-                return Ok(route);
+                return Ok(new RouteDTO(route));
             }
         }
 

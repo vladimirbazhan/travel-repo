@@ -1,6 +1,9 @@
 ﻿<div>
   <div ng-if="!item.loaded">loading...</div>
   <a ng-if="item.loaded" class="list-group-item">
+    <div class="text-right">
+      <button ng-click="edit()" class="btn btn-link" style="position: absolute; right: 0px; top: 0px">Edit</button>
+    </div>
     <b><h4 class="list-group-item-heading">Start place: {{item.startPlace.name + ' (' + item.startPlace.formatted_address + ')'}}</h4></b>
     <b><h4 class="list-group-item-heading">Finish place: {{item.finishPlace.name + ' (' + item.finishPlace.formatted_address + ')'}}</h4></b>
     <p class="list-group-item-text">{{item.Comment || ''}}</p>

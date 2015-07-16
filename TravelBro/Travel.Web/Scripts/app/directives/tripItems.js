@@ -60,11 +60,11 @@
             }
 
             function addVisit(e, order) {
-                $location.path($location.url() + '/visit-new').search({ order: order });
+                $location.path($location.url() + '/visit/new').search({ order: order });
             };
 
             function addRoute(e, order) {
-                $location.path($location.url() + '/route-new').search({ order: order });
+                $location.path($location.url() + '/route/new').search({ order: order });
             };
         }
     ]);

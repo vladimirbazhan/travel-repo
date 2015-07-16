@@ -23,15 +23,11 @@ define(['app'], function (app) {
                 controller: 'TripEditCtrl',
                 controllerAs: 'vm'
             }).
-            when('/trips/new', {
-                templateUrl: '/Scripts/app/partials/trip-edit.html',
-                controller: 'TripEditCtrl'
-            }).
-            when('/trips/:tripId/visit-new', {
+            when('/trips/:tripId/visit/:visitId', {
                 templateUrl: '/Scripts/app/partials/visit-edit.html',
                 controller: 'VisitEditCtrl'
             }).
-            when('/trips/:tripId/route-new', {
+            when('/trips/:tripId/route/:routeId', {
                 templateUrl: '/Scripts/app/partials/route-edit.html',
                 controller: 'RouteEditCtrl'
             }).
