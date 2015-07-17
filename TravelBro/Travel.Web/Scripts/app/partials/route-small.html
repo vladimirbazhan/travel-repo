@@ -4,10 +4,10 @@
     <table style="margin: 0px">
       <tr>
         <td style="padding-right: 15px">
-          <img ng-src="{{item.transportIconPath}}" width="48px" height="48px" border="0px"/>
+          <img ng-src="{{item.transportIconPath}}" width="48px" height="48px" border="0px" />
         </td>
         <td>
-          <div class="text-right">
+          <div class="text-right" ng-show="showEditButton == true">
             <button ng-click="edit()" class="btn btn-link" style="position: absolute; right: 0px; top: 0px">Edit</button>
           </div>
           <b><h4 class="list-group-item-heading"><img src="\..\Content\images\Location-Icon-From.png" height="16px" style="margin-right: 3px">{{item.startPlace.name + ' (' + item.startPlace.formatted_address + ')'}}</h4></b>

@@ -14,6 +14,13 @@ define(['./module'], function(directives) {
                     scope.edit = function() {
                         $location.path('/trips/' + visit.TripId + '/visit/' + visit.Id);
                     }
+
+                    scope.showEditButton = false;
+                    element.hover(function () {
+                        scope.$apply(function () { scope.showEditButton = true; })
+                    }, function () {
+                        scope.$apply(function () { scope.showEditButton = false; })
+                    });
                     
                     var mapDiv = $('<div>');
                     var map = new google.maps.Map(mapDiv.get()[0], {});

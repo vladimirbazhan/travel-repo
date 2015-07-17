@@ -17,6 +17,13 @@
 
                     route.transportIconPath = getTransTypeIconPath(route.TransType.Name);
 
+                    scope.showEditButton = false;
+                    element.hover(function () {
+                        scope.$apply(function () { scope.showEditButton = true; })
+                    }, function () {
+                        scope.$apply(function () { scope.showEditButton = false; })
+                    });
+
                     if (!(route.StartGPlaceId && route.FinishGPlaceId)) {
                         return;
                     }
@@ -94,7 +101,6 @@
                 }
                 return iconsPath + "empty.png";
             }
-
         }
     ]);
 });
