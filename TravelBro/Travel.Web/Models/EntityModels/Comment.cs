@@ -5,7 +5,7 @@ using WebApplication1.Models.IdentityModels;
 
 namespace WebApplication1.Models.EntityModels
 {
-    public class Comment
+    public class Comment : Entity
     {
         public int Id { get; set; }
 

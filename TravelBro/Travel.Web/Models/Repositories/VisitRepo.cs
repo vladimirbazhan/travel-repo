@@ -25,6 +25,18 @@ namespace WebApplication1.Models.Repositories
             }
         }
 
+        public void AddComment(int visitId, Comment comment)
+        {
+            Visit curr = Get(visitId);
+
+            if (curr.Comments == null)
+            {
+                curr.Comments = new Collection<Comment>();
+            }
+
+            curr.Comments.Add(comment);
+        }
+
         public override void Delete(int id)
         {
             base.Delete(id);

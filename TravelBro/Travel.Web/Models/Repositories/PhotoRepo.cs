@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
@@ -38,6 +39,18 @@ namespace WebApplication1.Models.Repositories
                 }
             });
             dbSet.RemoveRange(unusedPhotos);
+        }
+
+        public void AddComment(int photoId, Comment comment)
+        {
+            Photo curr = Get(photoId);
+            if (curr.Comments == null)
+            {
+                curr.Comments = new Collection<Comment>();
+            }
+
+            curr.Comments.Add(comment);
+
         }
     }
 }
