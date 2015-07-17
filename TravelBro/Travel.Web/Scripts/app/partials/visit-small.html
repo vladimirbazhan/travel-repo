@@ -1,16 +1,23 @@
 ﻿<div>
   <div ng-if="!item.loaded">loading...</div>
-  <a class="list-group-item">
-    <div class="text-right">
-      <!--<a href="#/trips/{{item.TripId}}/visit-edit/{{item.Id}}" class="btn btn-link" style="position: absolute; right: 0px; top: 0px">Edit</a>-->
-      <button ng-click="edit()" class="btn btn-link" style="position: absolute; right: 0px; top: 0px">Edit</button>
-    </div>
-    <b>
-      <h4 class="list-group-item-heading">Visited: {{(item.Place ? item.Place.name + ' (' + item.Place.formatted_address + ')' : '')}}</h4>
-    </b>
-    <p ng-if="item.Description" class="list-group-item-text">{{item.Description}}</p>
-    <p class="list-group-item-text">Spent money: {{item.Cost}}</p>
-    <p class="list-group-item-text">Order: {{item.Order}}</p>
-    <p class="list-group-item-text">Start: {{item.Start}} Finish: {{item.Finish}}</p>
-  </a>
+  <div ng-if="item.loaded" class="list-group-item">
+    <table style="margin: 0px">
+      <tr>
+        <td style="padding-right: 15px">
+          <img src="\..\Content\images\poi.png" width="48px" height="48px" border="0px" />
+        </td>
+        <td>
+          <div class="text-right">
+            <button ng-click="edit()" class="btn btn-link" style="position: absolute; right: 0px; top: 0px">Edit</button>
+          </div>
+          <b>
+            <h4 class="list-group-item-heading">{{(item.Place ? item.Place.name + ' (' + item.Place.formatted_address + ')' : '')}}</h4>
+          </b>
+          <p ng-if="item.Description" class="list-group-item-text">{{item.Description}}</p>
+          <p class="list-group-item-text">Spent money: {{item.Cost}}</p>
+          <p class="list-group-item-text" ng-if="item.Start && item.Finish">Start: {{item.Start.toDateString()}} Finish: {{item.Finish.toDateString()}}</p>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>

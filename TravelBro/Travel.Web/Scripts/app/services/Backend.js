@@ -93,30 +93,6 @@
             }
         };
 
-        var dateTransform = {
-            transformResponse: function(data, headersGetter) {
-                var dataObj = JSON.parse(data);
-                var parseDate = function(str) {
-                    return new Date(Date.parse(str));
-                };
-                var fTransformObj = function(obj) {
-                    if (obj.hasOwnProperty('DateFrom')) {
-                        obj.DateFrom = parseDate(obj.DateFrom);
-                    }
-                    if (obj.hasOwnProperty('DateTo')) {
-                        obj.DateTo = parseDate(obj.DateTo);
-                    }
-                    return obj;
-                };
-                if (Object.prototype.toString.call(dataObj) === '[object Array]') {
-                    dataObj.forEach(fTransformObj);
-                } else if (Object.prototype.toString.call(dataObj) === '[object Object]') {
-                    dataObj = fTransformObj(dataObj);
-                }
-                return dataObj;
-            }
-        };
-        
         var service = {
             trips: $resource("/api/trips", {},
             {
@@ -236,6 +212,12 @@
                 },
                 get: handleTrip
             },
+            routes: {
+                get: handleRoute
+            },
+            visits: {
+                get: handleVisit
+            },
             transTypes: {
                 query: function(transTypes) {
                     transTypes.forEach(handleTransType);
@@ -245,6 +227,12 @@
         service.trips = wrapActions(service.trips,
             ['query', 'get'],
             [successHandlers.trips.query, successHandlers.trips.get]);
+        service.routes = wrapActions(service.routes,
+            ['get'],
+            [successHandlers.routes.get]);
+        service.visits = wrapActions(service.visits,
+            ['get'],
+            [successHandlers.visits.get]);
 
         $.extend(service.trips, getTripCustomActions(Auth));
         $.extend(service.routes, getRouteCustomActions(Auth));

@@ -15,6 +15,8 @@
                         $location.path('/trips/' + route.TripId + '/route/' + route.Id);
                     }
 
+                    route.transportIconPath = getTransTypeIconPath(route.TransType.Name);
+
                     if (!(route.StartGPlaceId && route.FinishGPlaceId)) {
                         return;
                     }
@@ -35,7 +37,9 @@
                     if (status == google.maps.places.PlacesServiceStatus.OK) {
                         onSuccess(scope, true, place);
                     } else {
-                        $timeout(getStartPlace, 100);
+                        $timeout(function() {
+                            getStartPlace(scope, service);
+                        }, 100);
                     }
                 });
             };
@@ -47,7 +51,9 @@
                     if (status == google.maps.places.PlacesServiceStatus.OK) {
                         onSuccess(scope, false, place);
                     } else {
-                        $timeout(getFinishPlace, 100);
+                        $timeout(function() {
+                            getFinishPlace(scope, service);
+                        }, 100);
                     }
                 });
             };
@@ -64,6 +70,29 @@
                         scope.item.loaded = true;
                     }
                 });
+            }
+
+            function getTransTypeIconPath(transType) {
+                var iconsPath = "\\..\\Content\\images\\TransportTypes\\";
+                switch (transType) {
+                    case "Plane":
+                        return iconsPath + "airplane-7-xxl.png";
+                    case "Car":
+                        return iconsPath + "car-3-xxl.png";
+                    case "Bus":
+                        return iconsPath + "bus-xxl.png";
+                    case "Train":
+                        return iconsPath + "train-xxl.png";
+                    case "Ship":
+                        return iconsPath + "boat-9-xxl.png";
+                    case "Motorbike":
+                        return iconsPath + "motorcycle-xxl.png";
+                    case "Bike":
+                        return iconsPath + "bike-2-xxl.png";
+                    case "Pedestrian":
+                        return iconsPath + "shoes-footprints-xxl.png";
+                }
+                return iconsPath + "empty.png";
             }
 
         }
