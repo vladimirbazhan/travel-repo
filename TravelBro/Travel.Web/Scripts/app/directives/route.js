@@ -10,6 +10,7 @@
                 replace: false,
                 templateUrl: '/Scripts/app/partials/route-small.html',
                 link: function (scope, element, attrs) {
+                    scope.readonly = attrs.hasOwnProperty('readonly');
                     var route = scope.item;
                     scope.edit = function () {
                         $location.path('/trips/' + route.TripId + '/route/' + route.Id);

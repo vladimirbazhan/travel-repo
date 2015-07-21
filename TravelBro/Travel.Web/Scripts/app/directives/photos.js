@@ -4,64 +4,77 @@
         return {
             scope: {
                 photos: '=',
+                columns: '=?',
                 savePhoto: '&',
-                onAllSaved: '&'
+                onAllSaved: '&',
             },
             restrict: 'E',
             replace: true,
             templateUrl: '/Scripts/app/partials/photos.html',
             link: {
-                pre: function (scope) {
+                pre: function (scope, element, attrs) {
                     scope.rows = [];
-                    scope.selectedPhotos = [];
-                    scope.removeSelectedPhoto = function (index) {
-                        scope.selectedPhotos.splice(index, 1);
+                    scope.readonly = attrs.hasOwnProperty('readonly');
+                    if (!scope.readonly) {
+                        scope.selectedPhotos = [];
+                        scope.removeSelectedPhoto = function (index) {
+                            scope.selectedPhotos.splice(index, 1);
+                        }
+                        scope.onSelectedPhotosChanged = function (e) {
+                            scope.$apply(function () {
+                                var files = e.target.files;
+                                scope.selectedPhotos = [];
+                                for (var i = 0; i < files.length; ++i) {
+                                    scope.selectedPhotos.push(files[i]);
+                                }
+                            });
+                        }
+                        scope.fileChangedHandler = { event: 'change', handler: scope.onSelectedPhotosChanged };
                     }
-                    scope.onSelectedPhotosChanged = function (e) {
-                        scope.$apply(function () {
-                            var files = e.target.files;
-                            scope.selectedPhotos = [];
-                            for (var i = 0; i < files.length; ++i) {
-                                scope.selectedPhotos.push(files[i]);
-                            }
-                        });
-                    }
-                    scope.fileChangedHandler = { event: 'change', handler: scope.onSelectedPhotosChanged };
                 },
                 post: function (scope, element, attrs) {
-                    scope.save = function () {
-                        scope.operationLeft = scope.selectedPhotos.length;
-                        scope.selectedPhotos.forEach(function (currPhoto) {
-                            scope.savePhoto({ photo: currPhoto, callbacks: savePhotoCallbacks(scope, currPhoto) });
-                        });
+                    scope.columns = angular.isDefined(scope.columns) ? parseInt(scope.columns) : 4;
+                    if (!scope.readonly) {
+                        scope.save = function () {
+                            scope.operationLeft = scope.selectedPhotos.length;
+                            scope.selectedPhotos.forEach(function (currPhoto) {
+                                scope.savePhoto({ photo: currPhoto, callbacks: savePhotoCallbacks(scope, currPhoto) });
+                            });
+                        }
                     }
 
                     scope.$watch('photos', function (newVal, oldVal) {
                         if (newVal) {
-                            organizePhotos(scope);
+                            organizePhotos(scope, scope.columns);
                         }
                     });
                 }
             }
         };
 
-        function organizePhotos(scope) {
-            var colCount = 4;
+        function organizePhotos(scope, columns) {
             var imgServerPath = $location.protocol() + '://' + $location.host() + ':' + $location.port() + '/' + 'api/trips/photos/';
 
-            var rowCount = Math.ceil(scope.photos.length / colCount);
+            var rowCount = Math.ceil(scope.photos.length / columns);
             var rows = [];
             for (var iRow = 0; iRow < rowCount; ++iRow) {
                 var cols = [];
-                for (var jCol = 0; jCol < colCount; jCol++) {
-                    var imgIndex = iRow * colCount + jCol;
+                for (var jCol = 0; jCol < columns; jCol++) {
+                    var imgIndex = iRow * columns + jCol;
                     if (imgIndex >= scope.photos.length) {
                         break;
+                    }
+                    var position = null;
+                    if (jCol == 0) {
+                        position = 'leftmost';
+                    } else if (jCol == columns - 1) {
+                        position = 'rightmost';
                     }
 
                     cols.push({
                         Path: imgServerPath + scope.photos[imgIndex].ImagePath,
-                        IsMain: scope.photos[imgIndex].IsMain
+                        IsMain: scope.photos[imgIndex].IsMain,
+                        Position: position
                     });
                 }
                 rows.push(cols);

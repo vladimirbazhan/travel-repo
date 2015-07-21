@@ -8,6 +8,7 @@ define([
     './HeaderCtrl',
     './TripListCtrl',
     './TripEditCtrl',
+    './TripViewCtrl',
     './SignInCtrl',
     './SignUpCtrl',
     './VisitEditCtrl',

@@ -1,9 +1,11 @@
 <header/>
 <form class="form-horizontal" >
   <fieldset>
-    <legend>{{legend}}</legend>
+    <legend>{{legend}}
+      <button class="btn btn-link" ng-show="{{editMode && signedIn}}" ng-click="delete();">delete</button>
+    </legend>
     <div class="form-group">
-      <map class="col-lg-8" id="map_canvas" style="height: 480px;" map="map" options="mapOptions"></map>
+      <map class="col-lg-8" id="map_canvas" style="height: 480px; padding: 0px" map="map" options="mapOptions"></map>
       <div class="col-lg-4 list-group">
         <span ng-repeat="place in nearbyPlaces" class="list-group-item">
           <a href ng-click="selectPlace(place.place_id)">{{place.name}}</a>

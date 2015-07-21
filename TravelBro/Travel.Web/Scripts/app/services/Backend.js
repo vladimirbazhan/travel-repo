@@ -108,6 +108,7 @@
                 'get': angular.extend({ url: '/api/visits/:visitId', method: 'GET' }, authHeaders),
                 'save': angular.extend({ url: '/api/visits', method: 'POST' }, authHeaders),
                 'update': angular.extend({ url: '/api/visits/:visitId', method: 'PUT' }, authHeaders),
+                'delete': angular.extend({ url: '/api/visits/:visitId', method: 'DELETE' }, authHeaders),
             }),
             routes: $resource('/api/routes', {},
             {

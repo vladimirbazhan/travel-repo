@@ -1,0 +1,17 @@
+﻿<header />
+<h2>{{vm.trip.Name}}<a class="btn btn-link" href="#/trips/edit/{{vm.trip.Id}}" ng-show="vm.isOwner">edit</a></h2>
+<h5 ng-show="vm.trip.$resolved">{{vm.trip.DateFrom.toDateString()}} - {{vm.trip.DateTo.toDateString()}}</h5>
+<div class="well">{{vm.trip.Description}}</div>
+<map id="map_canvas" style="height: 480px;" map="vm.map" options="vm.mapOptions"></map>
+
+<br /><br />
+
+<photos photos="vm.trip.Photos" readonly />
+
+<div ng-repeat="item in vm.trip.tripItems">
+  <div ng-switch="item.type">
+    <div ng-switch-when="visit" visit readonly item="item.data">{{item.type}}</div>
+    <div ng-switch-when="route" route readonly item="item.data">{{item.type}}</div>
+  </div>
+</div>
+<br/>

@@ -19,6 +19,11 @@ define(['app'], function (app) {
                 controllerAs: 'tripListVm'
             }).
             when('/trips/:tripId', {
+                templateUrl: '/Scripts/app/partials/trip-view.html',
+                controller: 'TripViewCtrl',
+                controllerAs: 'vm'
+            }).
+            when('/trips/edit/:tripId', {
                 templateUrl: '/Scripts/app/partials/trip-edit.html',
                 controller: 'TripEditCtrl',
                 controllerAs: 'vm'

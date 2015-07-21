@@ -7,16 +7,17 @@
           <img ng-src="{{item.transportIconPath}}" width="48px" height="48px" border="0px" />
         </td>
         <td>
-          <div class="text-right" ng-show="showEditButton == true">
+          <div class="text-right" ng-show="!readonly && showEditButton">
             <button ng-click="edit()" class="btn btn-link" style="position: absolute; right: 0px; top: 0px">Edit</button>
           </div>
           <b><h4 class="list-group-item-heading"><img src="\..\Content\images\Location-Icon-From.png" height="16px" style="margin-right: 3px">{{item.startPlace.name + ' (' + item.startPlace.formatted_address + ')'}}</h4></b>
           <b><h4 class="list-group-item-heading"><img src="\..\Content\images\Location-Icon-To.png" height="16px" style="margin-right: 3px">{{item.finishPlace.name + ' (' + item.finishPlace.formatted_address + ')'}}</h4></b>
-          <p class="list-group-item-text">{{item.Comment || ''}}</p>
+          <p class="list-group-item-text">{{item.Description || ''}}</p>
           <p class="list-group-item-text">Spent money: {{item.Cost}}</p>
           <p class="list-group-item-text" ng-if="item.Start && item.Finish">Start: {{item.Start.toDateString()}} Finish: {{item.Finish.toDateString()}}</p>
         </td>
       </tr>
     </table>
+    <photos ng-if="readonly" photos="item.Photos" columns="6" readonly />
   </div>
 </div>

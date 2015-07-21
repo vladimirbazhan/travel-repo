@@ -10,7 +10,7 @@ define(['./module'], function (controllers) {
             tripsOrder: 'Name',
             commentText: "",
             create: function() {
-                $location.path('/trips/new');
+                $location.path('/trips/edit/new');
             },
             sendComment: sendComment
         };

@@ -1,7 +1,7 @@
 ﻿<div>
   <div class="photos">
     <div class="row" ng-repeat="row in rows">
-      <div class="col-md-3" ng-repeat="img in row">
+      <div class="photoContainer" ng-class="'col-md-' + 12/columns" ng-repeat="img in row" ng-class="img.Position">
         <img ng-src="{{img.Path}}/" class="img-responsive img-rounded center-block" ng-attr-style="{{img.IsMain ? 'outline: 3px solid orange' : ''}}" />
       </div>
     </div>
@@ -16,8 +16,8 @@
       <span>&nbsp;&nbsp;&nbsp;&nbsp;{{photo.uploadStatus || ''}}</span>
     </li>
   </ul>
-
-  <div class="btn-file btn btn-xs btn-default">
+  
+  <div class="btn-file btn btn-xs btn-default" ng-show="!readonly">
     <span>Add photos</span>
     <input type="file" multiple accept="image/*" on-events="fileChangedHandler">
   </div>

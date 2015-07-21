@@ -53,11 +53,19 @@
                     Backend.visits.save($scope.visit, function () {
                         Alerts.add('info', 'Changes saved');
                         $location.$$search = {};
-                        $location.path('/trips/' + $routeParams.tripId);
+                        $location.path('/trips/edit/' + $routeParams.tripId);
                     }, function (err) {
                         Alerts.add('danger', 'Error ' + err.status + ': ' + err.statusText);
                     });
                 }
+            };
+            $scope.delete = function() {
+                Backend.visits.delete({ visitId: $scope.visit.Id, }, function () {
+                    Alerts.add('info', 'Visit deleted');
+                    $location.path('/trips/edit/' + $scope.trip.Id);
+                }, function (err) {
+                    Alerts.add('danger', 'Error ' + err.status + ': ' + err.statusText);
+                });
             };
 
             $scope.selectPlace = function (placeId) {

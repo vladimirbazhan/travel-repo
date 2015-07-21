@@ -3,10 +3,9 @@
   <fieldset>
     <legend>{{vm.legend}}
       <button class="btn btn-link" ng-show="{{vm.editMode && vm.signedIn}}" ng-click="vm.delete();">delete</button>
-      <h5 class="text-right">Author: {{vm.trip.AuthorEmail}}</h5>
     </legend>
     <div class="form-group">
-      <map class="col-lg-12" id="map_canvas" style="height: 480px; margin: 15px;" map="vm.map" options="vm.mapOptions"></map>
+      <map id="map_canvas" style="height: 480px; margin: 15px;" map="vm.map" options="vm.mapOptions"></map>
       <label for="inputName" class="col-lg-2 control-label">Trip name</label>
       <div class="col-lg-10">
         <input type="text" class="form-control" id="inputName" value="{{vm.trip.Name}}" ng-model="vm.trip.Name">

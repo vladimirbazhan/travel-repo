@@ -283,6 +283,7 @@
     <Content Include="Scripts\app\controllers\SignUpCtrl.js" />
     <Content Include="Scripts\app\controllers\TripEditCtrl.js" />
     <Content Include="Scripts\app\controllers\TripListCtrl.js" />
+    <Content Include="Scripts\app\controllers\TripViewCtrl.js" />
     <Content Include="Scripts\app\controllers\VisitEditCtrl.js" />
     <Content Include="Scripts\app\css\app.css" />
     <Content Include="Scripts\app\directives\draggableItem.js" />
@@ -312,6 +313,7 @@
     <Content Include="Scripts\app\partials\trip-edit.html" />
     <Content Include="Scripts\app\partials\trip-items.html" />
     <Content Include="Scripts\app\partials\trip-list.html" />
+    <Content Include="Scripts\app\partials\trip-view.html" />
     <Content Include="Scripts\app\partials\visit-edit.html" />
     <Content Include="Scripts\app\partials\visit-small.html" />
     <Content Include="Scripts\app\routes.js" />

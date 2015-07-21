@@ -8,7 +8,8 @@ define(['./module'], function(directives) {
                 },
                 restrict: 'A',
                 templateUrl: '/Scripts/app/partials/visit-small.html',
-                link: function (scope, element) {
+                link: function (scope, element, attrs) {
+                    scope.readonly = attrs.hasOwnProperty('readonly');
                     var visit = scope.item;
 
                     scope.edit = function() {

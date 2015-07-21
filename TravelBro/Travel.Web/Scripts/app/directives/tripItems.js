@@ -1,7 +1,7 @@
 ﻿define(['./module'], function(directives) {
     'use strict';
     directives.directive('tripItems', [
-        '$location', '$route', 'Backend', 'Alerts', function ($location, $route, Backend, Alerts) {
+        '$location', '$route', '$routeParams', 'Backend', 'Alerts', function ($location, $route, $routeParams, Backend, Alerts) {
             return {
                 scope: {
                     items: '=',
@@ -60,11 +60,11 @@
             }
 
             function addVisit(e, order) {
-                $location.path($location.url() + '/visit/new').search({ order: order });
+                $location.path('/trips/' + $routeParams.tripId + '/visit/new').search({ order: order });
             };
 
             function addRoute(e, order) {
-                $location.path($location.url() + '/route/new').search({ order: order });
+                $location.path('/trips/' + $routeParams.tripId + '/route/new').search({ order: order });
             };
         }
     ]);

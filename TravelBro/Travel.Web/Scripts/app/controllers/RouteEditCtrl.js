@@ -84,7 +84,7 @@
                     Backend.routes.save($scope.route, function () {
                         Alerts.add('info', 'Changes saved');
                         $location.$$search = {};
-                        $location.path('/trips/' + $routeParams.tripId);
+                        $location.path('/trips/edit/' + $routeParams.tripId);
                     }, function (err) {
                         Alerts.add('danger', 'Error ' + err.status + ': ' + err.statusText);
                     });
@@ -94,7 +94,7 @@
             function deleteRoute () {
                 Backend.routes.delete({ routeId: $scope.route.Id, }, function () {
                     Alerts.add('info', 'Route deleted');
-                    $location.path('/trips/' + $scope.trip.Id);
+                    $location.path('/trips/edit/' + $scope.trip.Id);
                 }, function (err) {
                     Alerts.add('danger', 'Error ' + err.status + ': ' + err.statusText);
                 });
