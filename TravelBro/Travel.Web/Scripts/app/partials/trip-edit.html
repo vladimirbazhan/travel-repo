@@ -2,7 +2,7 @@
 <form class="form-horizontal" >
   <fieldset>
     <legend>{{vm.legend}}
-      <button class="btn btn-link" ng-show="{{vm.editMode && vm.signedIn}}" ng-click="vm.delete();">delete</button>
+      <a class="btn btn-link" ng-show="{{vm.editMode && vm.signedIn}}" ng-click="vm.delete();">delete</a>
     </legend>
     <div class="form-group">
       <map id="map_canvas" style="height: 480px; margin: 15px;" map="vm.map" options="vm.mapOptions"></map>
@@ -54,8 +54,8 @@
   <trip-items ng-show="{{vm.editMode && vm.signedIn}}" items="vm.trip.tripItems"></trip-items>
   <div class="text-right">
     <br />
-    <button class="btn btn-default" onclick=" history.go(-1); ">Cancel</button>
-    <button class="btn btn-primary" ng-click="vm.save();"><span class="glyphicon glyphicon-ok"></span>&nbsp;Save</button>
+    <a class="btn btn-default" onclick=" history.go(-1); ">Cancel</a>
+    <a class="btn btn-primary" ng-click="vm.save();"><span class="glyphicon glyphicon-ok"></span>&nbsp;Save</a>
   </div>
 </form>
 <br />
