@@ -9,9 +9,16 @@ namespace WebApplication1.Utils
         private readonly object _lock = new object();
 
         private static string _location;
+
+        private static string _locationThumbnails;
         public static string FileSaveLocation
         {
             get { return _location ?? (_location = HttpContext.Current.Server.MapPath("~/App_Data/Images") + '\\'); }
+        }
+
+        public static string FileSaveLocationThumbnails
+        {
+            get { return _locationThumbnails ?? (_locationThumbnails = HttpContext.Current.Server.MapPath("~/App_Data/Thumbnails") + '\\'); }
         }
 
         public string GetNewFileName(string extension)

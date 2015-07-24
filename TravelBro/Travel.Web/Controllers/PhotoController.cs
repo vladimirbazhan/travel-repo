@@ -48,32 +48,19 @@ namespace WebApplication1.Controllers
         public HttpResponseMessage PhotosGet(string photoId)
         {
             string path = PhotoFileNameProvider.FileSaveLocation + photoId;
-            if (!File.Exists(path))
-            {
-                return Request.CreateResponse(HttpStatusCode.NotFound);
-            }
-
-            using (var fileStream = File.OpenRead(path))
-            {
-                byte[] fileData = new byte[fileStream.Length];
-                var readResult = fileStream.ReadAsync(fileData, 0, (int)fileStream.Length);
-                if (readResult.Result == 0)
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound);
-                }
-
-                var resp = new HttpResponseMessage()
-                {
-                    Content = new ByteArrayContent(fileData)
-                };
-
-                // Find the MIME type
-                string ext = Path.GetExtension(path);
-                string mimeType = _extensions[ext];
-                resp.Content.Headers.ContentType = new MediaTypeHeaderValue(mimeType);
-                return resp;
-            }
+            return GetImageInternal(path);
         }
+
+        
+
+        [Route("api/trips/thumbnails/{photoId}")]
+        [HttpGet]
+        public HttpResponseMessage ThumbnailGet(string photoId)
+        {
+            string path = PhotoFileNameProvider.FileSaveLocationThumbnails + photoId;
+            return GetImageInternal(path);
+        }
+
         #endregion
 
         #region Private methods
@@ -110,9 +97,21 @@ namespace WebApplication1.Controllers
                         {
                             using (Stream fileStream = await file.ReadAsStreamAsync())
                             using (Image img = new Bitmap(fileStream))
-                            using (Image convertedImage = ImageHelper.ResizeImage(img, 1024, 768))
                             {
-                                ImageHelper.SaveJpeg(PhotoFileNameProvider.FileSaveLocation + fileName, convertedImage, 70);
+                                Size convertedSize = GetSizeWithDimensionsNotLongerThan(img.Width, img.Height, 1024, 768);
+                                Size thumbNailSize = GetSizeWithDimensionsNotLongerThan(img.Width, img.Height, 150, 150);
+                                using (Image convertedImage = ImageHelper.ResizeImage(img, convertedSize.Width, convertedSize.Height))
+                                {
+                                    //Save converted image
+                                    ImageHelper.SaveJpeg(PhotoFileNameProvider.FileSaveLocation + fileName,
+                                        convertedImage, 70);
+                                }
+                                using (Image thumbNailImage = ImageHelper.ResizeImage(img, thumbNailSize.Width, thumbNailSize.Height))
+                                {
+                                    //Save converted image
+                                    ImageHelper.SaveJpeg(PhotoFileNameProvider.FileSaveLocationThumbnails + fileName,
+                                        thumbNailImage, 70);
+                                }
                             }
                         }
 
@@ -148,6 +147,49 @@ namespace WebApplication1.Controllers
                     return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
                 }
             }
+        }
+
+        private HttpResponseMessage GetImageInternal(string path)
+        {
+            if (!File.Exists(path))
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+
+            using (var fileStream = File.OpenRead(path))
+            {
+                byte[] fileData = new byte[fileStream.Length];
+                var readResult = fileStream.ReadAsync(fileData, 0, (int)fileStream.Length);
+                if (readResult.Result == 0)
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
+                }
+
+                var resp = new HttpResponseMessage()
+                {
+                    Content = new ByteArrayContent(fileData)
+                };
+
+                // Find the MIME type
+                string ext = Path.GetExtension(path);
+                string mimeType = _extensions[ext];
+                resp.Content.Headers.ContentType = new MediaTypeHeaderValue(mimeType);
+                return resp;
+            }
+        }
+
+
+        private Size GetSizeWithDimensionsNotLongerThan(int originalWidht, int originalHeight,
+                                                         int maxResultWidth, int maxResultHeight)
+        {
+
+            double koefA = ((double)originalWidht) / ((double)maxResultWidth);
+            double koefB = ((double)originalHeight) / ((double)maxResultHeight);
+
+            double koef = koefA > koefB ? koefA : koefB;
+
+            return new Size((int)Math.Round(originalWidht/koef, MidpointRounding.AwayFromZero),
+                            (int)Math.Round(originalHeight / koef, MidpointRounding.AwayFromZero));
         }
 
         #endregion
