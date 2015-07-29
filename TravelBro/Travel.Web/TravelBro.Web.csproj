@@ -210,6 +210,10 @@
     <Compile Include="Migrations\201506250958151_Photo-IsMain-Added.Designer.cs">
       <DependentUpon>201506250958151_Photo-IsMain-Added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507290958120_MapBoundsAdded.cs" />
+    <Compile Include="Migrations\201507290958120_MapBoundsAdded.Designer.cs">
+      <DependentUpon>201507290958120_MapBoundsAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Conventions\ManyToManyTableNameConvention.cs" />
     <Compile Include="Models\EntityModels\CommentDTO.cs" />
     <Compile Include="Models\EntityModels\Entity.cs" />
@@ -374,6 +378,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506250958151_Photo-IsMain-Added.resx">
       <DependentUpon>201506250958151_Photo-IsMain-Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507290958120_MapBoundsAdded.resx">
+      <DependentUpon>201507290958120_MapBoundsAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

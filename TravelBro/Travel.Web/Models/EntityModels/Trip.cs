@@ -14,6 +14,7 @@ namespace WebApplication1.Models.EntityModels
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
         public bool IsPrivate { get; set; }
+        public string MapInfo { get; set; }
 
         public virtual ApplicationUser Author { get; set; }
 
@@ -31,6 +32,7 @@ namespace WebApplication1.Models.EntityModels
             DateFrom = other.DateFrom;
             DateTo = other.DateTo;
             IsPrivate = other.IsPrivate;
+            MapInfo = other.MapInfo;
         }
     }
 }

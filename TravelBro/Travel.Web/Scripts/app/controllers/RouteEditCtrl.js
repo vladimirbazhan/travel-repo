@@ -9,7 +9,13 @@
             $scope.editMode = $routeParams.routeId == 'new' ? false : true;
             $scope.signedIn = Auth.token.isSet();
             $scope.legend = $scope.editMode ? "Edit route" : "Create route";
-            $scope.trip = Backend.trips.get({ tripId: $routeParams.tripId });
+            $scope.trip = Backend.trips.get({ tripId: $routeParams.tripId }, function () {
+                    var mapInfo = JSON.parse($scope.trip.MapInfo);
+                    $scope.map.setCenter(new google.maps.LatLng(mapInfo.mapCenter.G, mapInfo.mapCenter.K));
+                    $scope.map.setZoom(mapInfo.mapZoom);
+                }, function(err) {
+                    Alerts.add('danger', JSON.stringify(err));
+                });
             $scope.transTypes = Backend.transTypes.query();
 
             $scope.startPlace = {};
@@ -24,8 +30,6 @@
             $scope.map = null;
             $scope.mapControl = {};
             $scope.mapOptions = {
-                center: new google.maps.LatLng(-34.397, 150.644),
-                zoom: 5,
                 minZoom: 1,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };

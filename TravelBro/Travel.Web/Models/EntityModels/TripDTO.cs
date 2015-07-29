@@ -16,6 +16,7 @@ namespace WebApplication1.Models.EntityModels
             DateFrom = trip.DateFrom;
             DateTo = trip.DateTo;
             IsPrivate = trip.IsPrivate;
+            MapInfo = trip.MapInfo;
             if (trip.Visits != null)
             {
                 Visits = (from visit in trip.Visits select new VisitDTO(visit)).ToList();
@@ -38,6 +39,7 @@ namespace WebApplication1.Models.EntityModels
         public string AuthorEmail { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string MapInfo { get; set; }
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
         public bool IsPrivate { get; set; }

@@ -6,13 +6,18 @@
             $scope.editMode = $routeParams.visitId == 'new' ? false : true;
             $scope.signedIn = Auth.token.isSet();
             $scope.legend = $scope.editMode ? "Edit visit" : "Create visit";
-            $scope.trip = Backend.trips.get({ tripId: $routeParams.tripId });
+            
+            $scope.trip = Backend.trips.get({ tripId: $routeParams.tripId }, function () {                   
+                    var mapInfo = JSON.parse($scope.trip.MapInfo);
+                    $scope.map.setCenter(new google.maps.LatLng(mapInfo.mapCenter.G, mapInfo.mapCenter.K));
+                    $scope.map.setZoom(mapInfo.mapZoom);
+                }, function(err) {
+                    Alerts.add('danger', JSON.stringify(err));
+                });
 
             $scope.map = null;
             $scope.marker = null;
             $scope.mapOptions = {
-                center: new google.maps.LatLng(-34.397, 150.644),
-                zoom: 5,
                 minZoom: 1,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
@@ -93,12 +98,6 @@
                 } else {
                     $scope.visit = Entity.visit.Default();
                 }
-                
-                if (navigator.geolocation)
-                    navigator.geolocation.getCurrentPosition(function (pos) {
-                        var me = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-                        $scope.map.setCenter(me);
-                    });
 
                 google.maps.event.addListener($scope.map, 'click', function (e) {
                     if ($scope.marker)

@@ -23,7 +23,9 @@
         function init() {
             vm.trip = Backend.trips.get({ tripId: $routeParams.tripId }, function (trip) {
                 vm.isOwner = (Auth.token.isSet() && Auth.getUserName() == trip.AuthorEmail) ? {} : null;
-                mapNavigateByTitle();
+                var mapInfo = JSON.parse(vm.trip.MapInfo);
+                vm.map.setCenter(new google.maps.LatLng(mapInfo.mapCenter.G, mapInfo.mapCenter.K));
+                vm.map.setZoom(mapInfo.mapZoom);
             }, function (err) {
                 Alerts.add('danger', JSON.stringify(err));
             });
