@@ -1,7 +1,9 @@
 /* app css stylesheet */
 
+/* General */
 body { padding-top: 70px; }
 
+/* Notification area */
 .notification-area {
     bottom: 1em;
     display: flex;
@@ -10,6 +12,7 @@ body { padding-top: 70px; }
     right: 1em;
 }
 
+/* Photos directive */
 .btn-file {
     overflow: hidden;
     position: relative;
@@ -33,6 +36,7 @@ div.photos .row {
     top: 0;
 }
 
+/* map context menu */
 .mapcontextmenu .dropdown-menu > li > a {
     padding: 2px 10px;
 }
@@ -45,6 +49,7 @@ div.photos .row {
     margin: 3px 0;
 }
 
+/*drag'n'drop*/
 [draggable] {
     cursor: move
 }
@@ -55,4 +60,90 @@ div.photos .row {
 
 .dragging {
   border: 2px dashed #0A5;
+}
+
+/* settings */
+.settingsList {
+  border-bottom: 1px solid #aaa;
+  border-top: 1px solid #aaa;
+}
+
+.settingsList ul {
+    margin: 0;    
+}
+
+.settingsList ul>li:first-child {
+  border-width: 0;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+}
+
+.settingsList ul li {
+    border-top: 1px solid #ddd;
+    border-bottom: 0;
+    border-right: 0;
+    border-left: 0;
+}
+
+.settingsList a.listLink {
+    display: block;
+    cursor: pointer;
+    color: #333;
+}
+
+.settingsList a.listLink:hover {
+    text-decoration: none;
+}
+
+.settingsList .listItemLabel {
+    float: left;
+    width: 165px;
+}
+
+.settingsList .listItemContent {
+    margin-left: 175px;
+    display: block;
+    height: 20px;
+    color: #9197a3;
+}
+
+.settingsList .listItemEdit {
+    position: relative;
+    text-align: right;
+    display: inline-block;
+    float: right;
+    color: #428bca;
+}
+
+.settingsList .settingsItemEditor {
+    margin-left: 180px;
+    width: 400px;
+}
+
+.settingsList .settingsItemEditor .editorLabel {
+    position: absolute;
+    left: 15px;
+}
+
+.settingsList .settingsItemEditor .form-control {
+    height: 24px;
+    padding: 0px;
+}
+
+.settingsList .settingsItemEditor .table {
+    margin-bottom: 0;    
+}
+
+.settingsList .settingsItemEditor .table td {
+    border-top: none;
+}
+
+.settingsList .settingsItemEditor .table td.header {
+    text-align: right;
+}
+
+.settingsList .settingsItemEditor .buttons a {
+    cursor: pointer;
 }

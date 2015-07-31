@@ -1,0 +1,13 @@
+﻿<header />
+<h4>Account</h4>
+<div class="settingsList">
+  <ul class="list-group">
+    <settings-list-item name="Name" content="{{settingsVm.fullName}}" item-data="settingsVm.userInfo" editor="settings-name-editor" 
+                        on-save="settingsVm.saveName(params)"
+                        on-cancel="settingsVm.cancel()">
+    </settings-list-item>
+    <settings-list-item name="Email" content="{{settingsVm.userInfo.Email}}"></settings-list-item>
+    <settings-list-item name="Password" content="Changed 1 month ago"></settings-list-item>
+    <settings-list-item name="Language" content="{{settingsVm.userInfo.Language.Name}}"></settings-list-item>
+  </ul>
+</div>

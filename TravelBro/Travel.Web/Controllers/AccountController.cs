@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Web.Http.Owin;
 using System.Security.Claims;
@@ -16,6 +18,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using WebApplication1.Models;
 using WebApplication1.Models.IdentityModels;
+using WebApplication1.Models.Repositories;
 using WebApplication1.Providers;
 using WebApplication1.Results;
 
@@ -56,16 +59,32 @@ namespace WebApplication1.Controllers
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]
-        public UserInfoViewModel GetUserInfo()
+        public ApplicationUserDTO GetUserInfo()
         {
-            ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
-
-            return new UserInfoViewModel
+            using (IUnitOfWork uow = new UnitOfWork())
             {
-                Email = User.Identity.GetUserName(),
-                HasRegistered = externalLogin == null,
-                LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
-            };
+                string id = User.Identity.GetUserId();
+                var usr = uow.Repo<UserRepo>().Users.FirstOrDefault(x => x.Id == id);
+                return new ApplicationUserDTO(usr);
+            }
+        }
+
+        // PUT api/Account/UserInfo
+        [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+        [Route("UserInfo")]
+        public void PutUserInfo(ApplicationUser item)
+        {
+            using (IUnitOfWork uow = new UnitOfWork())
+            {
+                string id = User.Identity.GetUserId();
+                var usr = uow.Repo<UserRepo>().Users.FirstOrDefault(x => x.Id == id);
+                usr.Merge(item);
+                if (!uow.Repo<UserRepo>().Update(usr))
+                {
+                    throw new HttpResponseException(HttpStatusCode.NotFound);
+                }
+                uow.Commit();
+            }
         }
 
         // POST api/Account/Logout

@@ -12,9 +12,18 @@ namespace WebApplication1.Models.IdentityModels
         {
             VisibleName = user.VisibleName;
             Email       = user.Email;
+            Name = user.Name;
+            Surname = user.Surname;
+            Patronymic = user.Patronymic;
+            Language = user.Language;
         }
 
         public string VisibleName { get; set; }
         public string Email { get; set; }
+
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string Patronymic { get; set; }
+        public Language Language { get; set; }
     }
 }

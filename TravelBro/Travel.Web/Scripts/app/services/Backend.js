@@ -121,6 +121,11 @@
             {
                 'query': angular.extend({ url: '/api/transtypes', method: 'GET', isArray: true }, authHeaders),
             }),
+            userInfo: $resource('/api/account', {},
+            {
+                'get': angular.extend({ url: '/api/account/userInfo', method: 'GET' }, authHeaders),
+                'update': angular.extend({ url: '/api/account/userInfo', method: 'PUT' }, authHeaders),
+            })
         };
 
         function parseDate(str) {

@@ -24,5 +24,12 @@ namespace WebApplication1.Models.Repositories
         {
             get { return dbSet.ToList(); }
         }
+
+        public virtual bool Update(ApplicationUser entity)
+        {
+            context.Entry(entity).State = EntityState.Modified;
+            return true;
+        }
+
     }
 }

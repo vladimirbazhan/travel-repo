@@ -3,6 +3,7 @@ define(['app'], function (app) {
 
     return app.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
+            // Authentication
             when('/sign-in', {
                 templateUrl: '/Scripts/app/partials/sign-in.html',
                 controller: 'SignInCtrl',
@@ -13,6 +14,13 @@ define(['app'], function (app) {
                 controller: 'SignUpCtrl',
                 controllerAs: 'signUpVm'
             }).
+            // Settings
+            when('/settings', {
+                templateUrl: '/Scripts/app/partials/settings.html',
+                controller: 'SettingsCtrl',
+                controllerAs: 'settingsVm'
+            }).
+            // Trips
             when('/trips', {
                 templateUrl: '/Scripts/app/partials/trip-list.html',
                 controller: 'TripListCtrl',

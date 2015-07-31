@@ -36,6 +36,13 @@ namespace WebApplication1.Migrations
             {
                 context.TransTypes.AddOrUpdate(x => x.Id, new TransType() {Id = (int)transpType, Name = transpType.ToString()});
             }
+
+            // fill Languages table with hardcoded data
+            foreach (LanguageEnum lang in Enum.GetValues(typeof(LanguageEnum)))
+            {
+                context.Languages.AddOrUpdate(x => x.Id, new Language() { Id = (int)lang, Name = lang.ToString() });
+            }
+
             context.SaveChanges();
         }
     }

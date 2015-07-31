@@ -43,6 +43,7 @@ namespace WebApplication1.Models.IdentityModels
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Photo> Photos { get; set; }
         public DbSet<TransType> TransTypes { get; set; }
+        public DbSet<Language> Languages { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

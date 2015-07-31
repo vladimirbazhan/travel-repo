@@ -178,6 +178,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\RoutesController.cs" />
     <Compile Include="Controllers\TransTypesController.cs" />
@@ -214,12 +215,17 @@
     <Compile Include="Migrations\201507290958120_MapBoundsAdded.Designer.cs">
       <DependentUpon>201507290958120_MapBoundsAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507311155236_UserInfoAndLanguage.cs" />
+    <Compile Include="Migrations\201507311155236_UserInfoAndLanguage.Designer.cs">
+      <DependentUpon>201507311155236_UserInfoAndLanguage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Conventions\ManyToManyTableNameConvention.cs" />
     <Compile Include="Models\EntityModels\CommentDTO.cs" />
     <Compile Include="Models\EntityModels\Entity.cs" />
     <Compile Include="Models\EntityModels\IEntity.cs" />
     <Compile Include="Models\EntityModels\IOrderedTripEntity.cs" />
     <Compile Include="Models\EntityModels\ITripEntity.cs" />
+    <Compile Include="Models\EntityModels\Language.cs" />
     <Compile Include="Models\EntityModels\PhotoDTO.cs" />
     <Compile Include="Models\EntityModels\RouteDTO.cs" />
     <Compile Include="Models\EntityModels\TransType.cs" />
@@ -233,6 +239,7 @@
     <Compile Include="Models\IdentityModels\ApplicationDbContext.cs" />
     <Compile Include="Models\IdentityModels\ApplicationUserDTO.cs" />
     <Compile Include="Models\Repositories\CommentRepo.cs" />
+    <Compile Include="Models\Repositories\LanguageRepo.cs" />
     <Compile Include="Models\Repositories\OrderedItemRepo.cs" />
     <Compile Include="Models\Repositories\PhotoRepo.cs" />
     <Compile Include="Models\EntityModels\Photo.cs" />
@@ -283,6 +290,7 @@
     <Content Include="Scripts\app\controllers\index.js" />
     <Content Include="Scripts\app\controllers\module.js" />
     <Content Include="Scripts\app\controllers\RouteEditCtrl.js" />
+    <Content Include="Scripts\app\controllers\SettingsCtrl.js" />
     <Content Include="Scripts\app\controllers\SignInCtrl.js" />
     <Content Include="Scripts\app\controllers\SignUpCtrl.js" />
     <Content Include="Scripts\app\controllers\TripEditCtrl.js" />
@@ -303,6 +311,8 @@
     <Content Include="Scripts\app\directives\index.js" />
     <Content Include="Scripts\app\directives\module.js" />
     <Content Include="Scripts\app\directives\route.js" />
+    <Content Include="Scripts\app\directives\settingsListItem.js" />
+    <Content Include="Scripts\app\directives\settingsNameEditor.js" />
     <Content Include="Scripts\app\directives\tripItems.js" />
     <Content Include="Scripts\app\directives\visit.js" />
     <Content Include="Scripts\app\main.js" />
@@ -312,6 +322,9 @@
     <Content Include="Scripts\app\partials\photos.html" />
     <Content Include="Scripts\app\partials\route-edit.html" />
     <Content Include="Scripts\app\partials\route-small.html" />
+    <Content Include="Scripts\app\partials\settings-name-editor.html" />
+    <Content Include="Scripts\app\partials\settings.html" />
+    <Content Include="Scripts\app\partials\settingsListItem.html" />
     <Content Include="Scripts\app\partials\sign-in.html" />
     <Content Include="Scripts\app\partials\sign-up.html" />
     <Content Include="Scripts\app\partials\trip-edit.html" />
@@ -381,6 +394,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507290958120_MapBoundsAdded.resx">
       <DependentUpon>201507290958120_MapBoundsAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507311155236_UserInfoAndLanguage.resx">
+      <DependentUpon>201507311155236_UserInfoAndLanguage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

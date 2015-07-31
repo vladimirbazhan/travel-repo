@@ -9,14 +9,14 @@ using WebApplication1.Models.Repositories;
 
 namespace WebApplication1.Controllers
 {
-    public class TransTypesController : ApiController
+    public class LanguageController : ApiController
     {
-        // GET api/TransTypes
-        public IEnumerable<TransType> GetTransTypes()
+        // GET api/Languages
+        public IEnumerable<Language> GetLanguages()
         {
             using (IUnitOfWork uow = new UnitOfWork())
             {
-                return uow.Repo<TransTypeRepo>().GetAll();
+                return uow.Repo<LanguageRepo>().GetAll();
             }
         }
     }

@@ -1,0 +1,13 @@
+﻿<li class="list-group-item">
+  <a class="listLink" ng-hide="isEditMode" ng-click="switchToEditMode(true)">
+    <span class="listItemLabel">
+      <b>{{name}}</b>
+    </span>
+    <span class="listItemEdit">Edit</span>
+    <span class="listItemContent">{{content}}</span>
+  </a>
+  <div class="settingsItemEditor" ng-show="isEditMode" ng-switch="editor">
+    <settings-name-editor ng-switch-when="settings-name-editor" class="settings-name-editor" item-data="itemData" label="{{name}}" on-save="settingsListItemVm.save(params)" on-cancel="settingsListItemVm.cancel()"></settings-name-editor>
+    <div ng-switch-default>editor is not implemented</div>
+  </div>
+</li>

@@ -1,0 +1,34 @@
+﻿<div>
+  <span class="editorLabel">
+    <b>{{label}}</b>
+  </span>
+  <table class="table">
+    <tr>
+      <td class="header">Name</td>
+      <td>
+        <input type="text" class="form-control" id="inputName" value="{{itemData.Name}}" ng-model="itemData.Name">
+      </td>
+    </tr>
+    <tr>
+      <td class="header">Patronymic</td>
+      <td>
+        <input type="text" class="form-control" id="inputName" value="{{itemData.Patronymic}}" ng-model="itemData.Patronymic">
+      </td>
+    </tr>
+    <tr>
+      <td class="header">Surname</td>
+      <td>
+        <input type="text" class="form-control" id="inputName" value="{{itemData.Surname}}" ng-model="itemData.Surname">
+      </td>
+    </tr>
+    <tr>
+      <td class="header"></td>
+      <td>
+        <div class="buttons text-right">
+          <a class="btn-xs btn-primary" ng-click="saveChanges()">Save</a>
+          <a class="btn-xs btn-default" ng-click="cancel()">Cancel</a>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>

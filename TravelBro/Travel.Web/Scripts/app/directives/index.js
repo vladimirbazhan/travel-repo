@@ -11,5 +11,7 @@ define([
     './dropdown',
     './onEvents',
     './draggableItem',
-    './droppableItem'
+    './droppableItem',
+    './settingsListItem',
+    './settingsNameEditor',
 ], function () {});

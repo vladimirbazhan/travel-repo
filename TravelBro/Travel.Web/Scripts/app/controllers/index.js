@@ -13,5 +13,6 @@ define([
     './SignUpCtrl',
     './VisitEditCtrl',
     './RouteEditCtrl',
-    './AlertsCtrl'
+    './AlertsCtrl',
+    './SettingsCtrl'
 ], function () {});

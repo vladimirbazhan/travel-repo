@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -19,6 +21,32 @@ namespace WebApplication1.Models.IdentityModels
         }
 
         public string VisibleName { get; set; }
+
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string Patronymic { get; set; }
+
+        [DefaultValue(LanguageEnum.English)]
+        public int? LanguageId { get; set; }
+        private Language language;
+        [ForeignKey("LanguageId")]
+        public virtual Language Language
+        {
+            get { return language; }
+            set
+            {
+                language = value;
+                LanguageId = (value != null) ? value.Id : (int?)null;
+            }
+        }
+
+        public void Merge(ApplicationUser user)
+        {
+            Name = user.Name;
+            Surname = user.Surname;
+            Patronymic = user.Patronymic;
+            //Language = user.Language;
+        }
 
         public virtual Collection<Trip> MemberInTrips { get; private set; }
         public virtual Collection<Visit> MemberInVisits { get; private set; }
