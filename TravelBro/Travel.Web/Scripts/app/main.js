@@ -12,7 +12,8 @@ require.config({
         'jquery-ui': 'bower_components/jquery-ui/ui/jquery-ui',
         'jquery.ui.datepicker': 'bower_components/jquery-ui/ui/jquery.ui.datepicker',
         'angular-ui-date': 'bower_components/angular-ui-date/src/date',
-        'angular-bootstrap': 'bower_components/angular-bootstrap/ui-bootstrap-tpls'
+        'angular-bootstrap': 'bower_components/angular-bootstrap/ui-bootstrap-tpls',
+        'lightbox-js': 'bower_components/lightbox2-master/dist/js/lightbox'
     },
 
     // angular does not support AMD out of the box, put it in a shim
@@ -40,6 +41,9 @@ require.config({
             deps: ['jquery']
         },
         'jquery-ui': {
+            deps: ['jquery']
+        },
+        'lightbox-js': {
             deps: ['jquery']
         }
     },
