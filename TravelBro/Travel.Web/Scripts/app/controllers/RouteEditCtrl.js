@@ -10,9 +10,11 @@
             $scope.signedIn = Auth.token.isSet();
             $scope.legend = $scope.editMode ? "Edit route" : "Create route";
             $scope.trip = Backend.trips.get({ tripId: $routeParams.tripId }, function () {
-                    var mapInfo = JSON.parse($scope.trip.MapInfo);
-                    $scope.map.setCenter(new google.maps.LatLng(mapInfo.mapCenter.G, mapInfo.mapCenter.K));
-                    $scope.map.setZoom(mapInfo.mapZoom);
+                    if(!$scope.editMode){
+                        var mapInfo = JSON.parse($scope.trip.MapInfo);
+                        $scope.map.setCenter(new google.maps.LatLng(mapInfo.mapCenter.G, mapInfo.mapCenter.K));
+                        $scope.map.setZoom(mapInfo.mapZoom);
+                    }
                 }, function(err) {
                     Alerts.add('danger', JSON.stringify(err));
                 });
@@ -43,6 +45,7 @@
             $scope.delete = deleteRoute;
             $scope.savePhoto = savePhoto;
             $scope.onAllPhotosSaved = onAllPhotosSaved;
+            $scope.stickPositionToggle = stickPositionToggle;
 
             $scope.selectPlace = function (placeId) {
                 selectPlaceImpl(placeId, nearbyShowsDirectionsFrom);
@@ -55,6 +58,7 @@
             init();
 
             function init() {
+                $scope.isMapStick = $scope.editMode;
                 setTimeout(function () {
                     $scope.mapControl.setContextMenu(geContextMenuItems);
                 }, 0);
@@ -63,6 +67,9 @@
                     $scope.route = Backend.routes.get({ routeId: $routeParams.routeId }, function (res) {
                         selectPlaceImpl(res.StartGPlaceId, true);
                         selectPlaceImpl(res.FinishGPlaceId, false);
+                        var mapInfo = JSON.parse(res.MapInfo);
+                        $scope.map.setCenter(new google.maps.LatLng(mapInfo.mapCenter.G, mapInfo.mapCenter.K));
+                        $scope.map.setZoom(mapInfo.mapZoom);
                     }, function (err) {
                         Alerts.add('danger', JSON.stringify(err));
                     });
@@ -74,6 +81,12 @@
             function save() {
                 $scope.route.TripId = $scope.trip.Id;
                 $scope.route.Cost = parseFloat($scope.route.Cost) || 0;
+                if (!$scope.isMapStick) {
+                    var mapInfo = {};
+                    mapInfo.mapCenter = $scope.map.getCenter();
+                    mapInfo.mapZoom = $scope.map.getZoom();
+                    $scope.route.MapInfo = JSON.stringify(mapInfo);
+                }
                 if (!$scope.editMode) {
                     $scope.route.Order = $routeParams.order !== 'undefined' ? $routeParams.order + 1 : -1;
                 }
@@ -199,6 +212,15 @@
                 $scope.$apply(function() {
                     $scope.nearbyPlaces = [];
                 });
+            }
+            
+            function stickPositionToggle() {
+                if ($scope.isMapStick) {
+                    var mapInfo = {};
+                    mapInfo.mapCenter = $scope.map.getCenter();
+                    mapInfo.mapZoom = $scope.map.getZoom();
+                    $scope.route.MapInfo = JSON.stringify(mapInfo);
+                }
             }
         }
     ]);

@@ -214,6 +214,10 @@
     <Compile Include="Migrations\201507290958120_MapBoundsAdded.Designer.cs">
       <DependentUpon>201507290958120_MapBoundsAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507311456566_RouteMapInfoAdded.cs" />
+    <Compile Include="Migrations\201507311456566_RouteMapInfoAdded.Designer.cs">
+      <DependentUpon>201507311456566_RouteMapInfoAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Conventions\ManyToManyTableNameConvention.cs" />
     <Compile Include="Models\EntityModels\CommentDTO.cs" />
     <Compile Include="Models\EntityModels\Entity.cs" />
@@ -381,6 +385,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507290958120_MapBoundsAdded.resx">
       <DependentUpon>201507290958120_MapBoundsAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507311456566_RouteMapInfoAdded.resx">
+      <DependentUpon>201507311456566_RouteMapInfoAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
