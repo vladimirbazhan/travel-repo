@@ -1,9 +1,11 @@
 ﻿<div>
   <div class="photos">
     <div class="row" ng-repeat="row in rows">
-      <div class="photoContainer" ng-class="'col-md-' + 12/columns" ng-repeat="img in row" ng-class="img.Position">
-        <img ng-src="{{img.Path}}/" class="img-responsive img-rounded center-block" ng-attr-style="{{img.IsMain ? 'outline: 3px solid orange' : ''}}" />
-      </div>
+        <div class="photoContainer" ng-class="'col-md-' + 12/columns" ng-repeat="img in row" ng-class="img.Position">
+            <a href="{{img.ImagePath}}/" data-lightbox="roadtrip">
+                <img ng-src="{{img.ThumbnailPath}}/" class="img-responsive img-rounded center-block" ng-attr-style="{{img.IsMain ? 'outline: 3px solid orange' : ''}}" />
+            </a>
+        </div>
     </div>
   </div>
 

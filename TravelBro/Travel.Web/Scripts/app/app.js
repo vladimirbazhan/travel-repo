@@ -14,7 +14,8 @@ define([
     'angular-bootstrap',
     'controllers/index',
     'services/index',
-    'directives/index'
+    'directives/index',
+    'lightbox-js'
 ], function (ng) {
     'use strict';
     

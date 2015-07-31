@@ -53,8 +53,8 @@
         };
 
         function organizePhotos(scope, columns) {
+            var thumbnailPath = $location.protocol() + '://' + $location.host() + ':' + $location.port() + '/' + 'api/trips/thumbnails/';
             var imgServerPath = $location.protocol() + '://' + $location.host() + ':' + $location.port() + '/' + 'api/trips/photos/';
-
             var rowCount = Math.ceil(scope.photos.length / columns);
             var rows = [];
             for (var iRow = 0; iRow < rowCount; ++iRow) {
@@ -72,7 +72,8 @@
                     }
 
                     cols.push({
-                        Path: imgServerPath + scope.photos[imgIndex].ImagePath,
+                        ThumbnailPath: thumbnailPath + scope.photos[imgIndex].ImagePath,
+                        ImagePath: imgServerPath + scope.photos[imgIndex].ImagePath,
                         IsMain: scope.photos[imgIndex].IsMain,
                         Position: position
                     });
