@@ -7,13 +7,15 @@
             $scope.signedIn = Auth.token.isSet();
             $scope.legend = $scope.editMode ? "Edit visit" : "Create visit";
             
-            $scope.trip = Backend.trips.get({ tripId: $routeParams.tripId }, function () {                   
+            $scope.trip = Backend.trips.get({ tripId: $routeParams.tripId }, function () {
+                if (!$scope.editMode) {
                     var mapInfo = JSON.parse($scope.trip.MapInfo);
                     $scope.map.setCenter(new google.maps.LatLng(mapInfo.mapCenter.G, mapInfo.mapCenter.K));
                     $scope.map.setZoom(mapInfo.mapZoom);
-                }, function(err) {
-                    Alerts.add('danger', JSON.stringify(err));
-                });
+                }
+            }, function (err) {
+                Alerts.add('danger', JSON.stringify(err));
+            });
 
             $scope.map = null;
             $scope.marker = null;
@@ -40,10 +42,17 @@
                     $scope.visit.Photos = res.Photos;
                 });
             }
+            $scope.stickPositionToggle = stickPositionToggle;
 
             $scope.save = function () {
                 $scope.visit.TripId = $scope.trip.Id;
                 $scope.visit.Cost = parseFloat($scope.visit.Cost) || 0;
+                if (!$scope.isMapStick) {
+                    var mapInfo = {};
+                    mapInfo.mapCenter = $scope.map.getCenter();
+                    mapInfo.mapZoom = $scope.map.getZoom();
+                    $scope.visit.MapInfo = JSON.stringify(mapInfo);
+                }
                 if (!$scope.editMode) {
                     $scope.visit.Order = (typeof $routeParams.order != 'undefined') ? ($routeParams.order + 1) : -1;
                 }
@@ -89,9 +98,13 @@
             setTimeout(init, 0); // wait until directives are loaded
 
             function init() {
+                $scope.isMapStick = $scope.editMode;
                 if ($scope.editMode) {
                     $scope.visit = Backend.visits.get({ visitId: $routeParams.visitId }, function (res) {
                         $scope.selectPlace(res.GPlaceId);
+                        var mapInfo = JSON.parse(res.MapInfo);
+                        $scope.map.setCenter(new google.maps.LatLng(mapInfo.mapCenter.G, mapInfo.mapCenter.K));
+                        $scope.map.setZoom(mapInfo.mapZoom);
                     }, function (err) {
                         Alerts.add('danger', JSON.stringify(err));
                     });
@@ -113,6 +126,15 @@
                         $scope.$apply();
                     });
                 });
+            };
+            
+            function stickPositionToggle() {
+                if ($scope.isMapStick) {
+                    var mapInfo = {};
+                    mapInfo.mapCenter = $scope.map.getCenter();
+                    mapInfo.mapZoom = $scope.map.getZoom();
+                    $scope.visit.MapInfo = JSON.stringify(mapInfo);
+                }
             };
         }]);
 });

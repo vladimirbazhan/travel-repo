@@ -17,6 +17,7 @@ namespace WebApplication1.Models.EntityModels
             Order = v.Order;
             GPlaceId = v.GPlaceId;
             TripId = v.TripId;
+            MapInfo = v.MapInfo;
             if (v.Comments != null)
             {
                 Comments = (from comment in v.Comments select new CommentDTO(comment)).ToList();
@@ -34,6 +35,7 @@ namespace WebApplication1.Models.EntityModels
         public DateTime? Start { get; set; }
         public DateTime? Finish { get; set; }
         public int Order { get; set; }
+        public string MapInfo { get; set; }
 
         public string GPlaceId { get; set; }
         public int TripId { get; set; }
