@@ -219,6 +219,14 @@
     <Compile Include="Migrations\201507311155236_UserInfoAndLanguage.Designer.cs">
       <DependentUpon>201507311155236_UserInfoAndLanguage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507311456566_RouteMapInfoAdded.cs" />
+    <Compile Include="Migrations\201507311456566_RouteMapInfoAdded.Designer.cs">
+      <DependentUpon>201507311456566_RouteMapInfoAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508030922096_VisitMapInfoAdded.cs" />
+    <Compile Include="Migrations\201508030922096_VisitMapInfoAdded.Designer.cs">
+      <DependentUpon>201508030922096_VisitMapInfoAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Conventions\ManyToManyTableNameConvention.cs" />
     <Compile Include="Models\EntityModels\CommentDTO.cs" />
     <Compile Include="Models\EntityModels\Entity.cs" />
@@ -399,6 +407,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507311155236_UserInfoAndLanguage.resx">
       <DependentUpon>201507311155236_UserInfoAndLanguage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507311456566_RouteMapInfoAdded.resx">
+      <DependentUpon>201507311456566_RouteMapInfoAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508030922096_VisitMapInfoAdded.resx">
+      <DependentUpon>201508030922096_VisitMapInfoAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

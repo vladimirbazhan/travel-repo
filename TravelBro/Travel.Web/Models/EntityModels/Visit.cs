@@ -15,6 +15,7 @@ namespace WebApplication1.Models.EntityModels
         public DateTime? Start { get; set; }
         public DateTime? Finish { get; set; }
         public int Order { get; set; }
+        public string MapInfo { get; set; }
 
         public string GPlaceId { get; set; }
 
@@ -35,6 +36,7 @@ namespace WebApplication1.Models.EntityModels
             Finish = other.Finish;
             Order = other.Order;
             GPlaceId = other.GPlaceId;
+            MapInfo = other.MapInfo;
         }
     }
 }
