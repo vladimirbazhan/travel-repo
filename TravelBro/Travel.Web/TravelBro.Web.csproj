@@ -313,6 +313,7 @@
     <Content Include="Scripts\app\directives\route.js" />
     <Content Include="Scripts\app\directives\settingsListItem.js" />
     <Content Include="Scripts\app\directives\settingsNameEditor.js" />
+    <Content Include="Scripts\app\directives\settingsPasswordEditor.js" />
     <Content Include="Scripts\app\directives\tripItems.js" />
     <Content Include="Scripts\app\directives\visit.js" />
     <Content Include="Scripts\app\main.js" />
@@ -323,6 +324,7 @@
     <Content Include="Scripts\app\partials\route-edit.html" />
     <Content Include="Scripts\app\partials\route-small.html" />
     <Content Include="Scripts\app\partials\settings-name-editor.html" />
+    <Content Include="Scripts\app\partials\settings-password-editor.html" />
     <Content Include="Scripts\app\partials\settings.html" />
     <Content Include="Scripts\app\partials\settingsListItem.html" />
     <Content Include="Scripts\app\partials\sign-in.html" />

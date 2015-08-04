@@ -7,15 +7,33 @@
     function SettingsCtrl(Backend, Alerts) {
         var vm = this;
         var userInfoString = null;
+        var emptyPwdFields = {
+            OldPassword: "",
+            NewPassword: "",
+            ConfirmPassword: ""
+        };
 
         init();
 
-        vm.saveName = function () {
+        vm.saveName = function (params, callbacks) {
             Backend.userInfo.update({}, vm.userInfo, function (userInfo) {
                 init();
                 Alerts.add('info', 'Changes saved');
+                callbacks.onsuccess();
             }, function (err) {
                 Alerts.add('danger', JSON.stringify(err));
+                callbacks.onerror();
+            });
+        }
+
+        vm.changePassword = function(data, callbacks) {
+            Backend.account.changePassword(vm.pwd, function () {
+                vm.pwd = JSON.parse(JSON.stringify(emptyPwdFields));
+                Alerts.add('info', 'Password successfully changed');
+                callbacks.onsuccess();
+            }, function (err) {
+                Alerts.add('danger', JSON.stringify(err));
+                callbacks.onerror();
             });
         }
 
@@ -33,6 +51,7 @@
             }, function (err) {
                 Alerts.add('danger', JSON.stringify(err));
             });
+            vm.pwd = JSON.parse(JSON.stringify(emptyPwdFields));
         }
     };
 });

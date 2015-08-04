@@ -121,7 +121,11 @@
             {
                 'query': angular.extend({ url: '/api/transtypes', method: 'GET', isArray: true }, authHeaders),
             }),
-            userInfo: $resource('/api/account', {},
+            account: $resource('/api/account', {},
+            {
+                'changePassword': angular.extend({ url: '/api/Account/ChangePassword', method: 'POST' }, authHeaders),
+            }),
+            userInfo: $resource('/api/account/userInfo', {},
             {
                 'get': angular.extend({ url: '/api/account/userInfo', method: 'GET' }, authHeaders),
                 'update': angular.extend({ url: '/api/account/userInfo', method: 'PUT' }, authHeaders),

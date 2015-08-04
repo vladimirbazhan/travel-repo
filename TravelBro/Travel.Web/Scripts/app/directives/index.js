@@ -14,4 +14,5 @@ define([
     './droppableItem',
     './settingsListItem',
     './settingsNameEditor',
+    './settingsPasswordEditor',
 ], function () {});

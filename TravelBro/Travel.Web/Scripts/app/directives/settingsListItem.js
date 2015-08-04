@@ -30,8 +30,15 @@
                     }
                 }
                 this.save = function (params) {
-                    $scope.switchToEditMode(false);
-                    $scope.onSave({ params: params });
+                    $scope.onSave({
+                        params: params,
+                        callbacks: {
+                            onsuccess: function() {
+                                $scope.switchToEditMode(false);
+                            },
+                            onerror: function() {}
+                        }
+                    });
                 }
                 this.cancel = function () {
                     $scope.onCancel();
