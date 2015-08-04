@@ -14,6 +14,7 @@ namespace WebApplication1.Models.EntityModels
         public DateTime? Finish { get; set; }
         public double Cost { get; set; }
         public int Order { get; set; }
+        public string MapInfo { get; set; }
 
         public int TransTypeId { get; set; }
         private TransType transType;
@@ -49,6 +50,7 @@ namespace WebApplication1.Models.EntityModels
             TransTypeId = other.TransTypeId;
             StartGPlaceId = other.StartGPlaceId;
             FinishGPlaceId = other.FinishGPlaceId;
+            MapInfo = other.MapInfo;
         }
     }
 }

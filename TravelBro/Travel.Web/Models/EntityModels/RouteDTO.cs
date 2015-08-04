@@ -19,6 +19,7 @@ namespace WebApplication1.Models.EntityModels
             TripId = r.TripId;
             StartGPlaceId = r.StartGPlaceId;
             FinishGPlaceId = r.FinishGPlaceId;
+            MapInfo = r.MapInfo;
             if (r.Comments != null)
             {
                 Comments = (from comment in r.Comments select new CommentDTO(comment)).ToList();
@@ -41,5 +42,6 @@ namespace WebApplication1.Models.EntityModels
         public string FinishGPlaceId { get; set; }
         public IEnumerable<CommentDTO> Comments;
         public IEnumerable<PhotoDTO> Photos;
+        public string MapInfo { get; set; }
     }
 }
