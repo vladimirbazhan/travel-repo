@@ -99,7 +99,7 @@ namespace WebApplication1.Controllers
                             using (Image img = new Bitmap(fileStream))
                             {
                                 Size convertedSize = GetSizeWithDimensionsNotLongerThan(img.Width, img.Height, 1024, 768);
-                                Size thumbNailSize = GetSizeWithDimensionsNotLongerThan(img.Width, img.Height, 150, 150);
+                                Size thumbNailSize = GetSizeWithDimensionsNotLongerThan(img.Width, img.Height, 250, 250);
                                 using (Image convertedImage = ImageHelper.ResizeImage(img, convertedSize.Width, convertedSize.Height))
                                 {
                                     //Save converted image
