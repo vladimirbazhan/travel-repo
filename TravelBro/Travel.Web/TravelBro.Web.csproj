@@ -215,9 +215,9 @@
     <Compile Include="Migrations\201507290958120_MapBoundsAdded.Designer.cs">
       <DependentUpon>201507290958120_MapBoundsAdded.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201507311155236_UserInfoAndLanguage.cs" />
-    <Compile Include="Migrations\201507311155236_UserInfoAndLanguage.Designer.cs">
-      <DependentUpon>201507311155236_UserInfoAndLanguage.cs</DependentUpon>
+    <Compile Include="Migrations\201508051230093_UserInfoAndLanguage.cs" />
+    <Compile Include="Migrations\201508051230093_UserInfoAndLanguage.Designer.cs">
+      <DependentUpon>201508051230093_UserInfoAndLanguage.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201507311456566_RouteMapInfoAdded.cs" />
     <Compile Include="Migrations\201507311456566_RouteMapInfoAdded.Designer.cs">
@@ -405,8 +405,8 @@
     <EmbeddedResource Include="Migrations\201507290958120_MapBoundsAdded.resx">
       <DependentUpon>201507290958120_MapBoundsAdded.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507311155236_UserInfoAndLanguage.resx">
-      <DependentUpon>201507311155236_UserInfoAndLanguage.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201508051230093_UserInfoAndLanguage.resx">
+      <DependentUpon>201508051230093_UserInfoAndLanguage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507311456566_RouteMapInfoAdded.resx">
       <DependentUpon>201507311456566_RouteMapInfoAdded.cs</DependentUpon>
