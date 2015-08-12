@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
@@ -20,7 +21,14 @@ namespace WebApplication1.Models.IdentityModels
             return userIdentity;
         }
 
+        public ApplicationUser()
+        {
+            PasswordChangedUtc = DateTime.UtcNow;
+        }
+
         public string VisibleName { get; set; }
+
+        public DateTime PasswordChangedUtc { get; set; }
 
         public string Name { get; set; }
         public string Surname { get; set; }

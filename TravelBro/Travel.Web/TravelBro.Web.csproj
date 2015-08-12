@@ -227,6 +227,10 @@
     <Compile Include="Migrations\201508030922096_VisitMapInfoAdded.Designer.cs">
       <DependentUpon>201508030922096_VisitMapInfoAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508121031402_PasswordChanged.cs" />
+    <Compile Include="Migrations\201508121031402_PasswordChanged.Designer.cs">
+      <DependentUpon>201508121031402_PasswordChanged.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Conventions\ManyToManyTableNameConvention.cs" />
     <Compile Include="Models\EntityModels\CommentDTO.cs" />
     <Compile Include="Models\EntityModels\Entity.cs" />
@@ -413,6 +417,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508030922096_VisitMapInfoAdded.resx">
       <DependentUpon>201508030922096_VisitMapInfoAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508121031402_PasswordChanged.resx">
+      <DependentUpon>201508121031402_PasswordChanged.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

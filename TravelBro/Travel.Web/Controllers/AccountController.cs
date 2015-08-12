@@ -152,6 +152,13 @@ namespace WebApplication1.Controllers
                 return GetErrorResult(result);
             }
 
+            using (UnitOfWork uof = new UnitOfWork())
+            {
+                ApplicationUser usr = uof.Repo<UserRepo>().Users.First(x => x.Id == User.Identity.GetUserId());
+                usr.PasswordChangedUtc = DateTime.UtcNow;
+                uof.Commit();
+            }
+            
             return Ok();
         }
 

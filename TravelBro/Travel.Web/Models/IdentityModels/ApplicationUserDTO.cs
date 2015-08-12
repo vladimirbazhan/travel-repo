@@ -12,6 +12,7 @@ namespace WebApplication1.Models.IdentityModels
         {
             VisibleName = user.VisibleName;
             Email       = user.Email;
+            PasswordChangedUtc = user.PasswordChangedUtc;
             Name = user.Name;
             Surname = user.Surname;
             Patronymic = user.Patronymic;
@@ -20,6 +21,8 @@ namespace WebApplication1.Models.IdentityModels
 
         public string VisibleName { get; set; }
         public string Email { get; set; }
+
+        public DateTime PasswordChangedUtc { get; set; }
 
         public string Name { get; set; }
         public string Surname { get; set; }

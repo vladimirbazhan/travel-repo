@@ -7,7 +7,7 @@
                         on-cancel="settingsVm.cancel()">
     </settings-list-item>
     <settings-list-item name="Email" content="{{settingsVm.userInfo.Email}}"></settings-list-item>
-    <settings-list-item name="Password" content="Changed 1 month ago" item-data="settingsVm.pwd" editor="settings-password-editor"
+    <settings-list-item name="Password" content="{{settingsVm.passwordChangedContent}}" item-data="settingsVm.pwd" editor="settings-password-editor"
                         on-save="settingsVm.changePassword(params, callbacks)"
                         on-cancel="settingsVm.cancel()">
     </settings-list-item>

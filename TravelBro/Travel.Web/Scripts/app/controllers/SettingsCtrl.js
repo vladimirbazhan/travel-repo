@@ -29,6 +29,7 @@
         vm.changePassword = function(data, callbacks) {
             Backend.account.changePassword(vm.pwd, function () {
                 vm.pwd = JSON.parse(JSON.stringify(emptyPwdFields));
+                init();
                 Alerts.add('info', 'Password successfully changed');
                 callbacks.onsuccess();
             }, function (err) {
@@ -48,10 +49,39 @@
                     (vm.userInfo.Name ? (vm.userInfo.Name + ' ') : '') +
                     (vm.userInfo.Patronymic ? (vm.userInfo.Patronymic + ' ') : '') +
                     (vm.userInfo.Surname || '');
+
+                // find when password was changed
+                vm.passwordChangedContent = createPasswordChangedContentString(new Date(Date.parse(userInfo.PasswordChangedUtc)));
             }, function (err) {
                 Alerts.add('danger', JSON.stringify(err));
             });
             vm.pwd = JSON.parse(JSON.stringify(emptyPwdFields));
+        }
+
+        function createPasswordChangedContentString(passChangedUtc) {
+            var compileString = function(unitName, unitCount) {
+                return 'Changed ' + unitCount + ' ' + unitName + (unitCount == 1 ? '' : 's') + ' ago';
+            }
+
+            var diff = new Date().getTime() - passChangedUtc.getTime();
+
+            var years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+            if (years > 0) {
+                return compileString('year', years);
+            }
+            
+            var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            if (days > 0) {
+                return compileString('day', days);
+            }
+
+            var hours = Math.floor(diff / (1000 * 60 * 60));
+            if (hours > 0) {
+                return compileString('hour', hours);
+            }
+
+            var mins = Math.floor(diff / (1000 * 60));
+            return compileString('minute', mins);
         }
     };
 });
