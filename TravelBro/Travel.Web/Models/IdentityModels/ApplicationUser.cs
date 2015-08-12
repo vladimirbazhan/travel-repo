@@ -53,7 +53,7 @@ namespace WebApplication1.Models.IdentityModels
             Name = user.Name;
             Surname = user.Surname;
             Patronymic = user.Patronymic;
-            //Language = user.Language;
+            LanguageId = user.LanguageId;
         }
 
         public virtual Collection<Trip> MemberInTrips { get; private set; }

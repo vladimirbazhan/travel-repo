@@ -323,6 +323,7 @@
     <Content Include="Scripts\app\directives\index.js" />
     <Content Include="Scripts\app\directives\module.js" />
     <Content Include="Scripts\app\directives\route.js" />
+    <Content Include="Scripts\app\directives\settingsLanguageEditor.js" />
     <Content Include="Scripts\app\directives\settingsListItem.js" />
     <Content Include="Scripts\app\directives\settingsNameEditor.js" />
     <Content Include="Scripts\app\directives\settingsPasswordEditor.js" />
@@ -335,6 +336,7 @@
     <Content Include="Scripts\app\partials\photos.html" />
     <Content Include="Scripts\app\partials\route-edit.html" />
     <Content Include="Scripts\app\partials\route-small.html" />
+    <Content Include="Scripts\app\partials\settings-language-editor.html" />
     <Content Include="Scripts\app\partials\settings-name-editor.html" />
     <Content Include="Scripts\app\partials\settings-password-editor.html" />
     <Content Include="Scripts\app\partials\settings.html" />

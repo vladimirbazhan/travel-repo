@@ -11,6 +11,9 @@
                         on-save="settingsVm.changePassword(params, callbacks)"
                         on-cancel="settingsVm.cancel()">
     </settings-list-item>
-    <settings-list-item name="Language" content="{{settingsVm.userInfo.Language.Name}}"></settings-list-item>
+    <settings-list-item name="Language" content="{{settingsVm.userInfo.Language.Name}}" item-data="settingsVm.langEditorData" editor="settings-language-editor"
+                        on-save="settingsVm.saveLanguage(params, callbacks)"
+                        on-cancel="settingsVm.cancel()">
+    </settings-list-item>
   </ul>
 </div>

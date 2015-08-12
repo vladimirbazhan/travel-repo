@@ -15,4 +15,5 @@ define([
     './settingsListItem',
     './settingsNameEditor',
     './settingsPasswordEditor',
+    './settingsLanguageEditor',
 ], function () {});

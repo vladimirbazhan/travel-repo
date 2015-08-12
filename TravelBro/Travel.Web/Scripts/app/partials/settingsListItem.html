@@ -9,6 +9,7 @@
   <div class="settingsItemEditor" ng-show="isEditMode" ng-switch="editor">
     <settings-name-editor ng-switch-when="settings-name-editor" class="settings-name-editor" item-data="itemData" label="{{name}}" on-save="settingsListItemVm.save(params)" on-cancel="settingsListItemVm.cancel()"></settings-name-editor>
     <settings-password-editor ng-switch-when="settings-password-editor" class="settings-password-editor" item-data="itemData" label="{{name}}" on-save="settingsListItemVm.save(params)" on-cancel="settingsListItemVm.cancel()"></settings-password-editor>
+    <settings-language-editor ng-switch-when="settings-language-editor" class="settings-language-editor" item-data="itemData" label="{{name}}" on-save="settingsListItemVm.save(params)" on-cancel="settingsListItemVm.cancel()"></settings-language-editor>
     <div ng-switch-default>editor is not implemented</div>
   </div>
 </li>

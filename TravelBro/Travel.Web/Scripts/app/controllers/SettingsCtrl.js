@@ -16,14 +16,7 @@
         init();
 
         vm.saveName = function (params, callbacks) {
-            Backend.userInfo.update({}, vm.userInfo, function (userInfo) {
-                init();
-                Alerts.add('info', 'Changes saved');
-                callbacks.onsuccess();
-            }, function (err) {
-                Alerts.add('danger', JSON.stringify(err));
-                callbacks.onerror();
-            });
+            saveUserInfo(vm.userInfo, callbacks);
         }
 
         vm.changePassword = function(data, callbacks) {
@@ -38,11 +31,32 @@
             });
         }
 
+        vm.saveLanguage = function (data, callbacks) {
+            vm.userInfo.Language = vm.langEditorData.selectedLanguage;
+            saveUserInfo(vm.userInfo, callbacks);
+        }
+
         vm.cancel = function() {
             vm.userInfo = JSON.parse(userInfoString);
         }
 
+        function saveUserInfo(userInfo, callbacks) {
+            Backend.userInfo.update({}, userInfo, function (userInfo) {
+                init();
+                Alerts.add('info', 'Changes saved');
+                callbacks.onsuccess();
+            }, function (err) {
+                Alerts.add('danger', JSON.stringify(err));
+                callbacks.onerror();
+            });
+        }
+
         function init() {
+            vm.langEditorData = {
+                selectedLanguage: null,
+                languages: []
+            }
+
             vm.userInfo = Backend.userInfo.get({}, function (userInfo) {
                 userInfoString = JSON.stringify(userInfo);
                 vm.fullName =
@@ -52,10 +66,16 @@
 
                 // find when password was changed
                 vm.passwordChangedContent = createPasswordChangedContentString(new Date(Date.parse(userInfo.PasswordChangedUtc)));
+
+                vm.langEditorData.selectedLanguage = vm.userInfo.Language;
             }, function (err) {
                 Alerts.add('danger', JSON.stringify(err));
             });
             vm.pwd = JSON.parse(JSON.stringify(emptyPwdFields));
+
+            vm.langEditorData.languages = Backend.languages.query(function (langs) { }, function (err) {
+                Alerts.add('danger', JSON.stringify(err));
+            });
         }
 
         function createPasswordChangedContentString(passChangedUtc) {

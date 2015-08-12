@@ -9,7 +9,7 @@ using WebApplication1.Models.Repositories;
 
 namespace WebApplication1.Controllers
 {
-    public class LanguageController : ApiController
+    public class LanguagesController : ApiController
     {
         // GET api/Languages
         public IEnumerable<Language> GetLanguages()
