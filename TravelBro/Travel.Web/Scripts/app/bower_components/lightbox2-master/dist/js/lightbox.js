@@ -26,8 +26,8 @@
     }
 }(this, function ($) {
 
-  function Lightbox(options) {
-    this.album = [];
+    function Lightbox(options) {
+        this.album = [];
     this.currentImageIndex = void 0;
     this.init();
 
@@ -41,14 +41,15 @@
   Lightbox.defaults = {
     albumLabel: 'Image %1 of %2',
     alwaysShowNavOnTouchDevices: false,
-    fadeDuration: 500,
+    fadeDuration: 0,
     fitImagesInViewport: true,
     // maxWidth: 800,
     // maxHeight: 600,
     positionFromTop: 50,
-    resizeDuration: 700,
+    resizeDuration: 0,
     showImageNumberLabel: true,
-    wrapAround: false
+    wrapAround: false,
+
   };
 
   Lightbox.prototype.option = function(options) {
@@ -207,7 +208,7 @@
 
     this.$overlay.fadeIn(this.options.fadeDuration);
 
-    $('.lb-loader').fadeIn('slow');
+    $('.lb-loader').fadeIn('fast');
     this.$lightbox.find('.lb-image, .lb-nav, .lb-prev, .lb-next, .lb-dataContainer, .lb-numbers, .lb-caption').hide();
 
     this.$outerContainer.addClass('animating');
@@ -307,7 +308,7 @@
   // Display the image and its details and begin preload neighboring images.
   Lightbox.prototype.showImage = function() {
     this.$lightbox.find('.lb-loader').stop(true).hide();
-    this.$lightbox.find('.lb-image').fadeIn('slow');
+    this.$lightbox.find('.lb-image').fadeIn('fast');
 
     this.updateNav();
     this.updateDetails();
